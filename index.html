@@ -19,7 +19,7 @@
         .logo span { color: var(--accent-gold); text-transform: uppercase; }
         .btn-cta { background-color: var(--accent-red); color: white; padding: 10px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: 0.3s; }
         .btn-cta:hover { background-color: #a00d24; transform: translateY(-2px); }
-        .hero { text-align: center; padding: 100px 20px; background-color: white; border-bottom: 1px solid #e2e8f0; }
+        .hero { text-align: center; padding: 100px 20px; background-color: white; border-bottom: 1px solid #e2e8f0; overflow: hidden; }
         .hero h1 { font-size: 2.5em; color: var(--primary-dark); margin-bottom: 15px; }
         .hero p { font-size: 1.2em; margin-bottom: 30px; color: #64748b; font-style: italic; }
         .products { display: flex; justify-content: center; gap: 30px; padding: 60px 10%; flex-wrap: wrap; }
@@ -39,9 +39,16 @@
             header { padding: 10px 15px; gap: 10px; }
             .logo { font-size: 16px; white-space: nowrap; }
             .btn-cta { padding: 8px 12px; font-size: 12px; white-space: nowrap; } 
-            .hero { padding: 50px 15px; }
-            .hero h1 { font-size: 1.8em; }
-            .hero p { font-size: 1em; padding: 0 10px; }
+            .hero { padding: 50px 5px; }
+            
+            /* Ép tiêu đề chính 1 dòng */
+            .hero h1 { 
+                white-space: nowrap; /* Cấm rớt dòng */
+                font-size: 4.2vw; /* Chữ tự động thu nhỏ theo chiều rộng điện thoại */
+                margin-bottom: 10px;
+            }
+            .hero p { font-size: 0.95em; padding: 0 5px; }
+            
             .products { padding: 40px 15px; gap: 20px; }
             .card { width: 100%; padding: 15px; }
             
@@ -49,12 +56,12 @@
             footer { padding: 30px 5px; }
             footer h2 { font-size: 1.3em; margin-bottom: 15px; }
             footer p { 
-                white-space: nowrap; /* Cấm rớt dòng tuyệt đối */
-                font-size: 2.7vw; /* Chữ tự động thu nhỏ bám theo chiều rộng điện thoại */
+                white-space: nowrap; 
+                font-size: 2.7vw; 
                 margin: 6px 0;
             }
             footer .copyright {
-                font-size: 2.4vw; /* Dòng này dài hơn nên nhỏ hơn 1 xíu để vừa màn hình */
+                font-size: 2.4vw; 
                 margin-top: 15px;
             }
         }
@@ -62,6 +69,7 @@
         @media (max-width: 380px) {
             .logo { font-size: 14px; }
             .btn-cta { padding: 7px 10px; font-size: 11px; }
+            .hero h1 { font-size: 4vw; }
         }
     </style>
 </head>

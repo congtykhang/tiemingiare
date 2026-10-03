@@ -1,0 +1,72 @@
+:root {
+    --primary-dark: #1E293B; 
+    --accent-red: #C8102E;   
+    --accent-gold: #B48600;  
+    --bg-light: #F8FAFC;     
+    --text-main: #334155;
+}
+* { box-sizing: border-box; }
+body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; color: var(--text-main); background-color: var(--bg-light); line-height: 1.6; }
+
+/* Header & Menu */
+header { background-color: var(--primary-dark); color: white; padding: 15px 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.2); flex-wrap: wrap; }
+.logo { font-size: 24px; font-weight: bold; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+.logo a { color: inherit; text-decoration: none; }
+.logo span { color: var(--accent-gold); text-transform: uppercase; }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { color: white; text-decoration: none; font-weight: 500; transition: 0.3s; }
+.nav-links a:hover { color: var(--accent-gold); }
+.btn-cta { background-color: var(--accent-red); color: white; padding: 10px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: 0.3s; }
+.btn-cta:hover { background-color: #a00d24; transform: translateY(-2px); }
+
+/* Trang chủ */
+.hero { text-align: center; padding: 100px 20px; background-color: white; border-bottom: 1px solid #e2e8f0; overflow: hidden; }
+.hero h1 { font-size: 2.5em; color: var(--primary-dark); margin-bottom: 15px; }
+.hero p { font-size: 1.2em; margin-bottom: 30px; color: #64748b; font-style: italic; }
+.products { display: flex; justify-content: center; gap: 30px; padding: 60px 10%; flex-wrap: wrap; }
+.card { background: white; border-radius: 10px; width: 260px; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid transparent; }
+.card:hover { transform: translateY(-10px); border-color: var(--accent-gold); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.product-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 6px; margin-bottom: 15px; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.card h3 { color: var(--primary-dark); margin: 10px 0; }
+.card p { font-size: 0.9em; color: #64748b; }
+.card-link { color: var(--accent-gold); text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; font-size: 0.9em; }
+
+/* Trang Liên Hệ - Form */
+.contact-section { padding: 60px 20px; text-align: center; }
+.contact-section h1 { color: var(--primary-dark); margin-bottom: 10px; }
+.contact-container { max-width: 600px; margin: 30px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: left; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: var(--primary-dark); }
+.form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; font-size: 1em; }
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-gold); box-shadow: 0 0 0 2px rgba(180, 134, 0, 0.2); }
+.btn-submit { width: 100%; background-color: var(--accent-gold); color: white; border: none; padding: 15px; font-size: 1.1em; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+.btn-submit:hover { background-color: #956f00; }
+
+/* Footer */
+footer { background-color: var(--primary-dark); color: white; text-align: center; padding: 40px 20px; overflow: hidden; }
+footer h2 { margin-top: 0; color: var(--accent-gold); }
+footer p { margin: 8px 0; font-size: 0.95em; color: #cbd5e1; }
+.copyright { margin-top: 25px; font-size: 13px; opacity: 0.5; }
+
+/* Điện thoại */
+@media (max-width: 768px) {
+    header { padding: 10px 15px; gap: 10px; }
+    .logo { font-size: 16px; white-space: nowrap; }
+    .nav-links { width: 100%; justify-content: center; margin-top: 10px; gap: 20px; font-size: 14px; order: 3; }
+    .btn-cta { padding: 8px 12px; font-size: 12px; white-space: nowrap; } 
+    .hero { padding: 50px 5px; }
+    .hero h1 { white-space: nowrap; font-size: 4.2vw; margin-bottom: 10px; }
+    .hero p { font-size: 0.95em; padding: 0 5px; }
+    .products { padding: 40px 15px; gap: 20px; }
+    .card { width: 100%; padding: 15px; }
+    footer { padding: 30px 5px; }
+    footer h2 { font-size: 1.3em; margin-bottom: 15px; }
+    footer p { white-space: nowrap; font-size: 2.7vw; margin: 6px 0; }
+    footer .copyright { font-size: 2.4vw; margin-top: 15px; }
+    .contact-container { padding: 20px; }
+}
+@media (max-width: 380px) {
+    .logo { font-size: 14px; }
+    .btn-cta { padding: 7px 10px; font-size: 11px; }
+    .hero h1 { font-size: 4vw; }
+}

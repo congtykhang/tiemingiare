@@ -29,14 +29,12 @@
         .card h3 { color: var(--primary-dark); margin: 10px 0; }
         .card p { font-size: 0.9em; color: #64748b; }
         .card-link { color: var(--accent-gold); text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; font-size: 0.9em; }
-        footer { background-color: var(--primary-dark); color: white; text-align: center; padding: 40px 20px; }
+        footer { background-color: var(--primary-dark); color: white; text-align: center; padding: 40px 20px; overflow: hidden; }
         footer h2 { margin-top: 0; color: var(--accent-gold); }
         footer p { margin: 8px 0; font-size: 0.95em; color: #cbd5e1; }
-        
-        /* Tối ưu hóa hiển thị địa chỉ không bị rớt chữ vô lý */
-        .address-line { display: inline-block; width: 100%; }
+        .copyright { margin-top: 25px; font-size: 13px; opacity: 0.5; }
 
-        /* --- Tối ưu hóa cực chuẩn cho Điện thoại --- */
+        /* --- Tối ưu hóa ép 1 dòng cho Điện thoại --- */
         @media (max-width: 768px) {
             header { padding: 10px 15px; gap: 10px; }
             .logo { font-size: 16px; white-space: nowrap; }
@@ -46,9 +44,19 @@
             .hero p { font-size: 1em; padding: 0 10px; }
             .products { padding: 40px 15px; gap: 20px; }
             .card { width: 100%; padding: 15px; }
-            footer { padding: 30px 10px; }
-            footer h2 { font-size: 1.3em; }
-            footer p { font-size: 0.85em; padding: 0 5px; }
+            
+            /* Ép chân trang (Footer) */
+            footer { padding: 30px 5px; }
+            footer h2 { font-size: 1.3em; margin-bottom: 15px; }
+            footer p { 
+                white-space: nowrap; /* Cấm rớt dòng tuyệt đối */
+                font-size: 2.7vw; /* Chữ tự động thu nhỏ bám theo chiều rộng điện thoại */
+                margin: 6px 0;
+            }
+            footer .copyright {
+                font-size: 2.4vw; /* Dòng này dài hơn nên nhỏ hơn 1 xíu để vừa màn hình */
+                margin-top: 15px;
+            }
         }
 
         @media (max-width: 380px) {
@@ -102,9 +110,9 @@
     <footer id="contact">
         <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
         <p><strong>Hotline/Zalo:</strong> 0986.450.025</p>
-        <p class="address-line"><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
-        <p class="address-line"><strong>Chi nhánh:</strong> A34/4JS Quốc Lộ 50, Phường Bình Hưng, TP. Hồ Chí Minh</p>
-        <p style="margin-top: 25px; font-size: 13px; opacity: 0.5;">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
+        <p><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
+        <p><strong>Chi nhánh:</strong> A34/4JS Quốc Lộ 50, Phường Bình Hưng, TP. Hồ Chí Minh</p>
+        <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
     </footer>
 
 </body>

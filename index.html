@@ -4,82 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiệm In Giá Rẻ | CÔNG TY TNHH PHẠM DUY KHANG</title>
-    <style>
-        :root {
-            --primary-dark: #1E293B; 
-            --accent-red: #C8102E;   
-            --accent-gold: #B48600;  
-            --bg-light: #F8FAFC;     
-            --text-main: #334155;
-        }
-        * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; color: var(--text-main); background-color: var(--bg-light); line-height: 1.6; }
-        header { background-color: var(--primary-dark); color: white; padding: 15px 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .logo { font-size: 24px; font-weight: bold; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
-        .logo span { color: var(--accent-gold); text-transform: uppercase; }
-        .btn-cta { background-color: var(--accent-red); color: white; padding: 10px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: 0.3s; }
-        .btn-cta:hover { background-color: #a00d24; transform: translateY(-2px); }
-        .hero { text-align: center; padding: 100px 20px; background-color: white; border-bottom: 1px solid #e2e8f0; overflow: hidden; }
-        .hero h1 { font-size: 2.5em; color: var(--primary-dark); margin-bottom: 15px; }
-        .hero p { font-size: 1.2em; margin-bottom: 30px; color: #64748b; font-style: italic; }
-        .products { display: flex; justify-content: center; gap: 30px; padding: 60px 10%; flex-wrap: wrap; }
-        .card { background: white; border-radius: 10px; width: 260px; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid transparent; }
-        .card:hover { transform: translateY(-10px); border-color: var(--accent-gold); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .product-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 6px; margin-bottom: 15px; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .card h3 { color: var(--primary-dark); margin: 10px 0; }
-        .card p { font-size: 0.9em; color: #64748b; }
-        .card-link { color: var(--accent-gold); text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; font-size: 0.9em; }
-        footer { background-color: var(--primary-dark); color: white; text-align: center; padding: 40px 20px; overflow: hidden; }
-        footer h2 { margin-top: 0; color: var(--accent-gold); }
-        footer p { margin: 8px 0; font-size: 0.95em; color: #cbd5e1; }
-        .copyright { margin-top: 25px; font-size: 13px; opacity: 0.5; }
-
-        /* --- Tối ưu hóa ép 1 dòng cho Điện thoại --- */
-        @media (max-width: 768px) {
-            header { padding: 10px 15px; gap: 10px; }
-            .logo { font-size: 16px; white-space: nowrap; }
-            .btn-cta { padding: 8px 12px; font-size: 12px; white-space: nowrap; } 
-            .hero { padding: 50px 5px; }
-            
-            /* Ép tiêu đề chính 1 dòng */
-            .hero h1 { 
-                white-space: nowrap;
-                font-size: 4.2vw;
-                margin-bottom: 10px;
-            }
-            .hero p { font-size: 0.95em; padding: 0 5px; }
-            
-            .products { padding: 40px 15px; gap: 20px; }
-            .card { width: 100%; padding: 15px; }
-            
-            /* Ép chân trang (Footer) */
-            footer { padding: 30px 5px; }
-            footer h2 { font-size: 1.3em; margin-bottom: 15px; }
-            footer p { 
-                white-space: nowrap; 
-                font-size: 2.7vw; 
-                margin: 6px 0;
-            }
-            footer .copyright {
-                font-size: 2.4vw; 
-                margin-top: 15px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .logo { font-size: 14px; }
-            .btn-cta { padding: 7px 10px; font-size: 11px; }
-            .hero h1 { font-size: 4vw; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <div class="logo">
-            <span>PHẠM DUY KHANG</span>
+            <a href="index.html"><span>PHẠM DUY KHANG</span></a>
         </div>
-        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta">Liên hệ Zalo ngay</a>
+        <div class="nav-links">
+            <a href="index.html">Trang Chủ</a>
+            <a href="lien-he.html">Liên Hệ</a>
+        </div>
+        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta">Zalo ngay</a>
     </header>
 
     <section class="hero">
@@ -90,29 +27,28 @@
 
     <section id="products" class="products">
         <div class="card">
-            <!-- Đã đổi .jpg thành .jpeg -->
-            <img src="temnhan.jpeg" alt="Tem Nhãn Decal" class="product-img" onerror="this.src='temnhan.jpg'">
+            <img src="images/tem-nhan.jpg" alt="Tem Nhãn Decal" class="product-img">
             <h3>Tem Nhãn (Decal)</h3>
             <p>Decal giấy, nhựa, trong, xi bạc...</p>
-            <a href="https://zalo.me/0986450025" target="_blank" class="card-link">Nhận báo giá &rarr;</a>
+            <a href="tem-nhan.html" class="card-link">Nhận báo giá &rarr;</a>
         </div>
         <div class="card">
-            <img src="cardvisit.jpeg" alt="Card Visit" class="product-img" onerror="this.src='cardvisit.jpg'">
-            <h3>Card Visit</h3>
+            <img src="images/danh-thiep.jpg" alt="Danh Thiếp" class="product-img">
+            <h3>Danh Thiếp</h3>
             <p>In offset, in nhanh kỹ thuật số.</p>
-            <a href="https://zalo.me/0986450025" target="_blank" class="card-link">Nhận báo giá &rarr;</a>
+            <a href="danh-thiep.html" class="card-link">Nhận báo giá &rarr;</a>
         </div>
         <div class="card">
-            <img src="tuigiay.jpeg" alt="Túi Giấy" class="product-img" onerror="this.src='tuigiay.jpg'">
+            <img src="images/tui-giay.jpg" alt="Túi Giấy" class="product-img">
             <h3>Túi Giấy</h3>
             <p>Đa dạng kích thước, chất liệu giấy.</p>
-            <a href="https://zalo.me/0986450025" target="_blank" class="card-link">Nhận báo giá &rarr;</a>
+            <a href="tui-giay.html" class="card-link">Nhận báo giá &rarr;</a>
         </div>
         <div class="card">
-            <img src="toroi.jpeg" alt="Tờ Rơi" class="product-img" onerror="this.src='toroi.jpg'">
+            <img src="images/to-roi.jpg" alt="Tờ Rơi" class="product-img">
             <h3>Tờ Rơi / Catalogue</h3>
             <p>Màu sắc chuẩn, gấp cấn thành phẩm.</p>
-            <a href="https://zalo.me/0986450025" target="_blank" class="card-link">Nhận báo giá &rarr;</a>
+            <a href="to-roi.html" class="card-link">Nhận báo giá &rarr;</a>
         </div>
     </section>
 

@@ -24,6 +24,87 @@ body {
     line-height: 1.6;
 }
 
+/* ---- MENU DROP DOWN CHO SẢN PHẨM ---- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--white);
+    min-width: 220px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-radius: 8px;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 0;
+    margin-top: 15px; /* Khoảng cách từ menu chính xuống menu phụ */
+}
+
+/* Mũi tên nhỏ chỉ lên của menu phụ */
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 8px 8px 8px;
+    border-style: solid;
+    border-color: transparent transparent var(--white) transparent;
+}
+
+.dropdown-content a {
+    color: var(--text-main);
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--bg-light);
+    color: var(--accent-gold);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Hiệu ứng mờ dần khi menu hiện ra */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Đảm bảo thanh menu hiển thị tốt trên Mobile */
+@media (max-width: 768px) {
+    .dropdown-content {
+        position: static;
+        transform: none;
+        box-shadow: none;
+        background-color: transparent;
+        padding-left: 20px;
+        margin-top: 0;
+        display: none; /* Mặc định ẩn trên mobile */
+    }
+    .dropdown-content::before {
+        display: none;
+    }
+    /* Chạm vào Sản phẩm trên mobile sẽ hiện menu con */
+    .dropdown:active .dropdown-content,
+    .dropdown:focus-within .dropdown-content {
+        display: block;
+    }
+}
+
+
 /* 4. THANH MENU (STICKY & KÍNH MỜ) */
 header {
     display: flex;

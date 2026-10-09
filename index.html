@@ -9,23 +9,38 @@
 </head>
 <body>
 
+    <!-- PHẦN 1: THANH ĐIỀU HƯỚNG CÓ DROPDOWN -->
     <header>
         <div class="logo">
             <a href="index.html"><span>PHẠM DUY KHANG</span></a>
         </div>
         <div class="nav-links">
             <a href="index.html">Trang Chủ</a>
+            
+            <!-- Menu Sản Phẩm xổ xuống -->
+            <div class="dropdown">
+                <a href="#products" style="cursor: pointer;">Sản Phẩm ▾</a>
+                <div class="dropdown-content">
+                    <a href="tem-nhan.html">In Tem Nhãn (Decal)</a>
+                    <a href="danh-thiep.html">In Danh Thiếp</a>
+                    <a href="tui-giay.html">In Túi Giấy</a>
+                    <a href="to-roi.html">In Tờ Rơi / Catalogue</a>
+                </div>
+            </div>
+
             <a href="lien-he.html">Liên Hệ</a>
         </div>
         <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta">Liên hệ Zalo</a>
     </header>
 
+    <!-- PHẦN 2: BANNER CHÍNH CỦA TRANG CHỦ -->
     <section class="hero">
         <h1>In Đẹp Giá Tốt - Cùng Bạn Thành Công</h1>
         <p>Xưởng In Trực Tiếp - Không Qua Trung Gian. <br>Cam kết chất lượng, tối ưu chi phí.</p>
         <a href="#products" class="btn-cta" style="background-color: var(--accent-gold);">Xem Sản Phẩm</a>
     </section>
 
+    <!-- PHẦN 3: DANH SÁCH 4 NHÓM SẢN PHẨM -->
     <section id="products" class="products">
         <div class="card">
             <img src="images/tem-nhan.jpg" alt="Tem Nhãn Decal" class="product-img">
@@ -56,7 +71,7 @@
         </div>
     </section>
 
-    <!-- ĐÂY LÀ PHẦN FOOTER ĐÃ ĐƯỢC BỔ SUNG LẠI -->
+    <!-- PHẦN 4: CHÂN TRANG ĐỊA CHỈ CHI NHÁNH A34/9JS -->
     <footer id="contact">
         <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
         <p><strong>Hotline/Zalo:</strong> 0986.450.025</p>

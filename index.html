@@ -91,8 +91,10 @@
     </footer>
 
     <!-- ĐOẠN JAVASCRIPT XỬ LÝ MENU MOBILE -->
+    <!-- ĐOẠN JAVASCRIPT XỬ LÝ MENU MOBILE (HỖ TRỢ TỐI ĐA SAFARI) -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý nút 3 gạch mở Menu chính
             const mobileMenu = document.getElementById('mobile-menu');
             const navLinks = document.getElementById('nav-links');
 
@@ -100,7 +102,22 @@
                 navLinks.classList.toggle('active');
                 mobileMenu.classList.toggle('is-active');
             });
+
+            // Xử lý nút "Sản Phẩm" để xổ Dropdown (Chỉ trên Mobile)
+            const dropBtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+            dropBtn.addEventListener('click', function(e) {
+                // Kiểm tra xem có đang ở chế độ mobile không (màn hình < 768px)
+                if (window.innerWidth <= 768) {
+                    e.preventDefault(); // Ngăn trình duyệt nhảy trang
+                    dropdownContent.classList.toggle('show');
+                }
+            });
         });
     </script>
+</body>
+</html>
+
 </body>
 </html>

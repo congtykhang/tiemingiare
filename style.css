@@ -28,39 +28,37 @@ header {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-.logo a {
-    text-decoration: none; font-size: 20px; font-weight: 700; color: var(--primary-blue);
-}
+.logo a { text-decoration: none; font-size: 20px; font-weight: 700; color: var(--primary-blue); }
 
-.nav-links {
-    display: flex; align-items: center; gap: 25px;
-}
-
-.nav-links a {
-    text-decoration: none; color: var(--primary-blue); font-weight: 600; font-size: 15px; transition: color 0.3s;
-}
-
+.nav-links { display: flex; align-items: center; gap: 25px; }
+.nav-links a { text-decoration: none; color: var(--primary-blue); font-weight: 600; font-size: 15px; transition: color 0.3s; }
 .nav-links a:hover { color: var(--accent-gold); }
 
 /* --- NÚT GỌI ZALO TRÊN MENU --- */
-.btn-cta-header {
-    background-color: var(--accent-gold); color: #000; padding: 8px 16px; border-radius: 6px;
-    text-decoration: none; font-weight: 700; font-size: 14px;
-}
+.btn-cta-header { background-color: var(--accent-gold); color: #000; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; }
+.btn-cta-mobile { display: none; } /* Ẩn nút Zalo trong menu mobile ở màn hình lớn */
 
-/* --- MENU DROPDOWN --- */
+/* --- MENU DROPDOWN (MÁY TÍNH) --- */
 .dropdown { position: relative; display: inline-block; }
+.dropbtn { display: inline-block; cursor: pointer; }
+.arrow { font-size: 12px; margin-left: 5px; }
+
 .dropdown-content {
     display: none; position: absolute; background-color: var(--white); min-width: 200px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; border-radius: 8px;
     top: 100%; left: 0; padding: 10px 0; margin-top: 10px;
 }
-.dropdown-content a {
-    color: var(--text-main); padding: 12px 20px; text-decoration: none; display: block;
-    font-size: 14px; transition: background-color 0.2s;
-}
+.dropdown-content a { color: var(--text-main); padding: 12px 20px; text-decoration: none; display: block; font-size: 14px; transition: background-color 0.2s; }
 .dropdown-content a:hover { background-color: var(--bg-light); color: var(--accent-gold); }
 .dropdown:hover .dropdown-content { display: block; }
+
+/* NÚT HAMBURGER (ẨN TRÊN MÁY TÍNH) */
+.menu-toggle {
+    display: none; flex-direction: column; cursor: pointer; gap: 5px;
+}
+.menu-toggle span {
+    width: 25px; height: 3px; background-color: var(--primary-blue); border-radius: 3px; transition: 0.3s;
+}
 
 /* 5. BANNER (HERO SECTION) */
 .hero { background: linear-gradient(135deg, var(--primary-blue) 0%, #1e293b 100%); color: var(--white); text-align: center; padding: 60px 20px; margin-bottom: 40px; }
@@ -82,41 +80,40 @@ footer h2 { color: var(--accent-gold); margin-bottom: 15px; font-size: 20px; }
 footer p { margin-bottom: 8px; font-size: 14px; }
 .copyright { margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; }
 
-/* Nút gạt Mobile Menu (Ẩn trên Desktop) */
-.menu-toggle { display: none; font-size: 24px; cursor: pointer; color: var(--primary-blue); }
-
 /* --- 8. TỐI ƯU CỰC MẠNH CHO ĐIỆN THOẠI --- */
 @media (max-width: 768px) {
-    header { flex-wrap: wrap; }
+    .menu-toggle { display: flex; } /* Hiện nút Hamburger */
+    .btn-cta-header { display: none; } /* Ẩn nút Zalo góc phải trên Mobile */
     
-    /* Hiện nút 3 gạch */
-    .menu-toggle { display: block; }
-    
-    /* Ẩn menu ngang ban đầu, sẽ thả xuống nhờ tính năng Focus/Target */
     .nav-links {
-        display: none; 
-        flex-direction: column; 
-        width: 100%; 
-        gap: 15px; 
-        padding-top: 15px;
+        display: none; /* Ẩn menu ban đầu */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.98);
+        padding: 20px;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
         align-items: flex-start;
+        gap: 15px;
     }
     
-    /* Mẹo CSS thuần để bật tắt menu trên điện thoại không cần JavaScript */
-    .nav-links.active, 
-    header:focus-within .nav-links { 
-        display: flex; 
-    }
+    .nav-links.active { display: flex; } /* Hiện menu khi bấm Hamburger */
 
-    /* Chỉnh lại dropdown trên Mobile để nó xổ thẳng xuống dưới không đè chữ */
     .dropdown { width: 100%; }
     .dropdown-content {
-        position: static; box-shadow: none; padding-left: 15px; margin-top: 5px; background: #f1f5f9; width: 100%; display: none;
+        position: static; box-shadow: none; padding-left: 20px; margin-top: 5px; background: transparent; width: 100%; border-left: 2px solid var(--accent-gold); border-radius: 0;
     }
-    .dropdown:hover .dropdown-content,
-    .dropdown:active .dropdown-content { display: block; }
+    .dropdown:hover .dropdown-content { display: block; } /* Dropdown trên mobile sẽ hiện luôn khi mở menu cha hoặc chạm vào */
     
+    .btn-cta-mobile { display: inline-block; background-color: var(--accent-gold); color: #000; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 700; margin-top: 10px; width: 100%; text-align: center; }
+
+    /* Hiệu ứng chéo chữ X cho nút Hamburger khi mở */
+    .menu-toggle.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.is-active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
     .hero { padding: 40px 15px; }
     .hero h1 { font-size: 24px; }
-    .btn-cta-header { display: none; } /* Ẩn bớt nút Zalo nhỏ trên thanh menu để đỡ chật, để nút to ở Banner là đủ */
 }

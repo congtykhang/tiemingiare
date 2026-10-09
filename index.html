@@ -9,17 +9,25 @@
 </head>
 <body>
 
-    <!-- PHẦN 1: THANH ĐIỀU HƯỚNG CÓ DROPDOWN -->
+    <!-- PHẦN 1: THANH ĐIỀU HƯỚNG -->
     <header>
         <div class="logo">
             <a href="index.html"><span>PHẠM DUY KHANG</span></a>
         </div>
-        <div class="nav-links">
+        
+        <!-- Nút 3 gạch (Hamburger) cho Mobile -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav class="nav-links" id="nav-links">
             <a href="index.html">Trang Chủ</a>
             
             <!-- Menu Sản Phẩm xổ xuống -->
             <div class="dropdown">
-                <a href="#products" style="cursor: pointer;">Sản Phẩm ▾</a>
+                <a href="#products" class="dropbtn">Sản Phẩm <span class="arrow">&#9662;</span></a>
                 <div class="dropdown-content">
                     <a href="tem-nhan.html">In Tem Nhãn (Decal)</a>
                     <a href="danh-thiep.html">In Danh Thiếp</a>
@@ -29,8 +37,10 @@
             </div>
 
             <a href="lien-he.html">Liên Hệ</a>
-        </div>
-        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta">Liên hệ Zalo</a>
+            <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
+        </nav>
+        
+        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
     </header>
 
     <!-- PHẦN 2: BANNER CHÍNH CỦA TRANG CHỦ -->
@@ -71,7 +81,7 @@
         </div>
     </section>
 
-    <!-- PHẦN 4: CHÂN TRANG ĐỊA CHỈ CHI NHÁNH A34/9JS -->
+    <!-- PHẦN 4: CHÂN TRANG -->
     <footer id="contact">
         <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
         <p><strong>Hotline/Zalo:</strong> 0986.450.025</p>
@@ -80,5 +90,17 @@
         <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
     </footer>
 
+    <!-- ĐOẠN JAVASCRIPT XỬ LÝ MENU MOBILE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+
+            mobileMenu.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileMenu.classList.toggle('is-active');
+            });
+        });
+    </script>
 </body>
 </html>

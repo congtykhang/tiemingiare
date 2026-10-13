@@ -1,4 +1,262 @@
-<script>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Tem Nhãn Decal | CÔNG TY TNHH PHẠM DUY KHANG</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS DÀNH RIÊNG CHO KHỐI HIỂN THỊ KẾT QUẢ IN NHANH/IN GHÉP */
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .result-item {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid;
+            display: none; /* Ẩn mặc định, sẽ hiển thị qua JS */
+        }
+
+        .result-item.fast {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        .result-item.offset {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+        }
+
+        .result-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .result-item.fast .result-title {
+            color: #166534;
+        }
+
+        .result-item.offset .result-title {
+            color: #1e3a8a;
+        }
+
+        .final-price {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+        
+        .result-item.fast .final-price {
+            color: #15803d;
+        }
+
+        .result-item.offset .final-price {
+            color: #1d4ed8;
+        }
+
+        .unit-price {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .result-item.fast .unit-price {
+             color: #166534;
+        }
+        
+        .result-item.offset .unit-price {
+             color: #1e3a8a;
+        }
+        
+        .note {
+            font-size: 13px;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .result-item.fast .note {
+             color: #166534;
+        }
+
+        .result-item.offset .note {
+             color: #1e3a8a;
+        }
+
+        .qty-warning {
+             font-size: 14px;
+             color: #dc2626;
+             margin-bottom: 15px;
+             font-weight: 500;
+             display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PHẦN 1: THANH ĐIỀU HƯỚNG -->
+    <header>
+        <div class="logo">
+            <a href="index.html"><span>PHẠM DUY KHANG</span></a>
+        </div>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav class="nav-links" id="nav-links">
+            <a href="index.html">Trang Chủ</a>
+            <div class="dropdown">
+                <a href="index.html#products" class="dropbtn">Sản Phẩm <span class="arrow">&#9662;</span></a>
+                <div class="dropdown-content">
+                    <a href="tem-nhan.html">In Tem Nhãn (Decal)</a>
+                    <a href="danh-thiep.html">In Danh Thiếp</a>
+                    <a href="tui-giay.html">In Túi Giấy</a>
+                    <a href="to-roi.html">In Tờ Rơi / Catalogue</a>
+                </div>
+            </div>
+            <a href="lien-he.html">Liên Hệ</a>
+            <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
+        </nav>
+        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
+    </header>
+
+    <!-- PHẦN 2: BANNER -->
+    <section class="hero">
+        <h1>In Tem Nhãn - Decal</h1>
+        <p>Bám dính chắc chắn - Màu sắc sắc nét - Cắt bế mọi hình dáng.</p>
+    </section>
+
+    <!-- PHẦN 3: FORM BÁO GIÁ TỰ ĐỘNG THÔNG MINH -->
+    <section class="calculator-section" style="max-width: 800px; margin: -20px auto 40px; padding: 0 20px; position: relative; z-index: 10;">
+        <div class="calculator-box" style="background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 5px solid var(--accent-gold);">
+            <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 25px; font-size: 22px;">
+                <i class="fa-solid fa-calculator"></i> TÍNH GIÁ IN TEM NHÃN TỰ ĐỘNG
+            </h2>
+            
+            <form id="priceCalcForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- 1. Chọn chất liệu -->
+                <div style="grid-column: 1 / -1;">
+                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">1. Chất liệu in</label>
+                    <select id="calcMaterial" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
+                        <option value="Decal giấy">Decal giấy</option>
+                        <option value="Decal kraft">Decal kraft</option>
+                        <option value="Decal nhựa đục">Decal nhựa đục</option>
+                        <option value="Decal nhựa bóng">Decal nhựa bóng</option>
+                        <option value="Decal nhựa trong">Decal nhựa trong</option>
+                        <option value="Decal xi">Decal xi</option>
+                        <option value="Decal 7 màu">Decal 7 màu</option>
+                        <option value="Decal giấy fort">Decal giấy fort</option>
+                        <option value="Decal vỡ dẻo">Decal vỡ dẻo</option>
+                    </select>
+                </div>
+
+                <!-- 2 & 3. Kích thước -->
+                <div>
+                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">2. Chiều ngang (cm)</label>
+                    <input type="number" id="calcLength" step="0.1" min="1" placeholder="VD: 5" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
+                </div>
+                <div>
+                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">3. Chiều cao (cm)</label>
+                    <input type="number" id="calcWidth" step="0.1" min="1" placeholder="VD: 5" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
+                </div>
+
+                <!-- 4 & 5. Gia công và Số lượng -->
+                <div>
+                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">4. Gia công màng</label>
+                    <select id="calcLamination" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
+                        <option value="Không">Không cán màng</option>
+                        <option value="Có">Cán Bóng / Cán Mờ</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">5. Số lượng cần in (Tem)</label>
+                    <input type="number" id="calcQty" min="100" step="1" placeholder="VD: 1000" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
+                </div>
+
+                <!-- Nút bấm -->
+                <div style="grid-column: 1 / -1; text-align: center; margin-top: 10px;">
+                    <button type="submit" id="btnCalculate" style="background: var(--primary-blue); color: #fff; padding: 14px 30px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%;">
+                        XEM GIÁ ƯỚC TÍNH
+                    </button>
+                </div>
+            </form>
+
+            <!-- Khối hiển thị kết quả -->
+             <div class="result-container" id="resultContainer">
+                <div id="qtyWarning" class="qty-warning"></div>
+                <!-- Kết quả In Nhanh -->
+                <div id="resultFast" class="result-item fast">
+                    <div class="result-title">IN NHANH (Giao hàng 1 - 2 ngày)</div>
+                    <div id="fastUnitPrice" class="final-price">Đang tính...</div>
+                    <div id="fastTotalPrice" class="unit-price">Tổng tiền: 0 đ</div>
+                    <p class="note">* Giá trên mang tính chất tham khảo. Vui lòng liên hệ Zalo để nhận báo giá chính xác kèm ưu đãi thiết kế.</p>
+                    <a href="https://zalo.me/0986450025" target="_blank" style="display: inline-block; background: var(--accent-gold); color: #000; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 10px;">Chốt Đơn Zalo (In Nhanh)</a>
+                </div>
+
+                <!-- Kết quả In Ghép -->
+                <div id="resultOffset" class="result-item offset">
+                    <div class="result-title">IN GHÉP (Giao hàng 5 - 7 ngày)</div>
+                    <div id="offsetUnitPrice" class="final-price">Đang tính...</div>
+                    <div id="offsetTotalPrice" class="unit-price">Tổng tiền: 0 đ</div>
+                    <p class="note">* Áp dụng cho số lượng chẵn ngàn (>= 1000). Giá tốt nhất.</p>
+                    <a href="https://zalo.me/0986450025" target="_blank" style="display: inline-block; background: var(--accent-gold); color: #000; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 10px;">Chốt Đơn Zalo (In Ghép)</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHẦN 4: DANH SÁCH THẺ SẢN PHẨM -->
+    <section class="products">
+        <div class="card">
+            <img src="images/tem-nhan.jpg" alt="Decal Giấy" class="product-img">
+            <h3>Tem nhãn Decal Giấy</h3>
+            <p>Phổ biến, giá cực rẻ, phù hợp dán hộp giấy, chai lọ khô ráo.</p>
+            <a href="#priceCalcForm" onclick="document.getElementById('calcMaterial').value='Decal giấy'; document.getElementById('calcLength').focus();" class="card-link">Tính giá chất liệu này</a>
+        </div>
+        <div class="card">
+            <img src="images/tem-nhan.jpg" alt="Decal Nhựa" class="product-img">
+            <h3>Tem nhãn Decal Nhựa đục</h3>
+            <p>Xé không rách, chống nước tuyệt đối, chuyên dán ly trà sữa, đồ đông lạnh.</p>
+            <a href="#priceCalcForm" onclick="document.getElementById('calcMaterial').value='Decal nhựa đục'; document.getElementById('calcLength').focus();" class="card-link">Tính giá chất liệu này</a>
+        </div>
+        <div class="card">
+            <img src="images/tem-nhan.jpg" alt="Decal Trong" class="product-img">
+            <h3>Tem nhãn Decal Trong</h3>
+            <p>Nhìn xuyên thấu, sang trọng, phù hợp dán chai thủy tinh, mỹ phẩm.</p>
+            <a href="#priceCalcForm" onclick="document.getElementById('calcMaterial').value='Decal nhựa trong'; document.getElementById('calcLength').focus();" class="card-link">Tính giá chất liệu này</a>
+        </div>
+        <div class="card">
+            <img src="images/tem-nhan.jpg" alt="Tem Xi Bạc" class="product-img">
+            <h3>Tem Xi Bạc / Tem Vỡ</h3>
+            <p>Bền bỉ với nhiệt độ, dùng làm tem bảo hành, niêm phong thiết bị.</p>
+            <a href="#priceCalcForm" onclick="document.getElementById('calcMaterial').value='Decal xi'; document.getElementById('calcLength').focus();" class="card-link">Tính giá chất liệu này</a>
+        </div>
+        <div class="card">
+            <img src="images/tem-nhan.jpg" alt="Decal Kraft" class="product-img">
+            <h3>Tem nhãn Decal Kraft</h3>
+            <p>Màu nâu mộc mạc, phong cách vintage, thân thiện với môi trường.</p>
+            <a href="#priceCalcForm" onclick="document.getElementById('calcMaterial').value='Decal kraft'; document.getElementById('calcLength').focus();" class="card-link">Tính giá chất liệu này</a>
+        </div>
+    </section>
+
+    <!-- PHẦN 5: CHÂN TRANG -->
+    <footer id="contact">
+        <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
+        <p><strong>Hotline/Zalo:</strong> 0986.450.025</p>
+        <p><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
+        <p><strong>Chi nhánh:</strong> A34/9JS Quốc Lộ 50, Phường Bình Hưng, TP. Hồ Chí Minh</p>
+        <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
+    </footer>
+
+    <!-- ĐOẠN JAVASCRIPT XỬ LÝ KẾT NỐI -->
+    <script>
         // Xử lý Menu Mobile
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenu = document.getElementById('mobile-menu');
@@ -27,7 +285,6 @@
         document.getElementById('priceCalcForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Lấy dữ liệu khách nhập
             const material = document.getElementById('calcMaterial').value;
             const length = document.getElementById('calcLength').value;
             const width = document.getElementById('calcWidth').value;
@@ -52,7 +309,7 @@
             btn.disabled = true;
             btn.style.opacity = '0.7';
 
-            // Xử lý cảnh báo số lượng
+            // Cảnh báo nếu số lượng bị làm tròn
             if (originalQty !== qty) {
                 qtyWarning.innerText = `* Do quy cách máy in, số lượng ${originalQty} của bạn đã được làm tròn thành ${qty} tem.`;
                 qtyWarning.style.display = 'block';
@@ -63,12 +320,10 @@
             // ==============================================================
             // ⚠️ DÁN LINK GOOGLE SCRIPT CỦA ANH VÀO ĐÂY (NẰM GIỮA 2 DẤU "")
             // ==============================================================
-            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyhIjo50yr8mh9W7GY4D9BEE1AH97sCEQDz05wrPGIb9uYXo8IPHn4CDR9b5WtkhfHK/exec";
+            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzdYuVTtXdR-ARYX2h1jaOFtZWBi1T5lxRGYCALfcGMeMHOy8PxCOysvorsWY2bizae/exec";
             
-            // Tự động dọn dẹp khoảng trắng dư thừa nếu anh lỡ copy dư
+            // Xử lý chuẩn hóa link (Bảo vệ lỗi copy nhầm khoảng trắng)
             const cleanUrl = GOOGLE_SCRIPT_URL.trim();
-
-            // Cảnh báo ngay nếu anh dán sai loại link
             if (!cleanUrl.includes("script.google.com/macros/s/") || !cleanUrl.endsWith("/exec")) {
                 alert("Đường link API anh dán chưa đúng chuẩn! Link bắt buộc phải chứa 'macros/s/' và đuôi là '/exec'. Anh kiểm tra lại nhé!");
                 btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
@@ -86,7 +341,6 @@
                     soluong: parseInt(qty)
                 };
 
-                // Lệnh gọi fetch đơn giản nhất để vượt qua tường lửa CORS
                 const response = await fetch(cleanUrl, {
                     method: 'POST',
                     body: JSON.stringify(payload)
@@ -134,3 +388,5 @@
             }
         });
     </script>
+</body>
+</html>

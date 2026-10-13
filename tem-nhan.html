@@ -180,6 +180,7 @@
             const material = document.getElementById('calcMaterial').value;
             const length = document.getElementById('calcLength').value;
             const width = document.getElementById('calcWidth').value;
+            const lamination = document.getElementById('calcLamination').value; // Dữ liệu cán màng
             const qty = document.getElementById('calcQty').value;
             
             const btn = document.getElementById('btnCalculate');
@@ -207,6 +208,7 @@
                     chatlieu: material,
                     dai: parseFloat(length),
                     rong: parseFloat(width),
+                    canmang: lamination, // Gửi biến cán màng đi
                     soluong: parseInt(qty)
                 };
 
@@ -221,22 +223,18 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    // Hiển thị kết quả tuyệt đẹp
                     finalPriceEl.innerText = data.tongTien.toLocaleString('vi-VN') + ' đ';
-                    finalPriceEl.style.color = '#15803d'; // Trả lại màu xanh lá
+                    finalPriceEl.style.color = '#15803d'; 
                     unitPriceEl.innerText = 'Đơn giá: ' + data.donGia.toLocaleString('vi-VN') + ' đ/tem';
                     printMethodEl.innerText = data.phuongPhap;
                 } else {
                     finalPriceEl.innerText = 'Lỗi tính toán!';
                     finalPriceEl.style.color = '#dc2626';
-                    console.error("Lỗi từ Sheets:", data.error);
                 }
             } catch (error) {
                 finalPriceEl.innerText = 'Chưa kết nối được hệ thống';
                 finalPriceEl.style.color = '#dc2626';
-                console.error("Lỗi mạng:", error);
             } finally {
-                // Phục hồi nút bấm
                 btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
                 btn.disabled = false;
                 btn.style.opacity = '1';

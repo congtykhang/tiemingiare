@@ -122,9 +122,16 @@ header {
     padding: 8px 15px; border: 2px solid var(--primary-blue); border-radius: 8px; width: 100%; transition: all 0.3s; 
 }
 .card-link:hover { background-color: var(--primary-blue); color: var(--white); }
+
 /* 7. CHÂN TRANG */
 footer { background-color: var(--primary-blue); color: var(--white); text-align: center; padding: 40px 20px 20px; margin-top: 40px; }
-footer h2 { color: var(--accent-gold); margin-bottom: 15px; font-size: 20px; }
+
+/* Tên công ty: Kéo giảm margin-bottom để Hotline xích lên sát hơn */
+footer h2 { color: var(--accent-gold); margin-bottom: 5px; font-size: 22px; }
+
+/* Dòng Hotline: To, Vàng Gold áp dụng cho cả Máy tính và Điện thoại */
+footer p:nth-of-type(1) { font-size: 18px; color: var(--accent-gold); font-weight: 700; margin-bottom: 20px; margin-top: 0; }
+
 footer p { margin-bottom: 8px; font-size: 14px; }
 .copyright { margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; }
 
@@ -156,36 +163,15 @@ footer p { margin-bottom: 8px; font-size: 14px; }
 /* --- ÉP TUYỆT ĐỐI KHÔNG RỚT DÒNG TRÊN MOBILE --- */
 @media (max-width: 768px) {
     /* Ép tiêu đề Banner thẳng 1 hàng */
-    .hero h1 {
-        font-size: 4.2vw !important; 
-        white-space: nowrap !important;
-    }
+    .hero h1 { font-size: 4.2vw !important; white-space: nowrap !important; }
     
     /* Mở rộng tối đa lề 2 bên của chân trang */
-    footer {
-        padding-left: 2px !important;
-        padding-right: 2px !important;
-        overflow-x: hidden !important;
-    }
-    
-    /* Ép Hotline to và nổi bật ngang hàng tên công ty */
-    footer p:nth-of-type(1) {
-        font-size: 18px !important;
-        color: var(--accent-gold) !important;
-        font-weight: 700 !important;
-        margin-bottom: 15px !important;
-    }
+    footer { padding-left: 2px !important; padding-right: 2px !important; overflow-x: hidden !important; }
     
     /* Ép 2 dòng địa chỉ và chi nhánh thẳng 1 hàng */
     footer p:nth-of-type(2),
-    footer p:nth-of-type(3) {
-        font-size: 2.6vw !important;
-        white-space: nowrap !important;
-    }
+    footer p:nth-of-type(3) { font-size: 2.6vw !important; white-space: nowrap !important; }
     
     /* Ép dòng bản quyền thẳng 1 hàng */
-    .copyright {
-        font-size: 2.3vw !important;
-        white-space: nowrap !important;
-    }
+    .copyright { font-size: 2.3vw !important; white-space: nowrap !important; }
 }

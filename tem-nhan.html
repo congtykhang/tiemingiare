@@ -8,22 +8,47 @@
 </head>
 <body>
 
+    <!-- PHẦN 1: THANH ĐIỀU HƯỚNG -->
     <header>
         <div class="logo">
             <a href="index.html"><span>PHẠM DUY KHANG</span></a>
         </div>
-        <div class="nav-links">
-            <a href="index.html">Trang Chủ</a>
-            <a href="lien-he.html">Liên Hệ</a>
+        
+        <!-- Nút 3 gạch (Hamburger) cho Mobile -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta">Liên hệ Zalo</a>
+
+        <nav class="nav-links" id="nav-links">
+            <a href="index.html">Trang Chủ</a>
+            
+            <!-- Menu Sản Phẩm xổ xuống -->
+            <div class="dropdown">
+                <a href="index.html#products" class="dropbtn">Sản Phẩm <span class="arrow">&#9662;</span></a>
+                <div class="dropdown-content">
+                    <a href="tem-nhan.html">In Tem Nhãn (Decal)</a>
+                    <a href="danh-thiep.html">In Danh Thiếp</a>
+                    <a href="tui-giay.html">In Túi Giấy</a>
+                    <a href="to-roi.html">In Tờ Rơi / Catalogue</a>
+                </div>
+            </div>
+
+            <a href="lien-he.html">Liên Hệ</a>
+            <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
+        </nav>
+        
+        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
     </header>
 
+    <!-- PHẦN 2: BANNER -->
     <section class="hero">
         <h1>In Tem Nhãn - Decal</h1>
         <p>Bám dính chắc chắn - Màu sắc sắc nét - Cắt bế mọi hình dáng.<br>Vui lòng chọn loại chất liệu bạn cần in.</p>
     </section>
 
+    <!-- PHẦN 3: DANH SÁCH SẢN PHẨM -->
     <section class="products">
         <div class="card">
             <img src="images/tem-nhan.jpg" alt="Decal Giấy" class="product-img">
@@ -57,7 +82,8 @@
         </div>
     </section>
 
-        <footer id="contact">
+    <!-- PHẦN 4: CHÂN TRANG -->
+    <footer id="contact">
         <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
         <p><strong>Hotline/Zalo:</strong> 0986.450.025</p>
         <p><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
@@ -65,6 +91,27 @@
         <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
     </footer>
 
+    <!-- ĐOẠN JAVASCRIPT XỬ LÝ MENU MOBILE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
 
+            mobileMenu.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileMenu.classList.toggle('is-active');
+            });
+
+            const dropBtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+            dropBtn.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdownContent.classList.toggle('show');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

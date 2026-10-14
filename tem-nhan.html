@@ -27,7 +27,6 @@
         .calc-col {
             flex: 0 0 460px;
             position: sticky;
-            /* ĐÃ SỬA LỖI BỊ CẮT: Tăng điểm dừng từ 20px lên 100px để né thanh Menu */
             top: 100px; 
             z-index: 10;
         }
@@ -221,7 +220,7 @@
 
         /* RESPONSIVE */
         @media (max-width: 992px) {
-            .content-wrapper { margin-top: 40px; }
+            .content-wrapper { margin-top: 40px; } 
             .main-split-layout { flex-direction: column; gap: 20px; }
             .calc-col { flex: none; width: 100%; position: static; }
             .calculator-box { padding: 25px 20px; }
@@ -280,7 +279,7 @@
                         BẢNG TÍNH GIÁ TỰ ĐỘNG
                     </h2>
                     
-                    <form id="priceCalcForm" novalidate>
+                    <form id="priceCalcForm">
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label class="form-label">1. Chất liệu in</label>
                             <select id="calcMaterial" class="form-input">
@@ -328,7 +327,8 @@
                         </div>
 
                         <div style="margin-top: 10px;">
-                            <button type="submit" id="btnCalculate" class="btn-main-calc">
+                            <!-- Đã đổi type="button" và gọi trực tiếp onclick để chặn đứng tình trạng iOS khóa Form -->
+                            <button type="button" id="btnCalculate" class="btn-main-calc" onclick="tinhGiaNgay()">
                                 XEM GIÁ ƯỚC TÍNH
                             </button>
                         </div>
@@ -477,61 +477,60 @@
             });
         });
 
-        document.getElementById('priceCalcForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const material = document.getElementById('calcMaterial').value;
-            const rawLength = document.getElementById('calcLength').value.replace(',', '.');
-            const rawWidth = document.getElementById('calcWidth').value.replace(',', '.');
-            const lamination = document.getElementById('calcLamination').value;
-            const rawQty = document.getElementById('calcQty').value;
-            
-            if (!rawLength || !rawWidth || !rawQty) {
-                alert("Vui lòng điền đầy đủ kích thước và số lượng tem!");
-                return;
-            }
-
-            const length = parseFloat(rawLength);
-            const width = parseFloat(rawWidth);
-            const originalQty = parseInt(rawQty); 
-            
-            if (isNaN(length) || isNaN(width) || length <= 0 || width <= 0) {
-                alert("Kích thước nhập vào không hợp lệ (Phải lớn hơn 0)!");
-                return;
-            }
-
-            if (isNaN(originalQty) || originalQty < 100) {
-                alert("Vui lòng nhập số lượng tối thiểu là 100 tem!");
-                return;
-            }
-
-            if (originalQty % 100 !== 0) {
-                alert("Vui lòng nhập số lượng chẵn trăm (VD: 100, 200, 500...)");
-                return;
-            }
-
-            const btn = document.getElementById('btnCalculate');
-            const resultContainer = document.getElementById('resultContainer');
-            const qtyWarning = document.getElementById('qtyWarning');
-            const resultFast = document.getElementById('resultFast');
-            const resultOffset = document.getElementById('resultOffset');
-            
-            const fastUnitPriceEl = document.getElementById('fastUnitPrice');
-            const fastTotalPriceEl = document.getElementById('fastTotalPrice');
-            const offsetUnitPriceEl = document.getElementById('offsetUnitPrice');
-            const offsetTotalPriceEl = document.getElementById('offsetTotalPrice');
-
-            btn.innerHTML = '⏳ ĐANG PHÂN TÍCH GIÁ...';
-            btn.disabled = true; 
-            btn.style.background = ''; 
-            btn.style.color = '';
-            
-            resultContainer.style.display = 'none';
-            qtyWarning.style.display = 'none';
-
-            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzKf0GxuGQ_otWr8xkvyKOPR_LVxc4eOTK-BZNror7XwT841-WJNXfNZYg5_YgEwWP/exec";
-            
+        // HÀM TÍNH GIÁ ĐỘC LẬP - BẤT CHẤP LỖI CỦA TRÌNH DUYỆT
+        async function tinhGiaNgay() {
             try {
+                const material = document.getElementById('calcMaterial').value;
+                const rawLength = document.getElementById('calcLength').value.replace(',', '.');
+                const rawWidth = document.getElementById('calcWidth').value.replace(',', '.');
+                const lamination = document.getElementById('calcLamination').value;
+                const rawQty = document.getElementById('calcQty').value;
+                
+                if (!rawLength || !rawWidth || !rawQty) {
+                    alert("Vui lòng điền đầy đủ kích thước và số lượng tem!");
+                    return;
+                }
+
+                const length = parseFloat(rawLength);
+                const width = parseFloat(rawWidth);
+                const originalQty = parseInt(rawQty); 
+                
+                if (isNaN(length) || isNaN(width) || length <= 0 || width <= 0) {
+                    alert("Kích thước nhập vào không hợp lệ (Phải lớn hơn 0)!");
+                    return;
+                }
+
+                if (isNaN(originalQty) || originalQty < 100) {
+                    alert("Vui lòng nhập số lượng tối thiểu là 100 tem!");
+                    return;
+                }
+
+                if (originalQty % 100 !== 0) {
+                    alert("Vui lòng nhập số lượng chẵn trăm (VD: 100, 200, 500...)");
+                    return;
+                }
+
+                const btn = document.getElementById('btnCalculate');
+                const resultContainer = document.getElementById('resultContainer');
+                const qtyWarning = document.getElementById('qtyWarning');
+                const resultFast = document.getElementById('resultFast');
+                const resultOffset = document.getElementById('resultOffset');
+                
+                const fastUnitPriceEl = document.getElementById('fastUnitPrice');
+                const fastTotalPriceEl = document.getElementById('fastTotalPrice');
+                const offsetUnitPriceEl = document.getElementById('offsetUnitPrice');
+                const offsetTotalPriceEl = document.getElementById('offsetTotalPrice');
+
+                btn.innerHTML = '⏳ ĐANG PHÂN TÍCH GIÁ...';
+                btn.disabled = true; 
+                btn.style.background = ''; 
+                btn.style.color = '';
+                
+                resultContainer.style.display = 'none';
+                qtyWarning.style.display = 'none';
+
+                const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzKf0GxuGQ_otWr8xkvyKOPR_LVxc4eOTK-BZNror7XwT841-WJNXfNZYg5_YgEwWP/exec";
+                
                 const payload = {
                     chatlieu: material,
                     dai: length,
@@ -540,4 +539,82 @@
                     soluong: originalQty
                 };
 
-                const response = await fetch(GOOGLE_SCRIPT_
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    let hasFast = false;
+                    let hasOffset = false;
+                    let currentBestPrice = 0;
+
+                    if (data.tongTienOffset !== undefined && data.tongTienOffset > 0) {
+                        const unitPrice = Math.round(data.tongTienOffset / originalQty);
+                        offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
+                        offsetTotalPriceEl.innerHTML = 'Tổng: <strong>' + data.tongTienOffset.toLocaleString('vi-VN') + ' đ</strong>';
+                        resultOffset.style.display = 'block';
+                        hasOffset = true;
+                        currentBestPrice = data.tongTienOffset;
+                    } else {
+                        resultOffset.style.display = 'none';
+                    }
+
+                    if (data.tongTienFast !== undefined && data.tongTienFast > 0) {
+                        const unitPrice = Math.round(data.tongTienFast / originalQty);
+                        fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
+                        fastTotalPriceEl.innerHTML = 'Tổng: <strong>' + data.tongTienFast.toLocaleString('vi-VN') + ' đ</strong>';
+                        resultFast.style.display = 'block';
+                        hasFast = true;
+                        
+                        if(currentBestPrice === 0 || data.tongTienFast < currentBestPrice) {
+                            currentBestPrice = data.tongTienFast;
+                        }
+                    } else {
+                        resultFast.style.display = 'none';
+                    }
+
+                    if (originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
+                        const nextQty = data.nextQty;
+                        const nextTotal = data.tongTienOffsetNext;
+                        const extraTem = nextQty - originalQty;
+                        
+                        const applyBtnHtml = `<span onclick="document.getElementById('calcQty').value=${nextQty}; document.getElementById('btnCalculate').disabled=false; document.getElementById('btnCalculate').click();" style="display:inline-block; margin-top:10px; padding: 6px 15px; background: #fbbf24; color: #000; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #d97706; transition:0.2s;">👉 Áp dụng mức ${nextQty.toLocaleString('vi-VN')} tem ngay</span>`;
+
+                        if (nextTotal <= currentBestPrice) {
+                            qtyWarning.innerHTML = `🎉 <b>ĐẶC QUYỀN:</b> Bạn đủ điều kiện nâng cấp! Xưởng sẽ tự động in dư thành <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) với giá Tiết Kiệm chỉ <b>${nextTotal.toLocaleString('vi-VN')}đ</b>.<br><span style="font-size:13px; color:#166534; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng In Tiết Kiệm là 5-7 ngày.</span><br>${applyBtnHtml}`;
+                            qtyWarning.style.background = "#f0fdf4";
+                            qtyWarning.style.color = "#166534";
+                            qtyWarning.style.borderColor = "#bbf7d0";
+                            qtyWarning.style.display = 'block';
+                        } else if ((nextTotal - currentBestPrice) <= 100000) { 
+                            const diff = nextTotal - currentBestPrice;
+                            qtyWarning.innerHTML = `💡 <b>MẸO TIẾT KIỆM:</b> Chỉ cần thêm <b>${diff.toLocaleString('vi-VN')}đ</b>, bạn sẽ nhận được <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) nhờ công nghệ In Tiết Kiệm.<br><span style="font-size:13px; color:#b45309; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng 5-7 ngày, không phù hợp cho đơn cần in gấp!</span><br>${applyBtnHtml}`;
+                            qtyWarning.style.background = "#fffbeb";
+                            qtyWarning.style.color = "#b45309";
+                            qtyWarning.style.borderColor = "#fde68a";
+                            qtyWarning.style.display = 'block';
+                        }
+                    }
+                    
+                    resultContainer.style.display = 'block';
+                    btn.innerHTML = '✅ ĐÃ HIỂN THỊ BẢNG GIÁ';
+                    btn.disabled = true;
+
+                } else {
+                    alert('Lỗi hệ thống: ' + data.error);
+                    btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                alert('Lỗi kết nối trình duyệt: Vui lòng kiểm tra mạng hoặc tải lại trang!');
+                const btn = document.getElementById('btnCalculate');
+                btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

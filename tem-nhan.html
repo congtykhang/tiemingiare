@@ -179,10 +179,12 @@
             border-bottom: 1px dashed #cbd5e1; text-transform: uppercase;
         }
 
-        .result-comparison { display: flex; background: #e2e8f0; gap: 1px; }
-        .result-box { flex: 1; background: #fff; padding: 25px 15px; text-align: center; display: none; }
+        .result-comparison { display: flex; background: #fff; gap: 1px; }
+        .result-box { flex: 1; padding: 25px 15px; text-align: center; display: none; }
         .price-big { font-size: 26px; font-weight: 900; margin: 8px 0; }
-        .price-total { color: #475569; font-size: 14px; margin-bottom: 20px; }
+        
+        /* Bỏ chữ Tổng nên đẩy chữ bự và đậm hơn xíu */
+        .price-total { color: #0f172a; font-size: 15px; margin-bottom: 20px; }
         
         .btn-chot-don {
             display: block; padding: 12px; border-radius: 8px;
@@ -199,9 +201,10 @@
         .box-offset .btn-chot-don { background: #eff6ff; border: 1px solid #1e3a8a; color: #1e3a8a; }
         .box-offset .btn-chot-don:hover { background: #1e3a8a; color: #fff; }
 
+        /* Chuyển viền lên trên vì phần cảnh báo (Mẹo tiết kiệm) đã bị dời xuống dưới */
         .qty-warning {
-            font-size: 14px; line-height: 1.6; padding: 15px 20px;
-            text-align: center; display: none; border-bottom: 1px solid #e2e8f0;
+            font-size: 14px; line-height: 1.6; padding: 20px;
+            text-align: center; display: none; border-top: 1px dashed #e2e8f0;
         }
 
         .btn-main-calc {
@@ -212,10 +215,6 @@
         }
         .btn-main-calc:hover:not(:disabled) {
             transform: translateY(-2px); box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
-        }
-        .btn-main-calc:disabled {
-            background: #cbd5e1 !important; color: #475569 !important;
-            box-shadow: none; cursor: not-allowed; transform: none;
         }
 
         /* RESPONSIVE */
@@ -229,6 +228,8 @@
 
         @media (max-width: 576px) {
             .result-comparison { flex-direction: column; }
+            /* Thêm viền mờ chia tách 2 ô giá trên đt */
+            .box-fast { border-bottom: 1px solid #e2e8f0; } 
             .grid-2-col { grid-template-columns: 1fr 1fr; gap: 10px; }
             .form-input { padding: 10px 12px; }
             .products-grid { grid-template-columns: 1fr; } 
@@ -327,7 +328,6 @@
                         </div>
 
                         <div style="margin-top: 10px;">
-                            <!-- Đã đổi type="button" và gọi trực tiếp onclick để chặn đứng tình trạng iOS khóa Form -->
                             <button type="button" id="btnCalculate" class="btn-main-calc" onclick="tinhGiaNgay()">
                                 XEM GIÁ ƯỚC TÍNH
                             </button>
@@ -336,25 +336,28 @@
 
                     <div id="resultContainer">
                         <div class="result-header">TỔNG CHI PHÍ DỰ KIẾN</div>
-                        <div id="qtyWarning" class="qty-warning"></div>
                         
+                        <!-- 1. ĐÃ DỜI BẢNG GIÁ LÊN TRÊN & BỎ CHỮ TỔNG -->
                         <div class="result-comparison">
                             <div id="resultFast" class="result-box box-fast">
                                 <div class="title">⏱️ IN NHANH (1-2 ngày)</div>
                                 <div class="price-big" id="fastUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
-                                <div class="price-total" id="fastTotalPrice">Tổng: <strong>0 đ</strong></div>
+                                <div class="price-total" id="fastTotalPrice"><strong>0 đ</strong></div> 
                                 <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn Zalo</a>
                             </div>
 
                             <div id="resultOffset" class="result-box box-offset">
                                 <div class="title">📦 IN TIẾT KIỆM (5-7 ngày)</div>
                                 <div class="price-big" id="offsetUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
-                                <div class="price-total" id="offsetTotalPrice">Tổng: <strong>0 đ</strong></div>
+                                <div class="price-total" id="offsetTotalPrice"><strong>0 đ</strong></div> 
                                 <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn Zalo</a>
                             </div>
                         </div>
                         
-                        <div style="padding: 12px; background: #f8fafc; font-size: 12px; color: #64748b; text-align: center; font-style: italic;">
+                        <!-- 2. ĐÃ DỜI MẸO TIẾT KIỆM XUỐNG DƯỚI BẢNG GIÁ -->
+                        <div id="qtyWarning" class="qty-warning"></div>
+
+                        <div style="padding: 12px; background: #f8fafc; font-size: 12px; color: #64748b; text-align: center; font-style: italic; border-top: 1px solid #e2e8f0;">
                             * Giá tham khảo. In tiết kiệm áp dụng cho số lượng chẵn ngàn.
                         </div>
                     </div>
@@ -433,7 +436,6 @@
         <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
     </footer>
 
-    <!-- SCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenu = document.getElementById('mobile-menu');
@@ -470,14 +472,17 @@
                 if (resultContainer.style.display === 'block' || btn.disabled) {
                     resultContainer.style.display = 'none';
                     btn.disabled = false;
+                    
+                    // Reset lại giao diện nút bấm về màu vàng nguyên bản
                     btn.innerHTML = '👉 BẤM ĐỂ CẬP NHẬT GIÁ MỚI';
                     btn.style.background = '#3b82f6'; 
+                    btn.style.border = 'none';
                     btn.style.color = '#fff';
+                    btn.style.boxShadow = '0 6px 15px rgba(59, 130, 246, 0.3)';
                 }
             });
         });
 
-        // HÀM TÍNH GIÁ ĐỘC LẬP - BẤT CHẤP LỖI CỦA TRÌNH DUYỆT
         async function tinhGiaNgay() {
             try {
                 const material = document.getElementById('calcMaterial').value;
@@ -524,7 +529,9 @@
                 btn.innerHTML = '⏳ ĐANG PHÂN TÍCH GIÁ...';
                 btn.disabled = true; 
                 btn.style.background = ''; 
+                btn.style.border = 'none';
                 btn.style.color = '';
+                btn.style.boxShadow = '';
                 
                 resultContainer.style.display = 'none';
                 qtyWarning.style.display = 'none';
@@ -554,7 +561,8 @@
                     if (data.tongTienOffset !== undefined && data.tongTienOffset > 0) {
                         const unitPrice = Math.round(data.tongTienOffset / originalQty);
                         offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
-                        offsetTotalPriceEl.innerHTML = 'Tổng: <strong>' + data.tongTienOffset.toLocaleString('vi-VN') + ' đ</strong>';
+                        // Đã bỏ chữ Tổng
+                        offsetTotalPriceEl.innerHTML = '<strong>' + data.tongTienOffset.toLocaleString('vi-VN') + ' đ</strong>';
                         resultOffset.style.display = 'block';
                         hasOffset = true;
                         currentBestPrice = data.tongTienOffset;
@@ -565,7 +573,8 @@
                     if (data.tongTienFast !== undefined && data.tongTienFast > 0) {
                         const unitPrice = Math.round(data.tongTienFast / originalQty);
                         fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
-                        fastTotalPriceEl.innerHTML = 'Tổng: <strong>' + data.tongTienFast.toLocaleString('vi-VN') + ' đ</strong>';
+                        // Đã bỏ chữ Tổng
+                        fastTotalPriceEl.innerHTML = '<strong>' + data.tongTienFast.toLocaleString('vi-VN') + ' đ</strong>';
                         resultFast.style.display = 'block';
                         hasFast = true;
                         
@@ -587,21 +596,27 @@
                             qtyWarning.innerHTML = `🎉 <b>ĐẶC QUYỀN:</b> Bạn đủ điều kiện nâng cấp! Xưởng sẽ tự động in dư thành <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) với giá Tiết Kiệm chỉ <b>${nextTotal.toLocaleString('vi-VN')}đ</b>.<br><span style="font-size:13px; color:#166534; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng In Tiết Kiệm là 5-7 ngày.</span><br>${applyBtnHtml}`;
                             qtyWarning.style.background = "#f0fdf4";
                             qtyWarning.style.color = "#166534";
-                            qtyWarning.style.borderColor = "#bbf7d0";
                             qtyWarning.style.display = 'block';
                         } else if ((nextTotal - currentBestPrice) <= 100000) { 
                             const diff = nextTotal - currentBestPrice;
                             qtyWarning.innerHTML = `💡 <b>MẸO TIẾT KIỆM:</b> Chỉ cần thêm <b>${diff.toLocaleString('vi-VN')}đ</b>, bạn sẽ nhận được <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) nhờ công nghệ In Tiết Kiệm.<br><span style="font-size:13px; color:#b45309; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng 5-7 ngày, không phù hợp cho đơn cần in gấp!</span><br>${applyBtnHtml}`;
                             qtyWarning.style.background = "#fffbeb";
                             qtyWarning.style.color = "#b45309";
-                            qtyWarning.style.borderColor = "#fde68a";
                             qtyWarning.style.display = 'block';
                         }
                     }
                     
                     resultContainer.style.display = 'block';
-                    btn.innerHTML = '✅ ĐÃ HIỂN THỊ BẢNG GIÁ';
+                    
+                    // 3. ĐÃ THAY ĐỔI GIAO DIỆN NÚT BẤM KHI THÀNH CÔNG (Icon + chữ kéo xuống)
+                    btn.innerHTML = `<span style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#10b981;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                        <span style="color:#0f172a; font-weight:800;">KÉO XUỐNG XEM GIÁ 👇</span>
+                                     </span>`;
                     btn.disabled = true;
+                    btn.style.background = '#f8fafc';
+                    btn.style.border = '2px dashed #cbd5e1';
+                    btn.style.boxShadow = 'none';
 
                 } else {
                     alert('Lỗi hệ thống: ' + data.error);

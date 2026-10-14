@@ -9,11 +9,11 @@
         /* =========================================
            BỐ CỤC CHIA 2 CỘT CHO MÀN HÌNH MÁY TÍNH
            ========================================= */
-        /* Vùng chứa kéo CẢ 2 CỘT lún lên banner cùng một lúc để ngay hàng thẳng lối */
+        /* Vùng chứa đẩy 2 cột cách xa banner ra cho thoáng */
         .content-wrapper {
             position: relative;
             max-width: 1150px;
-            margin: -40px auto 60px; /* Kéo lên 40px */
+            margin: 50px auto 60px; /* Đổi từ -40px thành 50px để tạo độ "thở" */
             padding: 0 15px;
             z-index: 10;
         }
@@ -43,13 +43,13 @@
         /* CỘT PHẢI: DANH SÁCH SẢN PHẨM */
         .products-col {
             flex: 1; 
-            padding-top: 0; /* Xóa khoảng trống thừa để căn bằng với cột trái */
+            padding-top: 0; 
         }
 
         .products-header-title {
             font-size: 24px;
             color: #1e293b;
-            margin-top: 0; /* Ép sát mép trên */
+            margin-top: 0; 
             margin-bottom: 25px;
             font-weight: 800;
             border-bottom: 2px solid #e2e8f0;
@@ -221,7 +221,7 @@
 
         /* RESPONSIVE */
         @media (max-width: 992px) {
-            .content-wrapper { margin-top: -30px; }
+            .content-wrapper { margin-top: 40px; } /* Trả lại khoảng cách trên Mobile */
             .main-split-layout { flex-direction: column; gap: 20px; }
             .calc-col { flex: none; width: 100%; position: static; }
             .calculator-box { padding: 25px 20px; }

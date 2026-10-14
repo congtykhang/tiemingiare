@@ -9,12 +9,13 @@
         /* =========================================
            BỐ CỤC CHIA 2 CỘT CHO MÀN HÌNH MÁY TÍNH
            ========================================= */
-        /* Thêm vùng chứa để giới hạn cuộn Sticky */
+        /* Vùng chứa kéo CẢ 2 CỘT lún lên banner cùng một lúc để ngay hàng thẳng lối */
         .content-wrapper {
             position: relative;
             max-width: 1150px;
-            margin: 0 auto 60px;
+            margin: -40px auto 60px; /* Kéo lên 40px */
             padding: 0 15px;
+            z-index: 10;
         }
 
         .main-split-layout {
@@ -26,7 +27,6 @@
         /* CỘT TRÁI: BẢNG TÍNH GIÁ (STICKY) */
         .calc-col {
             flex: 0 0 460px;
-            margin-top: -40px; 
             position: sticky;
             top: 20px; 
             z-index: 10;
@@ -43,12 +43,13 @@
         /* CỘT PHẢI: DANH SÁCH SẢN PHẨM */
         .products-col {
             flex: 1; 
-            padding-top: 20px;
+            padding-top: 0; /* Xóa khoảng trống thừa để căn bằng với cột trái */
         }
 
         .products-header-title {
             font-size: 24px;
             color: #1e293b;
+            margin-top: 0; /* Ép sát mép trên */
             margin-bottom: 25px;
             font-weight: 800;
             border-bottom: 2px solid #e2e8f0;
@@ -220,15 +221,11 @@
 
         /* RESPONSIVE */
         @media (max-width: 992px) {
-            .main-split-layout {
-                flex-direction: column; 
-                gap: 20px;
-            }
-            .calc-col {
-                flex: none; width: 100%; position: static; margin-top: -40px;
-            }
+            .content-wrapper { margin-top: -30px; }
+            .main-split-layout { flex-direction: column; gap: 20px; }
+            .calc-col { flex: none; width: 100%; position: static; }
             .calculator-box { padding: 25px 20px; }
-            .products-col { padding-top: 0; width: 100%; }
+            .products-col { width: 100%; }
         }
 
         @media (max-width: 576px) {
@@ -272,7 +269,7 @@
         <p>Bám dính chắc chắn - Màu sắc sắc nét - Cắt bế mọi hình dáng.</p>
     </section>
 
-    <!-- WRAPPER GIỚI HẠN SCROLL -->
+    <!-- WRAPPER GIỚI HẠN SCROLL & ÉP NGAY HÀNG -->
     <div class="content-wrapper">
         <div class="main-split-layout">
             
@@ -288,12 +285,10 @@
                             <label class="form-label">1. Chất liệu in</label>
                             <select id="calcMaterial" class="form-input">
                                 <option value="Decal giấy">Decal Giấy (Giá rẻ nhất, dán hộp/chai lọ khô)</option>
-                                <!-- Đổi tên thành Decal Nhựa Trắng Sữa -->
                                 <option value="Decal nhựa đục">Decal Nhựa Trắng Sữa (Chống nước 100%, siêu dai)</option>
                                 <option value="Decal nhựa trong">Decal Nhựa Trong (Xuyên thấu, dán chai thủy tinh)</option>
                                 <option value="Decal kraft">Decal Kraft (Màu da bò, phong cách mộc mạc)</option>
                                 <option value="Decal nhựa bóng">Decal Nhựa Bóng (Chống nước, bề mặt bóng bẩy)</option>
-                                <!-- Tách riêng Xi Bạc và Vỡ -->
                                 <option value="Decal xi">Decal Xi Bạc (Dán máy móc, tem thông số)</option>
                                 <option value="Decal vỡ dẻo">Decal Vỡ (Tem bảo hành, niêm phong)</option>
                                 <option value="Decal 7 màu">Decal 7 Màu (Phản quang, chống hàng giả)</option>
@@ -366,7 +361,7 @@
                 </div>
             </div>
 
-            <!-- CỘT PHẢI: DANH MỤC SẢN PHẨM ĐÃ CẬP NHẬT -->
+            <!-- CỘT PHẢI: DANH MỤC SẢN PHẨM -->
             <div class="products-col">
                 <h2 class="products-header-title">CHẤT LIỆU IN DECAL PHỔ BIẾN</h2>
                 <div class="products-grid">
@@ -383,7 +378,6 @@
                     <div class="pro-card">
                         <img src="images/tem-nhan.jpg" alt="Decal Nhựa Trắng Sữa" class="pro-img">
                         <div class="pro-content">
-                            <!-- Đổi tên -->
                             <h3>Decal Nhựa Trắng Sữa</h3>
                             <p>Xé không rách, chống nước tuyệt đối. Phù hợp dán ly trà sữa, đồ đông lạnh, sản phẩm phòng tắm.</p>
                             <a href="javascript:void(0)" onclick="chonSanPham('Decal nhựa đục')" class="btn-select-pro">Tính giá chất liệu này</a>
@@ -417,7 +411,6 @@
                         </div>
                     </div>
 
-                    <!-- Thêm thẻ riêng cho Decal Vỡ -->
                     <div class="pro-card">
                         <img src="images/tem-nhan.jpg" alt="Decal Vỡ" class="pro-img">
                         <div class="pro-content">

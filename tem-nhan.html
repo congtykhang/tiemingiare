@@ -6,52 +6,86 @@
     <title>In Tem Nhãn Decal | CÔNG TY TNHH PHẠM DUY KHANG</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS TỐI ƯU HÓA FORM CHO CẢ PC & MOBILE */
+        /* =========================================
+           CSS TỐI ƯU HÓA FORM (CHỐNG TRÀN TÙM LUM)
+           ========================================= */
+        .calculator-section {
+            max-width: 680px; /* Thu gọn form lại cho cân đối, không bị bè ngang trên màn hình máy tính */
+            margin: -40px auto 50px;
+            position: relative;
+            z-index: 10;
+            padding: 0 15px;
+        }
+
+        .calculator-box {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--accent-gold, #fbbf24);
+            padding: 35px 40px;
+        }
+
         .calc-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px 20px;
+            gap: 20px;
         }
         
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px; /* Khoảng cách chuẩn giữa Label và Input */
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1; /* Ép chiếm cả 2 cột */
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #334155;
+        }
+
         .form-input {
             width: 100%;
-            padding: 14px;
+            padding: 12px 15px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             font-family: inherit;
-            font-size: 16px !important; 
+            font-size: 15px !important; 
             outline: none;
             box-sizing: border-box;
             transition: 0.2s;
-            background: #f8fafc; /* Nền xám nhạt cho ô nhập liệu */
+            background: #f8fafc;
+            color: #0f172a;
         }
         
         .form-input:focus {
             border-color: #3b82f6;
             background: #fff;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
-        /* KHỐI KẾT QUẢ GỌN GÀNG, SÁNG SỦA MỚI */
+        /* KHỐI KẾT QUẢ GỌN GÀNG, SÁNG SỦA */
         #resultContainer {
             display: none;
-            margin-top: 35px;
+            margin-top: 30px;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
             overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
             background: #fff;
         }
         
-        /* Tiêu đề thanh lịch, xóa bỏ mảng đen */
         .result-header {
             background: #f8fafc; 
             color: #1e293b;      
-            padding: 18px;
+            padding: 15px;
             text-align: center;
             font-weight: 800;
-            font-size: 18px;
-            border-bottom: 2px dashed #cbd5e1;
+            font-size: 16px;
+            border-bottom: 1px dashed #cbd5e1;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -59,7 +93,7 @@
         .result-comparison {
             display: flex;
             background: #e2e8f0;
-            gap: 1px; /* Tạo đường viền chia đôi */
+            gap: 1px;
         }
 
         .result-box {
@@ -70,8 +104,8 @@
             display: none; 
         }
 
-        .price-big { font-size: 28px; font-weight: 900; margin: 8px 0; }
-        .price-total { color: #475569; font-size: 15px; margin-bottom: 20px; }
+        .price-big { font-size: 26px; font-weight: 900; margin: 8px 0; }
+        .price-total { color: #475569; font-size: 14px; margin-bottom: 20px; }
         
         .btn-chot-don {
             display: block;
@@ -96,7 +130,7 @@
         .box-offset .btn-chot-don:hover { background: #1e3a8a; color: #fff; }
 
         .qty-warning {
-            font-size: 14px;
+            font-size: 13px;
             color: #dc2626;
             padding: 12px 15px;
             background: #fef2f2;
@@ -110,22 +144,22 @@
         .btn-main-calc {
             background: var(--accent-gold, #fbbf24); 
             color: #000; 
-            padding: 16px 45px; 
+            padding: 15px 40px; 
             border: none; 
-            border-radius: 50px; /* Hình viên thuốc */
+            border-radius: 50px;
             font-size: 16px; 
-            font-weight: 900; 
+            font-weight: 800; 
             cursor: pointer; 
             transition: 0.3s; 
             width: auto; 
-            min-width: 320px; /* Kích thước cố định thanh lịch */
-            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4); 
+            min-width: 280px; 
+            box-shadow: 0 6px 15px rgba(251, 191, 36, 0.3); 
             text-transform: uppercase; 
             letter-spacing: 0.5px;
         }
         .btn-main-calc:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(251, 191, 36, 0.5);
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
         }
         .btn-main-calc:disabled {
             background: #cbd5e1;
@@ -136,23 +170,10 @@
 
         /* RESPONSIVE CHO ĐIỆN THOẠI */
         @media (max-width: 768px) {
-            .calc-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            .result-comparison {
-                flex-direction: column;
-            }
-            .calculator-section {
-                padding: 0 10px;
-            }
-            .calculator-box {
-                padding: 25px 15px;
-            }
-            .btn-main-calc {
-                width: 100%;
-                min-width: unset;
-            }
+            .calc-grid { grid-template-columns: 1fr; gap: 15px; }
+            .result-comparison { flex-direction: column; }
+            .calculator-box { padding: 25px 20px; }
+            .btn-main-calc { width: 100%; min-width: unset; }
         }
     </style>
 </head>
@@ -165,9 +186,7 @@
         </div>
         
         <div class="menu-toggle" id="mobile-menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </div>
 
         <nav class="nav-links" id="nav-links">
@@ -194,16 +213,16 @@
     </section>
 
     <!-- PHẦN 3: FORM BÁO GIÁ TỰ ĐỘNG THÔNG MINH -->
-    <section class="calculator-section" style="max-width: 850px; margin: -20px auto 40px; position: relative; z-index: 10;">
-        <div class="calculator-box" style="background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 5px solid var(--accent-gold);">
+    <section class="calculator-section">
+        <div class="calculator-box">
             <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 24px;">
                 BẢNG TÍNH GIÁ TỰ ĐỘNG
             </h2>
             
             <form id="priceCalcForm" class="calc-grid">
-                <!-- 1. Chọn chất liệu -->
-                <div style="grid-column: 1 / -1;">
-                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">1. Chất liệu in</label>
+                <!-- Row 1: Chọn chất liệu -->
+                <div class="form-group full-width">
+                    <label class="form-label">1. Chất liệu in</label>
                     <select id="calcMaterial" class="form-input">
                         <option value="Decal giấy">Decal giấy</option>
                         <option value="Decal kraft">Decal kraft</option>
@@ -217,44 +236,43 @@
                     </select>
                 </div>
 
-                <!-- 2 & 3. Kích thước (Chạm là bôi đen) -->
-                <div>
-                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">2. Chiều ngang (cm)</label>
+                <!-- Row 2: Kích thước -->
+                <div class="form-group">
+                    <label class="form-label">2. Chiều ngang (cm)</label>
                     <input type="number" id="calcLength" step="0.1" min="1" placeholder="VD: 5" required class="form-input" onfocus="this.select();">
                 </div>
-                <div>
-                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">3. Chiều cao (cm)</label>
+                <div class="form-group">
+                    <label class="form-label">3. Chiều cao (cm)</label>
                     <input type="number" id="calcWidth" step="0.1" min="1" placeholder="VD: 5" required class="form-input" onfocus="this.select();">
                 </div>
 
-                <!-- 4 & 5. Gia công và Số lượng -->
-                <div>
-                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">4. Gia công màng</label>
+                <!-- Row 3: Gia công và Số lượng -->
+                <div class="form-group">
+                    <label class="form-label">4. Gia công màng</label>
                     <select id="calcLamination" class="form-input">
                         <option value="Không">Không cán màng</option>
                         <option value="Có">Cán Bóng / Cán Mờ</option>
                     </select>
                 </div>
-                <div>
-                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">5. Số lượng (Tem)</label>
+                <div class="form-group">
+                    <label class="form-label">5. Số lượng (Tem)</label>
                     <input type="number" id="calcQty" min="100" step="1" placeholder="VD: 1000" required class="form-input" onfocus="this.select();">
                 </div>
 
-                <!-- Nút bấm Dáng Viên Thuốc Vàng rực rỡ -->
-                <div style="grid-column: 1 / -1; text-align: center; margin-top: 20px;">
+                <!-- Nút bấm -->
+                <div class="form-group full-width" style="align-items: center; margin-top: 15px;">
                     <button type="submit" id="btnCalculate" class="btn-main-calc">
                         XEM GIÁ ƯỚC TÍNH
                     </button>
                 </div>
             </form>
 
-            <!-- GIAO DIỆN HIỂN THỊ KẾT QUẢ MỚI (SÁNG VÀ THANH LỊCH) -->
+            <!-- GIAO DIỆN HIỂN THỊ KẾT QUẢ -->
             <div id="resultContainer">
                 <div class="result-header">TỔNG CHI PHÍ DỰ KIẾN</div>
                 <div id="qtyWarning" class="qty-warning"></div>
                 
                 <div class="result-comparison">
-                    <!-- Khối In Nhanh -->
                     <div id="resultFast" class="result-box box-fast">
                         <div class="title">⏱️ IN NHANH (1-2 ngày)</div>
                         <div class="price-big" id="fastUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
@@ -262,7 +280,6 @@
                         <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn (In Nhanh)</a>
                     </div>
 
-                    <!-- Khối In Ghép -->
                     <div id="resultOffset" class="result-box box-offset">
                         <div class="title">📦 IN GHÉP (5-7 ngày)</div>
                         <div class="price-big" id="offsetUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
@@ -279,7 +296,7 @@
         </div>
     </section>
 
-    <!-- (Phần Danh sách Thẻ Sản Phẩm) -->
+    <!-- PHẦN 4: DANH SÁCH THẺ SẢN PHẨM -->
     <section class="products">
         <div class="card">
             <img src="images/tem-nhan.jpg" alt="Decal Giấy" class="product-img">
@@ -301,6 +318,7 @@
         </div>
     </section>
 
+    <!-- PHẦN 5: CHÂN TRANG -->
     <footer id="contact">
         <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
         <p><strong>Hotline/Zalo:</strong> 0986.450.025</p>
@@ -366,7 +384,7 @@
             }
 
             // ==============================================================
-            // ⚠️ DÁN LINK GOOGLE SCRIPT CỦA ANH VÀO ĐÂY
+            // ĐÃ NẠP SẴN LINK WEB APP CỦA ANH VÀO ĐÂY NHÉ
             // ==============================================================
             const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvSmL7e1s7Gw7nyayStxCJjYUc8QLiUHrp43GO6GxLj1LoMA3Xl0Vkhyn8WCWnd1IC/exec";
             

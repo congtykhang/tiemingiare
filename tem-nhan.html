@@ -231,7 +231,7 @@
                 <div class="grid-2-col">
                     <div class="form-group">
                         <label class="form-label">2. Ngang (cm)</label>
-                        <!-- type="text" kết hợp inputmode="decimal" để nhận dấu phẩy, Việt hóa thông báo lỗi -->
+                        <!-- Việt hóa thông báo lỗi và ép dấu phẩy thành dấu chấm -->
                         <input type="text" inputmode="decimal" id="calcLength" placeholder="VD: 5" required class="form-input" 
                                onfocus="this.select();" 
                                oninvalid="this.setCustomValidity('Vui lòng nhập chiều ngang cần in')" 
@@ -255,12 +255,12 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">5. SL (Tem)</label>
-                        <!-- step="100" và onblur tự động làm tròn chẵn trăm ngay khi khách nhập xong -->
+                        <!-- THÊM GHI CHÚ CHẴN TRĂM TRỰC TIẾP TRÊN TIÊU ĐỀ -->
+                        <label class="form-label">5. SL (Tem) <span style="text-transform:none; font-weight:normal; font-size:11px; color:#ef4444;">*Nhập chẵn trăm</span></label>
+                        <!-- Sử dụng logic oninvalid để bật bong bóng nhắc nhở thông minh thay vì tự ép số của khách -->
                         <input type="number" id="calcQty" min="100" step="100" placeholder="1000" required class="form-input" 
                                onfocus="this.select();" 
-                               onblur="if(this.value && this.value >= 100){ this.value = Math.ceil(this.value / 100) * 100; }"
-                               oninvalid="this.setCustomValidity('Vui lòng nhập số lượng (Lớn hơn 100)')" 
+                               oninvalid="if(!this.value){ this.setCustomValidity('Vui lòng nhập số lượng (Tối thiểu 100)') } else if(this.value % 100 !== 0){ this.setCustomValidity('Vui lòng nhập số lượng chẵn trăm (VD: 500, 1000, 1500...)') }" 
                                oninput="this.setCustomValidity('')">
                     </div>
                 </div>

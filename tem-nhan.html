@@ -151,9 +151,16 @@
             box-shadow: 0 6px 15px rgba(251, 191, 36, 0.3); 
             text-transform: uppercase; 
         }
-        .btn-main-calc:hover {
+        .btn-main-calc:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
+        }
+        .btn-main-calc:disabled {
+            background: #cbd5e1 !important;
+            color: #475569 !important;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* RESPONSIVE CHO ĐIỆN THOẠI */
@@ -224,11 +231,18 @@
                 <div class="grid-2-col">
                     <div class="form-group">
                         <label class="form-label">2. Ngang (cm)</label>
-                        <input type="number" id="calcLength" step="0.1" min="1" placeholder="VD: 5" required class="form-input" onfocus="this.select();">
+                        <!-- type="text" kết hợp inputmode="decimal" để nhận dấu phẩy, Việt hóa thông báo lỗi -->
+                        <input type="text" inputmode="decimal" id="calcLength" placeholder="VD: 5" required class="form-input" 
+                               onfocus="this.select();" 
+                               oninvalid="this.setCustomValidity('Vui lòng nhập chiều ngang cần in')" 
+                               oninput="this.setCustomValidity(''); this.value = this.value.replace(/[^0-9.,]/g, '');">
                     </div>
                     <div class="form-group">
                         <label class="form-label">3. Cao (cm)</label>
-                        <input type="number" id="calcWidth" step="0.1" min="1" placeholder="VD: 5" required class="form-input" onfocus="this.select();">
+                        <input type="text" inputmode="decimal" id="calcWidth" placeholder="VD: 5" required class="form-input" 
+                               onfocus="this.select();" 
+                               oninvalid="this.setCustomValidity('Vui lòng nhập chiều cao cần in')" 
+                               oninput="this.setCustomValidity(''); this.value = this.value.replace(/[^0-9.,]/g, '');">
                     </div>
                 </div>
 
@@ -242,7 +256,12 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">5. SL (Tem)</label>
-                        <input type="number" id="calcQty" min="100" step="1" placeholder="1000" required class="form-input" onfocus="this.select();">
+                        <!-- step="100" và onblur tự động làm tròn chẵn trăm ngay khi khách nhập xong -->
+                        <input type="number" id="calcQty" min="100" step="100" placeholder="1000" required class="form-input" 
+                               onfocus="this.select();" 
+                               onblur="if(this.value && this.value >= 100){ this.value = Math.ceil(this.value / 100) * 100; }"
+                               oninvalid="this.setCustomValidity('Vui lòng nhập số lượng (Lớn hơn 100)')" 
+                               oninput="this.setCustomValidity('')">
                     </div>
                 </div>
 
@@ -256,8 +275,6 @@
             <!-- KHỐI KẾT QUẢ & SALE TÂM LÝ -->
             <div id="resultContainer">
                 <div class="result-header">TỔNG CHI PHÍ DỰ KIẾN</div>
-                
-                <!-- Bảng tư vấn sẽ hiện ở đây -->
                 <div id="qtyWarning" class="qty-warning"></div>
                 
                 <div class="result-comparison">
@@ -333,17 +350,19 @@
             });
         });
 
-        // 🟢 TÍNH NĂNG CHỐNG "LƯƠN LẸO": ẨN BẢNG GIÁ KHI THAY ĐỔI THÔNG SỐ
+        // 🟢 TÍNH NĂNG CHỐNG LƯƠN LẸO & QUẢN LÝ TRẠNG THÁI NÚT BẤM
         const formInputs = document.querySelectorAll('#priceCalcForm input, #priceCalcForm select');
         formInputs.forEach(input => {
             input.addEventListener('input', function() {
                 const resultContainer = document.getElementById('resultContainer');
-                // Nếu bảng giá đang hiện, thì ẩn nó đi và nhắc khách bấm lại
-                if (resultContainer.style.display === 'block') {
+                const btn = document.getElementById('btnCalculate');
+                
+                // Bất cứ khi nào khách thay đổi thông số, ẩn bảng giá và bật lại nút màu Xanh
+                if (resultContainer.style.display === 'block' || btn.disabled) {
                     resultContainer.style.display = 'none';
-                    const btn = document.getElementById('btnCalculate');
+                    btn.disabled = false;
                     btn.innerHTML = '👉 BẤM ĐỂ CẬP NHẬT GIÁ MỚI';
-                    btn.style.background = '#3b82f6'; // Đổi nút sang màu xanh cho nổi bật
+                    btn.style.background = '#3b82f6'; 
                     btn.style.color = '#fff';
                 }
             });
@@ -353,11 +372,20 @@
             e.preventDefault();
             
             const material = document.getElementById('calcMaterial').value;
-            const length = document.getElementById('calcLength').value;
-            const width = document.getElementById('calcWidth').value;
+            // Chuyển dấu phẩy (,) thành dấu chấm (.) để hệ thống tính toán không bị lỗi
+            const rawLength = document.getElementById('calcLength').value.replace(',', '.');
+            const rawWidth = document.getElementById('calcWidth').value.replace(',', '.');
+            
+            const length = parseFloat(rawLength);
+            const width = parseFloat(rawWidth);
             const lamination = document.getElementById('calcLamination').value;
             const originalQty = parseInt(document.getElementById('calcQty').value); 
             
+            if (isNaN(length) || isNaN(width) || length <= 0 || width <= 0) {
+                alert("Kích thước nhập vào không hợp lệ!");
+                return;
+            }
+
             const btn = document.getElementById('btnCalculate');
             const resultContainer = document.getElementById('resultContainer');
             const qtyWarning = document.getElementById('qtyWarning');
@@ -370,18 +398,22 @@
             const offsetTotalPriceEl = document.getElementById('offsetTotalPrice');
 
             btn.innerHTML = '⏳ ĐANG PHÂN TÍCH GIÁ...';
-            btn.disabled = true;
+            btn.disabled = true; // Khóa nút trong lúc đợi
+            
+            // Xóa màu xanh cập nhật, trả về chuẩn để chuẩn bị thành màu xám
+            btn.style.background = ''; 
+            btn.style.color = '';
+            
             resultContainer.style.display = 'none';
             qtyWarning.style.display = 'none';
 
-            // LINK GOOGLE APPS SCRIPT ĐÃ ĐƯỢC NẠP SẴN MỚI NHẤT
             const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzKf0GxuGQ_otWr8xkvyKOPR_LVxc4eOTK-BZNror7XwT841-WJNXfNZYg5_YgEwWP/exec";
             
             try {
                 const payload = {
                     chatlieu: material,
-                    dai: parseFloat(length),
-                    rong: parseFloat(width),
+                    dai: length,
+                    rong: width,
                     canmang: lamination,
                     soluong: originalQty
                 };
@@ -424,14 +456,13 @@
                         resultFast.style.display = 'none';
                     }
 
-                    // CHIẾN THUẬT SALE TÂM LÝ
+                    // CHIẾN THUẬT SALE TÂM LÝ ĐÃ NÂNG CẤP
                     if (originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
                         const nextQty = data.nextQty;
                         const nextTotal = data.tongTienOffsetNext;
                         const extraTem = nextQty - originalQty;
                         
-                        // Nút "Chốt luôn" thông minh
-                        const applyBtnHtml = `<span onclick="document.getElementById('calcQty').value=${nextQty}; document.getElementById('btnCalculate').click();" style="display:inline-block; margin-top:10px; padding: 6px 15px; background: #fbbf24; color: #000; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #d97706; transition:0.2s;">👉 Áp dụng mức ${nextQty.toLocaleString('vi-VN')} tem ngay</span>`;
+                        const applyBtnHtml = `<span onclick="document.getElementById('calcQty').value=${nextQty}; document.getElementById('btnCalculate').disabled=false; document.getElementById('btnCalculate').click();" style="display:inline-block; margin-top:10px; padding: 6px 15px; background: #fbbf24; color: #000; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #d97706; transition:0.2s;">👉 Áp dụng mức ${nextQty.toLocaleString('vi-VN')} tem ngay</span>`;
 
                         if (nextTotal <= currentBestPrice) {
                             qtyWarning.innerHTML = `🎉 <b>ĐẶC QUYỀN:</b> Bạn đủ điều kiện nâng cấp! Xưởng sẽ tự động in dư thành <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) với giá Tiết Kiệm chỉ <b>${nextTotal.toLocaleString('vi-VN')}đ</b>.<br><span style="font-size:13px; color:#166534; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng In Tiết Kiệm là 5-7 ngày.</span><br>${applyBtnHtml}`;
@@ -450,16 +481,19 @@
                     }
                     
                     resultContainer.style.display = 'block';
+                    
+                    // Vô hiệu hóa nút bấm và báo hoàn tất
+                    btn.innerHTML = '✅ ĐÃ HIỂN THỊ BẢNG GIÁ';
+                    btn.disabled = true;
 
                 } else {
                     alert('Lỗi hệ thống: ' + data.error);
+                    btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
+                    btn.disabled = false;
                 }
             } catch (error) {
                 alert('Chưa kết nối được máy chủ');
-            } finally {
                 btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
-                btn.style.background = 'var(--accent-gold, #fbbf24)'; // Trả về màu vàng gốc
-                btn.style.color = '#000';
                 btn.disabled = false;
             }
         });

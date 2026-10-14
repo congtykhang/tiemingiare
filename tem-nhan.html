@@ -9,11 +9,10 @@
         /* =========================================
            BỐ CỤC CHIA 2 CỘT CHO MÀN HÌNH MÁY TÍNH
            ========================================= */
-        /* Vùng chứa đẩy 2 cột cách xa banner ra cho thoáng */
         .content-wrapper {
             position: relative;
             max-width: 1150px;
-            margin: 50px auto 60px; /* Đổi từ -40px thành 50px để tạo độ "thở" */
+            margin: 50px auto 60px; 
             padding: 0 15px;
             z-index: 10;
         }
@@ -28,7 +27,8 @@
         .calc-col {
             flex: 0 0 460px;
             position: sticky;
-            top: 20px; 
+            /* ĐÃ SỬA LỖI BỊ CẮT: Tăng điểm dừng từ 20px lên 100px để né thanh Menu */
+            top: 100px; 
             z-index: 10;
         }
 
@@ -221,7 +221,7 @@
 
         /* RESPONSIVE */
         @media (max-width: 992px) {
-            .content-wrapper { margin-top: 40px; } /* Trả lại khoảng cách trên Mobile */
+            .content-wrapper { margin-top: 40px; }
             .main-split-layout { flex-direction: column; gap: 20px; }
             .calc-col { flex: none; width: 100%; position: static; }
             .calculator-box { padding: 25px 20px; }
@@ -540,81 +540,4 @@
                     soluong: originalQty
                 };
 
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    let hasFast = false;
-                    let hasOffset = false;
-                    let currentBestPrice = 0;
-
-                    if (data.tongTienOffset !== undefined && data.tongTienOffset > 0) {
-                        const unitPrice = Math.round(data.tongTienOffset / originalQty);
-                        offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
-                        offsetTotalPriceEl.innerHTML = 'Tổng: <strong>' + data.tongTienOffset.toLocaleString('vi-VN') + ' đ</strong>';
-                        resultOffset.style.display = 'block';
-                        hasOffset = true;
-                        currentBestPrice = data.tongTienOffset;
-                    } else {
-                        resultOffset.style.display = 'none';
-                    }
-
-                    if (data.tongTienFast !== undefined && data.tongTienFast > 0) {
-                        const unitPrice = Math.round(data.tongTienFast / originalQty);
-                        fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
-                        fastTotalPriceEl.innerHTML = 'Tổng: <strong>' + data.tongTienFast.toLocaleString('vi-VN') + ' đ</strong>';
-                        resultFast.style.display = 'block';
-                        hasFast = true;
-                        
-                        if(currentBestPrice === 0 || data.tongTienFast < currentBestPrice) {
-                            currentBestPrice = data.tongTienFast;
-                        }
-                    } else {
-                        resultFast.style.display = 'none';
-                    }
-
-                    if (originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
-                        const nextQty = data.nextQty;
-                        const nextTotal = data.tongTienOffsetNext;
-                        const extraTem = nextQty - originalQty;
-                        
-                        const applyBtnHtml = `<span onclick="document.getElementById('calcQty').value=${nextQty}; document.getElementById('btnCalculate').disabled=false; document.getElementById('btnCalculate').click();" style="display:inline-block; margin-top:10px; padding: 6px 15px; background: #fbbf24; color: #000; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #d97706; transition:0.2s;">👉 Áp dụng mức ${nextQty.toLocaleString('vi-VN')} tem ngay</span>`;
-
-                        if (nextTotal <= currentBestPrice) {
-                            qtyWarning.innerHTML = `🎉 <b>ĐẶC QUYỀN:</b> Bạn đủ điều kiện nâng cấp! Xưởng sẽ tự động in dư thành <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) với giá Tiết Kiệm chỉ <b>${nextTotal.toLocaleString('vi-VN')}đ</b>.<br><span style="font-size:13px; color:#166534; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng In Tiết Kiệm là 5-7 ngày.</span><br>${applyBtnHtml}`;
-                            qtyWarning.style.background = "#f0fdf4";
-                            qtyWarning.style.color = "#166534";
-                            qtyWarning.style.borderColor = "#bbf7d0";
-                            qtyWarning.style.display = 'block';
-                        } else if ((nextTotal - currentBestPrice) <= 100000) { 
-                            const diff = nextTotal - currentBestPrice;
-                            qtyWarning.innerHTML = `💡 <b>MẸO TIẾT KIỆM:</b> Chỉ cần thêm <b>${diff.toLocaleString('vi-VN')}đ</b>, bạn sẽ nhận được <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) nhờ công nghệ In Tiết Kiệm.<br><span style="font-size:13px; color:#b45309; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng 5-7 ngày, không phù hợp cho đơn cần in gấp!</span><br>${applyBtnHtml}`;
-                            qtyWarning.style.background = "#fffbeb";
-                            qtyWarning.style.color = "#b45309";
-                            qtyWarning.style.borderColor = "#fde68a";
-                            qtyWarning.style.display = 'block';
-                        }
-                    }
-                    
-                    resultContainer.style.display = 'block';
-                    btn.innerHTML = '✅ ĐÃ HIỂN THỊ BẢNG GIÁ';
-                    btn.disabled = true;
-
-                } else {
-                    alert('Lỗi hệ thống: ' + data.error);
-                    btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
-                    btn.disabled = false;
-                }
-            } catch (error) {
-                alert('Chưa kết nối được máy chủ');
-                btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
-                btn.disabled = false;
-            }
-        });
-    </script>
-</body>
-</html>
+                const response = await fetch(GOOGLE_SCRIPT_

@@ -130,8 +130,8 @@
         /* Ô Cảnh báo / Sale Tâm Lý */
         .qty-warning {
             font-size: 14px;
-            line-height: 1.5;
-            padding: 15px;
+            line-height: 1.6;
+            padding: 15px 20px;
             text-align: center;
             display: none;
             border-bottom: 1px solid #e2e8f0;
@@ -256,6 +256,8 @@
             <!-- KHỐI KẾT QUẢ & SALE TÂM LÝ -->
             <div id="resultContainer">
                 <div class="result-header">TỔNG CHI PHÍ DỰ KIẾN</div>
+                
+                <!-- Bảng tư vấn sẽ hiện ở đây -->
                 <div id="qtyWarning" class="qty-warning"></div>
                 
                 <div class="result-comparison">
@@ -275,7 +277,7 @@
                 </div>
                 
                 <div style="padding: 12px; background: #f8fafc; font-size: 13px; color: #64748b; text-align: center; font-style: italic;">
-                    * Lưu ý: Giá mang tính chất tham khảo. Chế độ in tiết kiệm áp dụng cho số lượng chẵn ngàn.
+                    * Giá mang tính chất tham khảo. In tiết kiệm áp dụng cho số lượng chẵn ngàn.
                 </div>
             </div>
         </div>
@@ -380,7 +382,7 @@
                     let hasOffset = false;
                     let currentBestPrice = 0;
 
-                    // HIỂN THỊ KẾT QUẢ CHO SỐ LƯỢNG KHÁCH NHẬP
+                    // HIỂN THỊ KẾT QUẢ
                     if (data.tongTienOffset !== undefined && data.tongTienOffset > 0) {
                         const unitPrice = Math.round(data.tongTienOffset / originalQty);
                         offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
@@ -406,21 +408,24 @@
                         resultFast.style.display = 'none';
                     }
 
-                    // CHIẾN THUẬT SALE TÂM LÝ
+                    // CHIẾN THUẬT SALE TÂM LÝ ĐÃ NÂNG CẤP
                     if (originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
                         const nextQty = data.nextQty;
                         const nextTotal = data.tongTienOffsetNext;
                         const extraTem = nextQty - originalQty;
+                        
+                        // Khối mã HTML tạo nút bấm Áp dụng tự động
+                        const applyBtnHtml = `<span onclick="document.getElementById('calcQty').value=${nextQty}; document.getElementById('btnCalculate').click();" style="display:inline-block; margin-top:10px; padding: 6px 15px; background: #fbbf24; color: #000; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #d97706; transition:0.2s;">👉 Áp dụng mức ${nextQty.toLocaleString('vi-VN')} tem ngay</span>`;
 
                         if (nextTotal <= currentBestPrice) {
-                            qtyWarning.innerHTML = `🎉 <b>ĐẶC QUYỀN MIỄN PHÍ:</b> Đơn hàng của bạn đủ điều kiện nâng cấp! Xưởng sẽ tự động in dư thành <b>${nextQty.toLocaleString('vi-VN')} tem</b> (tặng thêm ${extraTem} tem) với giá Tiết Kiệm chỉ <b>${nextTotal.toLocaleString('vi-VN')}đ</b>.`;
+                            qtyWarning.innerHTML = `🎉 <b>ĐẶC QUYỀN:</b> Bạn đủ điều kiện nâng cấp! Xưởng sẽ tự động in dư thành <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) với giá Tiết Kiệm chỉ <b>${nextTotal.toLocaleString('vi-VN')}đ</b>.<br><span style="font-size:13px; color:#166534; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng In Tiết Kiệm là 5-7 ngày.</span><br>${applyBtnHtml}`;
                             qtyWarning.style.background = "#f0fdf4";
                             qtyWarning.style.color = "#166534";
                             qtyWarning.style.borderColor = "#bbf7d0";
                             qtyWarning.style.display = 'block';
                         } else if ((nextTotal - currentBestPrice) <= 100000) { 
                             const diff = nextTotal - currentBestPrice;
-                            qtyWarning.innerHTML = `💡 <b>MẸO TIẾT KIỆM:</b> Chỉ cần thêm <b>${diff.toLocaleString('vi-VN')}đ</b>, bạn sẽ nhận được tới <b>${nextQty.toLocaleString('vi-VN')} tem</b> (gấp nhiều lần) nhờ công nghệ In Tiết Kiệm. Cân nhắc nhé!`;
+                            qtyWarning.innerHTML = `💡 <b>MẸO TIẾT KIỆM:</b> Chỉ cần thêm <b>${diff.toLocaleString('vi-VN')}đ</b>, bạn sẽ nhận được <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) nhờ công nghệ In Tiết Kiệm.<br><span style="font-size:13px; color:#b45309; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng 5-7 ngày, không phù hợp cho đơn cần in gấp!</span><br>${applyBtnHtml}`;
                             qtyWarning.style.background = "#fffbeb";
                             qtyWarning.style.color = "#b45309";
                             qtyWarning.style.borderColor = "#fde68a";

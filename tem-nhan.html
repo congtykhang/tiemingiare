@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* =========================================
-           CSS TỐI ƯU HÓA FORM (CHỐNG TRÀN TÙM LUM)
+           CSS TỐI ƯU HÓA FORM GỌN GÀNG, HIỆN ĐẠI
            ========================================= */
         .calculator-section {
-            max-width: 680px; /* Thu gọn form lại cho cân đối, không bị bè ngang trên màn hình máy tính */
+            max-width: 650px; /* Bóp gọn form lại cho xinh xắn */
             margin: -40px auto 50px;
             position: relative;
             z-index: 10;
@@ -22,29 +22,29 @@
             border-radius: 16px;
             box-shadow: 0 12px 35px rgba(0,0,0,0.08);
             border-top: 5px solid var(--accent-gold, #fbbf24);
-            padding: 35px 40px;
+            padding: 30px 35px;
         }
 
-        .calc-grid {
+        /* Chia cột gọn gàng cho các ô thông số nhỏ */
+        .grid-2-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
         
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 8px; /* Khoảng cách chuẩn giữa Label và Input */
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1; /* Ép chiếm cả 2 cột */
+            gap: 6px;
         }
 
         .form-label {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             color: #334155;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-input {
@@ -67,10 +67,10 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
-        /* KHỐI KẾT QUẢ GỌN GÀNG, SÁNG SỦA */
+        /* KHỐI KẾT QUẢ */
         #resultContainer {
             display: none;
-            margin-top: 30px;
+            margin-top: 25px;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
             overflow: hidden;
@@ -84,10 +84,9 @@
             padding: 15px;
             text-align: center;
             font-weight: 800;
-            font-size: 16px;
+            font-size: 15px;
             border-bottom: 1px dashed #cbd5e1;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .result-comparison {
@@ -117,13 +116,13 @@
             transition: 0.2s;
         }
 
-        /* Màu riêng cho In Nhanh */
+        /* Màu In Nhanh */
         .box-fast .title { color: #166534; font-weight: bold; }
         .box-fast .price-big { color: #15803d; }
         .box-fast .btn-chot-don { background: #f0fdf4; border: 1px solid #166534; color: #166534; }
         .box-fast .btn-chot-don:hover { background: #166534; color: #fff; }
 
-        /* Màu riêng cho In Ghép */
+        /* Màu In Tiết Kiệm (In Ghép) */
         .box-offset .title { color: #1e3a8a; font-weight: bold; }
         .box-offset .price-big { color: #1d4ed8; }
         .box-offset .btn-chot-don { background: #eff6ff; border: 1px solid #1e3a8a; color: #1e3a8a; }
@@ -140,7 +139,6 @@
             border-bottom: 1px solid #fee2e2;
         }
 
-        /* Nút Xem Giá Ước Tính */
         .btn-main-calc {
             background: var(--accent-gold, #fbbf24); 
             color: #000; 
@@ -151,29 +149,22 @@
             font-weight: 800; 
             cursor: pointer; 
             transition: 0.3s; 
-            width: auto; 
-            min-width: 280px; 
+            width: 100%; 
             box-shadow: 0 6px 15px rgba(251, 191, 36, 0.3); 
             text-transform: uppercase; 
-            letter-spacing: 0.5px;
         }
         .btn-main-calc:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
         }
-        .btn-main-calc:disabled {
-            background: #cbd5e1;
-            box-shadow: none;
-            color: #64748b;
-            transform: none;
-        }
 
         /* RESPONSIVE CHO ĐIỆN THOẠI */
         @media (max-width: 768px) {
-            .calc-grid { grid-template-columns: 1fr; gap: 15px; }
-            .result-comparison { flex-direction: column; }
             .calculator-box { padding: 25px 20px; }
-            .btn-main-calc { width: 100%; min-width: unset; }
+            .result-comparison { flex-direction: column; }
+            /* Giữ nguyên cấu trúc 2 cột cho các thông số nhỏ để form gọn gàng */
+            .grid-2-col { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .form-input { padding: 10px 12px; }
         }
     </style>
 </head>
@@ -215,52 +206,58 @@
     <!-- PHẦN 3: FORM BÁO GIÁ TỰ ĐỘNG THÔNG MINH -->
     <section class="calculator-section">
         <div class="calculator-box">
-            <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 24px;">
+            <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 25px; font-size: 22px;">
                 BẢNG TÍNH GIÁ TỰ ĐỘNG
             </h2>
             
-            <form id="priceCalcForm" class="calc-grid">
-                <!-- Row 1: Chọn chất liệu -->
-                <div class="form-group full-width">
+            <form id="priceCalcForm">
+                
+                <!-- HÀNG 1: Chất liệu in (Trải dài) -->
+                <div class="form-group" style="margin-bottom: 15px;">
                     <label class="form-label">1. Chất liệu in</label>
                     <select id="calcMaterial" class="form-input">
-                        <option value="Decal giấy">Decal giấy</option>
-                        <option value="Decal kraft">Decal kraft</option>
-                        <option value="Decal nhựa đục">Decal nhựa đục</option>
-                        <option value="Decal nhựa bóng">Decal nhựa bóng</option>
-                        <option value="Decal nhựa trong">Decal nhựa trong</option>
-                        <option value="Decal xi">Decal xi</option>
-                        <option value="Decal 7 màu">Decal 7 màu</option>
-                        <option value="Decal giấy fort">Decal giấy fort</option>
-                        <option value="Decal vỡ dẻo">Decal vỡ dẻo</option>
+                        <!-- Đã bổ sung tính năng để khách dễ chốt sale -->
+                        <option value="Decal giấy">Decal Giấy (Giá rẻ nhất, dán hộp/chai lọ khô)</option>
+                        <option value="Decal nhựa đục">Decal Nhựa Đục (Chống nước 100%, siêu dai)</option>
+                        <option value="Decal nhựa trong">Decal Nhựa Trong (Xuyên thấu, dán chai thủy tinh)</option>
+                        <option value="Decal kraft">Decal Kraft (Màu da bò, phong cách mộc mạc)</option>
+                        <option value="Decal nhựa bóng">Decal Nhựa Bóng (Chống nước, bề mặt bóng bẩy)</option>
+                        <option value="Decal xi">Decal Xi Bạc (Tem dán máy móc, điện tử)</option>
+                        <option value="Decal vỡ dẻo">Decal Vỡ Dẻo (Tem bảo hành, tem niêm phong)</option>
+                        <option value="Decal 7 màu">Decal 7 Màu (Phản quang, chống hàng giả)</option>
+                        <option value="Decal giấy fort">Decal Giấy Fort (Bề mặt nhám, viết bút lên được)</option>
                     </select>
                 </div>
 
-                <!-- Row 2: Kích thước -->
-                <div class="form-group">
-                    <label class="form-label">2. Chiều ngang (cm)</label>
-                    <input type="number" id="calcLength" step="0.1" min="1" placeholder="VD: 5" required class="form-input" onfocus="this.select();">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">3. Chiều cao (cm)</label>
-                    <input type="number" id="calcWidth" step="0.1" min="1" placeholder="VD: 5" required class="form-input" onfocus="this.select();">
+                <!-- HÀNG 2: Kích thước (Nằm cạnh nhau cực gọn) -->
+                <div class="grid-2-col">
+                    <div class="form-group">
+                        <label class="form-label">2. Ngang (cm)</label>
+                        <input type="number" id="calcLength" step="0.1" min="1" placeholder="VD: 5" required class="form-input" onfocus="this.select();">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">3. Cao (cm)</label>
+                        <input type="number" id="calcWidth" step="0.1" min="1" placeholder="VD: 5" required class="form-input" onfocus="this.select();">
+                    </div>
                 </div>
 
-                <!-- Row 3: Gia công và Số lượng -->
-                <div class="form-group">
-                    <label class="form-label">4. Gia công màng</label>
-                    <select id="calcLamination" class="form-input">
-                        <option value="Không">Không cán màng</option>
-                        <option value="Có">Cán Bóng / Cán Mờ</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">5. Số lượng (Tem)</label>
-                    <input type="number" id="calcQty" min="100" step="1" placeholder="VD: 1000" required class="form-input" onfocus="this.select();">
+                <!-- HÀNG 3: Gia công & Số lượng (Nằm cạnh nhau) -->
+                <div class="grid-2-col">
+                    <div class="form-group">
+                        <label class="form-label">4. Cán Màng</label>
+                        <select id="calcLamination" class="form-input">
+                            <option value="Không">Không cán</option>
+                            <option value="Có">Cán Bóng / Mờ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">5. SL (Tem)</label>
+                        <input type="number" id="calcQty" min="100" step="1" placeholder="1000" required class="form-input" onfocus="this.select();">
+                    </div>
                 </div>
 
                 <!-- Nút bấm -->
-                <div class="form-group full-width" style="align-items: center; margin-top: 15px;">
+                <div style="margin-top: 10px;">
                     <button type="submit" id="btnCalculate" class="btn-main-calc">
                         XEM GIÁ ƯỚC TÍNH
                     </button>
@@ -273,6 +270,7 @@
                 <div id="qtyWarning" class="qty-warning"></div>
                 
                 <div class="result-comparison">
+                    <!-- Khối In Nhanh -->
                     <div id="resultFast" class="result-box box-fast">
                         <div class="title">⏱️ IN NHANH (1-2 ngày)</div>
                         <div class="price-big" id="fastUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
@@ -280,16 +278,17 @@
                         <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn (In Nhanh)</a>
                     </div>
 
+                    <!-- Khối IN TIẾT KIỆM (Đổi tên từ In Ghép) -->
                     <div id="resultOffset" class="result-box box-offset">
-                        <div class="title">📦 IN GHÉP (5-7 ngày)</div>
+                        <div class="title">📦 IN TIẾT KIỆM (5-7 ngày)</div>
                         <div class="price-big" id="offsetUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
                         <div class="price-total" id="offsetTotalPrice">Tổng: <strong>0 đ</strong></div>
-                        <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn (In Ghép)</a>
+                        <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn (In Tiết Kiệm)</a>
                     </div>
                 </div>
                 
                 <div style="padding: 12px; background: #f8fafc; font-size: 13px; color: #64748b; text-align: center; font-style: italic;">
-                    * Lưu ý: Giá mang tính chất tham khảo. Vui lòng liên hệ Zalo để nhận báo giá chính xác.
+                    * Lưu ý: Giá mang tính chất tham khảo. Chế độ in tiết kiệm áp dụng cho số lượng chẵn ngàn.
                 </div>
             </div>
             
@@ -383,13 +382,9 @@
                 qtyWarning.style.display = 'none';
             }
 
-            // ==============================================================
-            // ĐÃ NẠP SẴN LINK WEB APP CỦA ANH VÀO ĐÂY NHÉ
-            // ==============================================================
+            // LINK GOOGLE APPS SCRIPT
             const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvSmL7e1s7Gw7nyayStxCJjYUc8QLiUHrp43GO6GxLj1LoMA3Xl0Vkhyn8WCWnd1IC/exec";
             
-            const cleanUrl = GOOGLE_SCRIPT_URL.trim();
-
             try {
                 const payload = {
                     chatlieu: material,
@@ -399,7 +394,7 @@
                     soluong: parseInt(qty)
                 };
 
-                const response = await fetch(cleanUrl, {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     body: JSON.stringify(payload)
                 });

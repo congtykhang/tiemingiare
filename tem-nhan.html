@@ -2,52 +2,58 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <!-- Thêm maximum-scale=1.0 để khóa màn hình không bị zoom vỡ khi dùng trên điện thoại -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>In Tem Nhãn Decal | CÔNG TY TNHH PHẠM DUY KHANG</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS TỐI ƯU HÓA FORM TRÊN MOBILE */
+        /* CSS TỐI ƯU HÓA FORM CHO CẢ PC & MOBILE */
         .calc-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 25px 20px;
         }
         
         .form-input {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             font-family: inherit;
-            font-size: 16px !important; /* Bắt buộc 16px để chống iPhone tự zoom màn hình */
+            font-size: 16px !important; 
             outline: none;
             box-sizing: border-box;
             transition: 0.2s;
+            background: #f8fafc; /* Nền xám nhạt cho ô nhập liệu */
         }
         
         .form-input:focus {
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+            border-color: #3b82f6;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        /* KHỐI KẾT QUẢ GỌN GÀNG MỚI */
+        /* KHỐI KẾT QUẢ GỌN GÀNG, SÁNG SỦA MỚI */
         #resultContainer {
             display: none;
-            margin-top: 25px;
+            margin-top: 35px;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
             overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            background: #fff;
         }
         
+        /* Tiêu đề thanh lịch, xóa bỏ mảng đen */
         .result-header {
-            background: var(--primary-blue);
-            color: #fff;
-            padding: 12px;
+            background: #f8fafc; 
+            color: #1e293b;      
+            padding: 18px;
             text-align: center;
-            font-weight: 700;
-            font-size: 16px;
+            font-weight: 800;
+            font-size: 18px;
+            border-bottom: 2px dashed #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .result-comparison {
@@ -59,17 +65,17 @@
         .result-box {
             flex: 1;
             background: #fff;
-            padding: 20px 15px;
+            padding: 25px 15px;
             text-align: center;
-            display: none; /* Mặc định ẩn, JS sẽ bật lên */
+            display: none; 
         }
 
-        .price-big { font-size: 28px; font-weight: 900; margin: 5px 0; }
-        .price-total { color: #475569; font-size: 15px; margin-bottom: 15px; }
+        .price-big { font-size: 28px; font-weight: 900; margin: 8px 0; }
+        .price-total { color: #475569; font-size: 15px; margin-bottom: 20px; }
         
         .btn-chot-don {
             display: block;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
@@ -92,27 +98,60 @@
         .qty-warning {
             font-size: 14px;
             color: #dc2626;
-            padding: 10px 15px;
+            padding: 12px 15px;
             background: #fef2f2;
             text-align: center;
             font-weight: 500;
             display: none;
+            border-bottom: 1px solid #fee2e2;
+        }
+
+        /* Nút Xem Giá Ước Tính */
+        .btn-main-calc {
+            background: var(--accent-gold, #fbbf24); 
+            color: #000; 
+            padding: 16px 45px; 
+            border: none; 
+            border-radius: 50px; /* Hình viên thuốc */
+            font-size: 16px; 
+            font-weight: 900; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            width: auto; 
+            min-width: 320px; /* Kích thước cố định thanh lịch */
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4); 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }
+        .btn-main-calc:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(251, 191, 36, 0.5);
+        }
+        .btn-main-calc:disabled {
+            background: #cbd5e1;
+            box-shadow: none;
+            color: #64748b;
+            transform: none;
         }
 
         /* RESPONSIVE CHO ĐIỆN THOẠI */
         @media (max-width: 768px) {
             .calc-grid {
-                grid-template-columns: 1fr; /* Ép form thành 1 cột dọc để khỏi bị chật */
+                grid-template-columns: 1fr;
                 gap: 15px;
             }
             .result-comparison {
-                flex-direction: column; /* Ép bảng kết quả xếp chồng lên nhau */
+                flex-direction: column;
             }
             .calculator-section {
-                padding: 0 10px; /* Thu nhỏ lề 2 bên */
+                padding: 0 10px;
             }
             .calculator-box {
-                padding: 20px 15px;
+                padding: 25px 15px;
+            }
+            .btn-main-calc {
+                width: 100%;
+                min-width: unset;
             }
         }
     </style>
@@ -155,10 +194,10 @@
     </section>
 
     <!-- PHẦN 3: FORM BÁO GIÁ TỰ ĐỘNG THÔNG MINH -->
-    <section class="calculator-section" style="max-width: 800px; margin: -20px auto 40px; position: relative; z-index: 10;">
+    <section class="calculator-section" style="max-width: 850px; margin: -20px auto 40px; position: relative; z-index: 10;">
         <div class="calculator-box" style="background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 5px solid var(--accent-gold);">
-            <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 25px; font-size: 22px;">
-                <i class="fa-solid fa-calculator"></i> BẢNG TÍNH GIÁ TỰ ĐỘNG
+            <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 24px;">
+                BẢNG TÍNH GIÁ TỰ ĐỘNG
             </h2>
             
             <form id="priceCalcForm" class="calc-grid">
@@ -178,7 +217,7 @@
                     </select>
                 </div>
 
-                <!-- 2 & 3. Kích thước (Thêm onfocus="this.select();" để chạm là bôi đen) -->
+                <!-- 2 & 3. Kích thước (Chạm là bôi đen) -->
                 <div>
                     <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">2. Chiều ngang (cm)</label>
                     <input type="number" id="calcLength" step="0.1" min="1" placeholder="VD: 5" required class="form-input" onfocus="this.select();">
@@ -201,15 +240,15 @@
                     <input type="number" id="calcQty" min="100" step="1" placeholder="VD: 1000" required class="form-input" onfocus="this.select();">
                 </div>
 
-                <!-- Nút bấm -->
-                <div style="grid-column: 1 / -1; text-align: center; margin-top: 5px;">
-                    <button type="submit" id="btnCalculate" style="background: var(--primary-blue); color: #fff; padding: 14px 30px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%;">
+                <!-- Nút bấm Dáng Viên Thuốc Vàng rực rỡ -->
+                <div style="grid-column: 1 / -1; text-align: center; margin-top: 20px;">
+                    <button type="submit" id="btnCalculate" class="btn-main-calc">
                         XEM GIÁ ƯỚC TÍNH
                     </button>
                 </div>
             </form>
 
-            <!-- GIAO DIỆN HIỂN THỊ KẾT QUẢ MỚI (GỌN GÀNG) -->
+            <!-- GIAO DIỆN HIỂN THỊ KẾT QUẢ MỚI (SÁNG VÀ THANH LỊCH) -->
             <div id="resultContainer">
                 <div class="result-header">TỔNG CHI PHÍ DỰ KIẾN</div>
                 <div id="qtyWarning" class="qty-warning"></div>
@@ -218,7 +257,7 @@
                     <!-- Khối In Nhanh -->
                     <div id="resultFast" class="result-box box-fast">
                         <div class="title">⏱️ IN NHANH (1-2 ngày)</div>
-                        <div class="price-big" id="fastUnitPrice">0 đ<span style="font-size:14px; font-weight:normal">/tem</span></div>
+                        <div class="price-big" id="fastUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
                         <div class="price-total" id="fastTotalPrice">Tổng: <strong>0 đ</strong></div>
                         <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn (In Nhanh)</a>
                     </div>
@@ -226,23 +265,22 @@
                     <!-- Khối In Ghép -->
                     <div id="resultOffset" class="result-box box-offset">
                         <div class="title">📦 IN GHÉP (5-7 ngày)</div>
-                        <div class="price-big" id="offsetUnitPrice">0 đ<span style="font-size:14px; font-weight:normal">/tem</span></div>
+                        <div class="price-big" id="offsetUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
                         <div class="price-total" id="offsetTotalPrice">Tổng: <strong>0 đ</strong></div>
                         <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn (In Ghép)</a>
                     </div>
                 </div>
                 
-                <div style="padding: 12px; background: #f8fafc; font-size: 12px; color: #64748b; text-align: center; font-style: italic;">
-                    * Lưu ý: Giá mang tính chất tham khảo. Áp dụng in ghép cho số lượng chẵn ngàn. Vui lòng liên hệ Zalo để nhận báo giá chính xác.
+                <div style="padding: 12px; background: #f8fafc; font-size: 13px; color: #64748b; text-align: center; font-style: italic;">
+                    * Lưu ý: Giá mang tính chất tham khảo. Vui lòng liên hệ Zalo để nhận báo giá chính xác.
                 </div>
             </div>
             
         </div>
     </section>
 
-    <!-- (Phần Danh sách Thẻ Sản Phẩm và Footer giữ nguyên dưới đây) -->
+    <!-- (Phần Danh sách Thẻ Sản Phẩm) -->
     <section class="products">
-        <!-- ... Các thẻ div.card ... -->
         <div class="card">
             <img src="images/tem-nhan.jpg" alt="Decal Giấy" class="product-img">
             <h3>Tem nhãn Decal Giấy</h3>
@@ -318,7 +356,6 @@
 
             btn.innerHTML = '⏳ ĐANG TÍNH...';
             btn.disabled = true;
-            btn.style.opacity = '0.7';
             resultContainer.style.display = 'block';
 
             if (originalQty !== qty) {
@@ -356,7 +393,7 @@
                     let hasOffset = false;
 
                     if (data.tongTienOffset !== undefined && data.tongTienOffset > 0) {
-                        offsetUnitPriceEl.innerHTML = data.donGiaOffset.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal">/tem</span>';
+                        offsetUnitPriceEl.innerHTML = data.donGiaOffset.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
                         offsetTotalPriceEl.innerHTML = 'Tổng: <strong>' + data.tongTienOffset.toLocaleString('vi-VN') + ' đ</strong>';
                         resultOffset.style.display = 'block';
                         hasOffset = true;
@@ -365,7 +402,7 @@
                     }
 
                     if (data.tongTienFast !== undefined && data.tongTienFast > 0) {
-                        fastUnitPriceEl.innerHTML = data.donGiaFast.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal">/tem</span>';
+                        fastUnitPriceEl.innerHTML = data.donGiaFast.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
                         fastTotalPriceEl.innerHTML = 'Tổng: <strong>' + data.tongTienFast.toLocaleString('vi-VN') + ' đ</strong>';
                         resultFast.style.display = 'block';
                         hasFast = true;
@@ -381,7 +418,6 @@
             } finally {
                 btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
                 btn.disabled = false;
-                btn.style.opacity = '1';
             }
         });
     </script>

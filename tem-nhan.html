@@ -33,18 +33,22 @@
         .form-label { font-weight: 700; font-size: 13px; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
         .form-input { width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px !important; outline: none; box-sizing: border-box; transition: 0.3s; background: #f8fafc; color: #0f172a; }
         .form-input:focus { border-color: #3b82f6; background: #fff; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+        .form-input:disabled { background: #e2e8f0; color: #64748b; cursor: not-allowed; opacity: 0.8; }
         #resultContainer { display: none; margin-top: 25px; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.04); background: #fff; }
         .result-header { background: #f8fafc; color: #1e293b; padding: 15px; text-align: center; font-weight: 800; font-size: 15px; border-bottom: 1px dashed #cbd5e1; text-transform: uppercase; }
-        .result-comparison { display: flex; background: #fff; gap: 1px; }
-        .result-box { flex: 1; padding: 25px 15px; text-align: center; display: none; }
-        .price-big { font-size: 26px; font-weight: 900; margin: 8px 0; }
-        .price-total { color: #0f172a; font-size: 15px; margin-bottom: 20px; }
+        .result-comparison { display: flex; background: #fff; }
+        .result-box { flex: 1; padding: 22px 15px; text-align: center; display: none; }
+        .box-offset { border-left: 1px solid #e2e8f0; }
+        .result-box .title { font-size: 15px; font-weight: 800; line-height: 1.3; }
+        .result-box .sub-days { display: block; font-size: 12px; font-weight: 500; color: #64748b; margin-top: 3px; }
+        .price-big { font-size: 26px; font-weight: 900; margin: 10px 0 6px; }
+        .price-total { color: #0f172a; font-size: 15px; margin-bottom: 18px; }
         .btn-chot-don { display: block; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s; }
-        .box-fast .title { color: #166534; font-weight: bold; }
+        .box-fast .title { color: #166534; }
         .box-fast .price-big { color: #15803d; }
         .box-fast .btn-chot-don { background: #f0fdf4; border: 1px solid #166534; color: #166534; }
         .box-fast .btn-chot-don:hover { background: #166534; color: #fff; }
-        .box-offset .title { color: #1e3a8a; font-weight: bold; }
+        .box-offset .title { color: #1e3a8a; }
         .box-offset .price-big { color: #1d4ed8; }
         .box-offset .btn-chot-don { background: #eff6ff; border: 1px solid #1e3a8a; color: #1e3a8a; }
         .box-offset .btn-chot-don:hover { background: #1e3a8a; color: #fff; }
@@ -60,7 +64,7 @@
         }
         @media (max-width: 576px) {
             .result-comparison { flex-direction: column; }
-            .box-fast { border-bottom: 1px solid #e2e8f0; }
+            .box-offset { border-left: none; border-top: 1px solid #e2e8f0; }
             .grid-2-col { grid-template-columns: 1fr 1fr; gap: 10px; }
             .form-input { padding: 10px 12px; }
             .products-grid { grid-template-columns: 1fr; }
@@ -107,7 +111,7 @@
                     <form id="priceCalcForm">
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label class="form-label">1. Chất liệu in</label>
-                            <select id="calcMaterial" class="form-input">
+                            <select id="calcMaterial" class="form-input" onchange="kiemTraCanMang()">
                                 <option value="Decal giấy">Decal Giấy (Giá rẻ nhất, dán hộp/chai lọ khô)</option>
                                 <option value="Decal nhựa đục">Decal Nhựa Trắng Sữa (Chống nước 100%, siêu dai)</option>
                                 <option value="Decal nhựa trong">Decal Nhựa Trong (Xuyên thấu, dán chai thủy tinh)</option>
@@ -153,13 +157,19 @@
                         <div class="result-header">TỔNG CHI PHÍ DỰ KIẾN</div>
                         <div class="result-comparison">
                             <div id="resultFast" class="result-box box-fast">
-                                <div class="title">⏱️ IN NHANH (1-2 ngày)</div>
+                                <div class="title">
+                                    ⏱️ IN NHANH
+                                    <span class="sub-days">(1 - 2 ngày)</span>
+                                </div>
                                 <div class="price-big" id="fastUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
                                 <div class="price-total" id="fastTotalPrice"><strong>0 đ</strong></div>
                                 <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn Zalo</a>
                             </div>
                             <div id="resultOffset" class="result-box box-offset">
-                                <div class="title">📦 IN TIẾT KIỆM (5-7 ngày)</div>
+                                <div class="title">
+                                    📦 IN TIẾT KIỆM
+                                    <span class="sub-days">(5 - 7 ngày)</span>
+                                </div>
                                 <div class="price-big" id="offsetUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
                                 <div class="price-total" id="offsetTotalPrice"><strong>0 đ</strong></div>
                                 <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn Zalo</a>
@@ -245,11 +255,26 @@
                 navLinks.classList.toggle('active');
                 mobileMenu.classList.toggle('is-active');
             });
+            kiemTraCanMang();
         });
+
+        // Tự động khóa Cán Màng đối với Decal Kraft, Decal Vỡ và Decal Giấy Fort
+        const chatLieuKhongCanMang = ['Decal kraft', 'Decal vỡ dẻo', 'Decal giấy fort'];
+        function kiemTraCanMang() {
+            const material = document.getElementById('calcMaterial').value;
+            const laminationSelect = document.getElementById('calcLamination');
+            if (chatLieuKhongCanMang.includes(material)) {
+                laminationSelect.value = 'Không';
+                laminationSelect.disabled = true;
+            } else {
+                laminationSelect.disabled = false;
+            }
+        }
 
         function chonSanPham(chatLieu) {
             const selectEl = document.getElementById('calcMaterial');
             selectEl.value = chatLieu;
+            kiemTraCanMang();
             selectEl.dispatchEvent(new Event('input'));
             document.querySelector('.calc-col').scrollIntoView({behavior: 'smooth', block: 'start'});
             selectEl.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.4)';
@@ -338,30 +363,33 @@
                 const data = await response.json();
 
                 if (data.success) {
+                    const fastPrice = (data.tongTienFast !== undefined && data.tongTienFast > 0) ? data.tongTienFast : 0;
+                    const offsetPrice = (data.tongTienOffset !== undefined && data.tongTienOffset > 0) ? data.tongTienOffset : 0;
                     let currentBestPrice = 0;
 
-                    if (data.tongTienOffset !== undefined && data.tongTienOffset > 0) {
-                        const unitPrice = Math.round(data.tongTienOffset / originalQty);
-                        offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
-                        offsetTotalPriceEl.innerHTML = '<strong>' + data.tongTienOffset.toLocaleString('vi-VN') + ' đ</strong>';
-                        resultOffset.style.display = 'block';
-                        currentBestPrice = data.tongTienOffset;
-                    } else {
-                        resultOffset.style.display = 'none';
-                    }
-
-                    if (data.tongTienFast !== undefined && data.tongTienFast > 0) {
-                        const unitPrice = Math.round(data.tongTienFast / originalQty);
+                    // 1. Hiển thị In Nhanh
+                    if (fastPrice > 0) {
+                        const unitPrice = Math.round(fastPrice / originalQty);
                         fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
-                        fastTotalPriceEl.innerHTML = '<strong>' + data.tongTienFast.toLocaleString('vi-VN') + ' đ</strong>';
+                        fastTotalPriceEl.innerHTML = '<strong>' + fastPrice.toLocaleString('vi-VN') + ' đ</strong>';
                         resultFast.style.display = 'block';
-                        if (currentBestPrice === 0 || data.tongTienFast < currentBestPrice) {
-                            currentBestPrice = data.tongTienFast;
-                        }
+                        currentBestPrice = fastPrice;
                     } else {
                         resultFast.style.display = 'none';
                     }
 
+                    // 2. Chỉ hiển thị In Tiết Kiệm khi có giá VÀ rẻ hơn In Nhanh (hoặc khi In Nhanh không có giá)
+                    if (offsetPrice > 0 && (fastPrice === 0 || offsetPrice < fastPrice)) {
+                        const unitPrice = Math.round(offsetPrice / originalQty);
+                        offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
+                        offsetTotalPriceEl.innerHTML = '<strong>' + offsetPrice.toLocaleString('vi-VN') + ' đ</strong>';
+                        resultOffset.style.display = 'block';
+                        currentBestPrice = offsetPrice;
+                    } else {
+                        resultOffset.style.display = 'none';
+                    }
+
+                    // 3. Mẹo tiết kiệm cho mốc chẵn ngàn tiếp theo
                     if (originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
                         const nextQty = data.nextQty;
                         const nextTotal = data.tongTienOffsetNext;

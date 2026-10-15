@@ -5,254 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>In Tem Nhãn Decal | CÔNG TY TNHH PHẠM DUY KHANG</title>
     <meta name="description" content="Bảng tính giá in tem nhãn decal tự động. Nhập kích thước và số lượng để xem ngay giá in nhanh và in tiết kiệm.">
-
-    <!-- THẺ HIỂN THỊ ĐẸP KHI GỬI LINK FACEBOOK / ZALO (OPEN GRAPH) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tiemingiare.com/tem-nhan">
     <meta property="og:title" content="Bảng Tính Giá In Tem Nhãn Tự Động - Xem Giá Sau 3 Giây">
     <meta property="og:description" content="Nhập kích thước & số lượng để xem ngay giá in nhanh và in tiết kiệm. Bám dính chắc chắn, cắt bế mọi hình dáng.">
     <meta property="og:image" content="https://tiemingiare.com/images/tem-nhan.jpg">
     <meta property="og:image:alt" content="In Tem Nhãn Decal Giá Rẻ - Phạm Duy Khang">
-
     <link rel="stylesheet" href="style.css">
     <style>
-        /* =========================================
-           BỐ CỤC CHIA 2 CỘT CHO MÀN HÌNH MÁY TÍNH
-           ========================================= */
-        .content-wrapper {
-            position: relative;
-            max-width: 1150px;
-            margin: 50px auto 60px; 
-            padding: 0 15px;
-            z-index: 10;
-        }
-
-        .main-split-layout {
-            display: flex;
-            gap: 40px;
-            align-items: flex-start; 
-        }
-
-        /* CỘT TRÁI: BẢNG TÍNH GIÁ (STICKY) */
-        .calc-col {
-            flex: 0 0 460px;
-            position: sticky;
-            top: 100px; 
-            z-index: 10;
-        }
-
-        .calculator-box {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-            border-top: 5px solid var(--accent-gold, #fbbf24);
-            padding: 30px 30px;
-        }
-
-        /* CỘT PHẢI: DANH SÁCH SẢN PHẨM */
-        .products-col {
-            flex: 1; 
-            padding-top: 0; 
-        }
-
-        .products-header-title {
-            font-size: 24px;
-            color: #1e293b;
-            margin-top: 0; 
-            margin-bottom: 25px;
-            font-weight: 800;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        /* THIẾT KẾ THẺ SẢN PHẨM */
-        .pro-card {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            overflow: hidden;
-            border: 1px solid #f1f5f9;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-        .pro-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-color: #cbd5e1;
-        }
-        .pro-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-        }
-        .pro-content {
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .pro-content h3 {
-            margin: 0 0 10px 0;
-            color: #0f172a;
-            font-size: 16px;
-            font-weight: 800;
-        }
-        .pro-content p {
-            font-size: 13px;
-            color: #475569;
-            line-height: 1.5;
-            flex: 1;
-            margin: 0 0 15px 0;
-        }
-        .btn-select-pro {
-            display: block;
-            text-align: center;
-            background: #f8fafc;
-            color: #3b82f6;
-            padding: 10px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 13px;
-            border: 1px solid #e2e8f0;
-            transition: 0.2s;
-        }
-        .btn-select-pro:hover {
-            background: #3b82f6;
-            color: #fff;
-            border-color: #3b82f6;
-        }
-
-        /* CSS BÊN TRONG FORM TÍNH GIÁ */
-        .grid-2-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-label {
-            font-weight: 700;
-            font-size: 13px;
-            color: #334155;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 15px !important; 
-            outline: none;
-            box-sizing: border-box;
-            transition: 0.3s;
-            background: #f8fafc;
-            color: #0f172a;
-        }
-        
-        .form-input:focus {
-            border-color: #3b82f6;
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-        }
-
-        /* KHỐI KẾT QUẢ */
-        #resultContainer {
-            display: none;
-            margin-top: 25px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-            background: #fff;
-        }
-        
-        .result-header {
-            background: #f8fafc; color: #1e293b; padding: 15px;
-            text-align: center; font-weight: 800; font-size: 15px;
-            border-bottom: 1px dashed #cbd5e1; text-transform: uppercase;
-        }
-
+        .content-wrapper { position: relative; max-width: 1150px; margin: 50px auto 60px; padding: 0 15px; z-index: 10; }
+        .main-split-layout { display: flex; gap: 40px; align-items: flex-start; }
+        .calc-col { flex: 0 0 460px; position: sticky; top: 100px; z-index: 10; }
+        .calculator-box { background: #fff; border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border-top: 5px solid var(--accent-gold, #fbbf24); padding: 30px; }
+        .products-col { flex: 1; padding-top: 0; }
+        .products-header-title { font-size: 24px; color: #1e293b; margin-top: 0; margin-bottom: 25px; font-weight: 800; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .pro-card { background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #f1f5f9; transition: 0.3s; display: flex; flex-direction: column; }
+        .pro-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-color: #cbd5e1; }
+        .pro-img { width: 100%; height: 160px; object-fit: cover; }
+        .pro-content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+        .pro-content h3 { margin: 0 0 10px 0; color: #0f172a; font-size: 16px; font-weight: 800; }
+        .pro-content p { font-size: 13px; color: #475569; line-height: 1.5; flex: 1; margin: 0 0 15px 0; }
+        .btn-select-pro { display: block; text-align: center; background: #f8fafc; color: #3b82f6; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13px; border: 1px solid #e2e8f0; transition: 0.2s; }
+        .btn-select-pro:hover { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+        .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-label { font-weight: 700; font-size: 13px; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-input { width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px !important; outline: none; box-sizing: border-box; transition: 0.3s; background: #f8fafc; color: #0f172a; }
+        .form-input:focus { border-color: #3b82f6; background: #fff; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+        #resultContainer { display: none; margin-top: 25px; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.04); background: #fff; }
+        .result-header { background: #f8fafc; color: #1e293b; padding: 15px; text-align: center; font-weight: 800; font-size: 15px; border-bottom: 1px dashed #cbd5e1; text-transform: uppercase; }
         .result-comparison { display: flex; background: #fff; gap: 1px; }
         .result-box { flex: 1; padding: 25px 15px; text-align: center; display: none; }
         .price-big { font-size: 26px; font-weight: 900; margin: 8px 0; }
         .price-total { color: #0f172a; font-size: 15px; margin-bottom: 20px; }
-        
-        .btn-chot-don {
-            display: block; padding: 12px; border-radius: 8px;
-            text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s;
-        }
-
+        .btn-chot-don { display: block; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s; }
         .box-fast .title { color: #166534; font-weight: bold; }
         .box-fast .price-big { color: #15803d; }
         .box-fast .btn-chot-don { background: #f0fdf4; border: 1px solid #166534; color: #166534; }
         .box-fast .btn-chot-don:hover { background: #166534; color: #fff; }
-
         .box-offset .title { color: #1e3a8a; font-weight: bold; }
         .box-offset .price-big { color: #1d4ed8; }
         .box-offset .btn-chot-don { background: #eff6ff; border: 1px solid #1e3a8a; color: #1e3a8a; }
         .box-offset .btn-chot-don:hover { background: #1e3a8a; color: #fff; }
-
-        .qty-warning {
-            font-size: 14px; line-height: 1.6; padding: 20px;
-            text-align: center; display: none; border-top: 1px dashed #e2e8f0;
-        }
-
-        .btn-main-calc {
-            background: var(--accent-gold, #fbbf24); color: #000; 
-            padding: 15px 40px; border: none; border-radius: 50px;
-            font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.3s; 
-            width: 100%; box-shadow: 0 6px 15px rgba(251, 191, 36, 0.3); text-transform: uppercase; 
-        }
-        .btn-main-calc:hover:not(:disabled) {
-            transform: translateY(-2px); box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
-        }
-
-        /* RESPONSIVE */
+        .qty-warning { font-size: 14px; line-height: 1.6; padding: 20px; text-align: center; display: none; border-top: 1px dashed #e2e8f0; }
+        .btn-main-calc { background: var(--accent-gold, #fbbf24); color: #000; padding: 15px 40px; border: none; border-radius: 50px; font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.3s; width: 100%; box-shadow: 0 6px 15px rgba(251, 191, 36, 0.3); text-transform: uppercase; }
+        .btn-main-calc:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4); }
         @media (max-width: 992px) {
-            .content-wrapper { margin-top: 40px; } 
+            .content-wrapper { margin-top: 40px; }
             .main-split-layout { flex-direction: column; gap: 20px; }
             .calc-col { flex: none; width: 100%; position: static; }
             .calculator-box { padding: 25px 20px; }
             .products-col { width: 100%; }
         }
-
         @media (max-width: 576px) {
             .result-comparison { flex-direction: column; }
-            .box-fast { border-bottom: 1px solid #e2e8f0; } 
+            .box-fast { border-bottom: 1px solid #e2e8f0; }
             .grid-2-col { grid-template-columns: 1fr 1fr; gap: 10px; }
             .form-input { padding: 10px 12px; }
-            .products-grid { grid-template-columns: 1fr; } 
+            .products-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-
     <header>
         <div class="logo">
             <a href="index.html"><span>PHẠM DUY KHANG</span></a>
         </div>
-        
         <div class="menu-toggle" id="mobile-menu">
             <span></span><span></span><span></span>
         </div>
-
         <nav class="nav-links" id="nav-links">
             <a href="index.html">Trang Chủ</a>
             <div class="dropdown">
@@ -275,17 +97,13 @@
         <p>Bám dính chắc chắn - Màu sắc sắc nét - Cắt bế mọi hình dáng.</p>
     </section>
 
-    <!-- WRAPPER GIỚI HẠN SCROLL & ÉP NGAY HÀNG -->
     <div class="content-wrapper">
         <div class="main-split-layout">
-            
-            <!-- CỘT TRÁI: BẢNG TÍNH GIÁ -->
             <div class="calc-col">
                 <div class="calculator-box">
                     <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 25px; font-size: 22px;">
                         BẢNG TÍNH GIÁ TỰ ĐỘNG
                     </h2>
-                    
                     <form id="priceCalcForm">
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label class="form-label">1. Chất liệu in</label>
@@ -301,22 +119,16 @@
                                 <option value="Decal giấy fort">Decal Giấy Fort (Bề mặt nhám, viết bút lên được)</option>
                             </select>
                         </div>
-
                         <div class="grid-2-col">
                             <div class="form-group">
                                 <label class="form-label">2. Ngang (cm)</label>
-                                <input type="text" inputmode="decimal" id="calcLength" placeholder="VD: 5" class="form-input" 
-                                       onfocus="this.select();" 
-                                       oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
+                                <input type="text" inputmode="decimal" id="calcLength" placeholder="VD: 5" class="form-input" onfocus="this.select();" oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">3. Cao (cm)</label>
-                                <input type="text" inputmode="decimal" id="calcWidth" placeholder="VD: 5" class="form-input" 
-                                       onfocus="this.select();" 
-                                       oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
+                                <input type="text" inputmode="decimal" id="calcWidth" placeholder="VD: 5" class="form-input" onfocus="this.select();" oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
                             </div>
                         </div>
-
                         <div class="grid-2-col">
                             <div class="form-group">
                                 <label class="form-label">4. Cán Màng</label>
@@ -327,12 +139,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">5. SL (Tem) <span style="text-transform:none; font-weight:normal; font-size:11px; color:#ef4444;">*Chẵn trăm</span></label>
-                                <input type="text" inputmode="numeric" id="calcQty" placeholder="1000" class="form-input" 
-                                       onfocus="this.select();" 
-                                       oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                <input type="text" inputmode="numeric" id="calcQty" placeholder="1000" class="form-input" onfocus="this.select();" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                             </div>
                         </div>
-
                         <div style="margin-top: 10px;">
                             <button type="button" id="btnCalculate" class="btn-main-calc" onclick="tinhGiaNgay()">
                                 XEM GIÁ ƯỚC TÍNH
@@ -342,25 +151,21 @@
 
                     <div id="resultContainer">
                         <div class="result-header">TỔNG CHI PHÍ DỰ KIẾN</div>
-                        
                         <div class="result-comparison">
                             <div id="resultFast" class="result-box box-fast">
                                 <div class="title">⏱️ IN NHANH (1-2 ngày)</div>
                                 <div class="price-big" id="fastUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
-                                <div class="price-total" id="fastTotalPrice"><strong>0 đ</strong></div> 
+                                <div class="price-total" id="fastTotalPrice"><strong>0 đ</strong></div>
                                 <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn Zalo</a>
                             </div>
-
                             <div id="resultOffset" class="result-box box-offset">
                                 <div class="title">📦 IN TIẾT KIỆM (5-7 ngày)</div>
                                 <div class="price-big" id="offsetUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
-                                <div class="price-total" id="offsetTotalPrice"><strong>0 đ</strong></div> 
+                                <div class="price-total" id="offsetTotalPrice"><strong>0 đ</strong></div>
                                 <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn Zalo</a>
                             </div>
                         </div>
-                        
                         <div id="qtyWarning" class="qty-warning"></div>
-
                         <div style="padding: 12px; background: #f8fafc; font-size: 12px; color: #64748b; text-align: center; font-style: italic; border-top: 1px solid #e2e8f0;">
                             * Giá tham khảo. In tiết kiệm áp dụng cho số lượng chẵn ngàn.
                         </div>
@@ -368,11 +173,9 @@
                 </div>
             </div>
 
-            <!-- CỘT PHẢI: DANH MỤC SẢN PHẨM -->
             <div class="products-col">
                 <h2 class="products-header-title">CHẤT LIỆU IN DECAL PHỔ BIẾN</h2>
                 <div class="products-grid">
-                    
                     <div class="pro-card">
                         <img src="images/tem-nhan.jpg" alt="Decal Giấy" class="pro-img">
                         <div class="pro-content">
@@ -381,7 +184,6 @@
                             <a href="javascript:void(0)" onclick="chonSanPham('Decal giấy')" class="btn-select-pro">Tính giá chất liệu này</a>
                         </div>
                     </div>
-
                     <div class="pro-card">
                         <img src="images/tem-nhan.jpg" alt="Decal Nhựa Trắng Sữa" class="pro-img">
                         <div class="pro-content">
@@ -390,7 +192,6 @@
                             <a href="javascript:void(0)" onclick="chonSanPham('Decal nhựa đục')" class="btn-select-pro">Tính giá chất liệu này</a>
                         </div>
                     </div>
-
                     <div class="pro-card">
                         <img src="images/tem-nhan.jpg" alt="Decal Trong" class="pro-img">
                         <div class="pro-content">
@@ -399,7 +200,6 @@
                             <a href="javascript:void(0)" onclick="chonSanPham('Decal nhựa trong')" class="btn-select-pro">Tính giá chất liệu này</a>
                         </div>
                     </div>
-
                     <div class="pro-card">
                         <img src="images/tem-nhan.jpg" alt="Decal Kraft" class="pro-img">
                         <div class="pro-content">
@@ -408,7 +208,6 @@
                             <a href="javascript:void(0)" onclick="chonSanPham('Decal kraft')" class="btn-select-pro">Tính giá chất liệu này</a>
                         </div>
                     </div>
-
                     <div class="pro-card">
                         <img src="images/tem-nhan.jpg" alt="Decal Xi Bạc" class="pro-img">
                         <div class="pro-content">
@@ -417,7 +216,6 @@
                             <a href="javascript:void(0)" onclick="chonSanPham('Decal xi')" class="btn-select-pro">Tính giá chất liệu này</a>
                         </div>
                     </div>
-
                     <div class="pro-card">
                         <img src="images/tem-nhan.jpg" alt="Decal Vỡ" class="pro-img">
                         <div class="pro-content">
@@ -426,10 +224,9 @@
                             <a href="javascript:void(0)" onclick="chonSanPham('Decal vỡ dẻo')" class="btn-select-pro">Tính giá chất liệu này</a>
                         </div>
                     </div>
-
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 
     <footer id="contact">
@@ -453,11 +250,8 @@
         function chonSanPham(chatLieu) {
             const selectEl = document.getElementById('calcMaterial');
             selectEl.value = chatLieu;
-            
             selectEl.dispatchEvent(new Event('input'));
-            
             document.querySelector('.calc-col').scrollIntoView({behavior: 'smooth', block: 'start'});
-            
             selectEl.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.4)';
             selectEl.style.borderColor = '#3b82f6';
             setTimeout(() => {
@@ -472,13 +266,11 @@
             input.addEventListener('input', function() {
                 const resultContainer = document.getElementById('resultContainer');
                 const btn = document.getElementById('btnCalculate');
-                
                 if (resultContainer.style.display === 'block' || btn.disabled) {
                     resultContainer.style.display = 'none';
                     btn.disabled = false;
-                    
                     btn.innerHTML = '👉 BẤM ĐỂ CẬP NHẬT GIÁ MỚI';
-                    btn.style.background = '#3b82f6'; 
+                    btn.style.background = '#3b82f6';
                     btn.style.border = 'none';
                     btn.style.color = '#fff';
                     btn.style.boxShadow = '0 6px 15px rgba(59, 130, 246, 0.3)';
@@ -493,7 +285,7 @@
                 const rawWidth = document.getElementById('calcWidth').value.replace(',', '.');
                 const lamination = document.getElementById('calcLamination').value;
                 const rawQty = document.getElementById('calcQty').value;
-                
+
                 if (!rawLength || !rawWidth || !rawQty) {
                     alert("Vui lòng điền đầy đủ kích thước và số lượng tem!");
                     return;
@@ -501,18 +293,16 @@
 
                 const length = parseFloat(rawLength);
                 const width = parseFloat(rawWidth);
-                const originalQty = parseInt(rawQty); 
-                
+                const originalQty = parseInt(rawQty);
+
                 if (isNaN(length) || isNaN(width) || length <= 0 || width <= 0) {
                     alert("Kích thước nhập vào không hợp lệ (Phải lớn hơn 0)!");
                     return;
                 }
-
                 if (isNaN(originalQty) || originalQty < 100) {
                     alert("Vui lòng nhập số lượng tối thiểu là 100 tem!");
                     return;
                 }
-
                 if (originalQty % 100 !== 0) {
                     alert("Vui lòng nhập số lượng chẵn trăm (VD: 100, 200, 500...)");
                     return;
@@ -523,42 +313,31 @@
                 const qtyWarning = document.getElementById('qtyWarning');
                 const resultFast = document.getElementById('resultFast');
                 const resultOffset = document.getElementById('resultOffset');
-                
                 const fastUnitPriceEl = document.getElementById('fastUnitPrice');
                 const fastTotalPriceEl = document.getElementById('fastTotalPrice');
                 const offsetUnitPriceEl = document.getElementById('offsetUnitPrice');
                 const offsetTotalPriceEl = document.getElementById('offsetTotalPrice');
 
                 btn.innerHTML = '⏳ ĐANG PHÂN TÍCH GIÁ...';
-                btn.disabled = true; 
-                btn.style.background = ''; 
+                btn.disabled = true;
+                btn.style.background = '';
                 btn.style.border = 'none';
                 btn.style.color = '';
                 btn.style.boxShadow = '';
-                
+
                 resultContainer.style.display = 'none';
                 qtyWarning.style.display = 'none';
 
                 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzKf0GxuGQ_otWr8xkvyKOPR_LVxc4eOTK-BZNror7XwT841-WJNXfNZYg5_YgEwWP/exec";
-                
-                const payload = {
-                    chatlieu: material,
-                    dai: length,
-                    rong: width,
-                    canmang: lamination,
-                    soluong: originalQty
-                };
+                const payload = { chatlieu: material, dai: length, rong: width, canmang: lamination, soluong: originalQty };
 
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     body: JSON.stringify(payload)
                 });
-
                 const data = await response.json();
 
                 if (data.success) {
-                    let hasFast = false;
-                    let hasOffset = false;
                     let currentBestPrice = 0;
 
                     if (data.tongTienOffset !== undefined && data.tongTienOffset > 0) {
@@ -566,7 +345,6 @@
                         offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
                         offsetTotalPriceEl.innerHTML = '<strong>' + data.tongTienOffset.toLocaleString('vi-VN') + ' đ</strong>';
                         resultOffset.style.display = 'block';
-                        hasOffset = true;
                         currentBestPrice = data.tongTienOffset;
                     } else {
                         resultOffset.style.display = 'none';
@@ -577,9 +355,7 @@
                         fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
                         fastTotalPriceEl.innerHTML = '<strong>' + data.tongTienFast.toLocaleString('vi-VN') + ' đ</strong>';
                         resultFast.style.display = 'block';
-                        hasFast = true;
-                        
-                        if(currentBestPrice === 0 || data.tongTienFast < currentBestPrice) {
+                        if (currentBestPrice === 0 || data.tongTienFast < currentBestPrice) {
                             currentBestPrice = data.tongTienFast;
                         }
                     } else {
@@ -590,7 +366,6 @@
                         const nextQty = data.nextQty;
                         const nextTotal = data.tongTienOffsetNext;
                         const extraTem = nextQty - originalQty;
-                        
                         const applyBtnHtml = `<span onclick="document.getElementById('calcQty').value=${nextQty}; document.getElementById('btnCalculate').disabled=false; document.getElementById('btnCalculate').click();" style="display:inline-block; margin-top:10px; padding: 6px 15px; background: #fbbf24; color: #000; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #d97706; transition:0.2s;">👉 Áp dụng mức ${nextQty.toLocaleString('vi-VN')} tem ngay</span>`;
 
                         if (nextTotal <= currentBestPrice) {
@@ -598,7 +373,7 @@
                             qtyWarning.style.background = "#f0fdf4";
                             qtyWarning.style.color = "#166534";
                             qtyWarning.style.display = 'block';
-                        } else if ((nextTotal - currentBestPrice) <= 100000) { 
+                        } else if ((nextTotal - currentBestPrice) <= 100000) {
                             const diff = nextTotal - currentBestPrice;
                             qtyWarning.innerHTML = `💡 <b>MẸO TIẾT KIỆM:</b> Chỉ cần thêm <b>${diff.toLocaleString('vi-VN')}đ</b>, bạn sẽ nhận được <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) nhờ công nghệ In Tiết Kiệm.<br><span style="font-size:13px; color:#b45309; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng 5-7 ngày, không phù hợp cho đơn cần in gấp!</span><br>${applyBtnHtml}`;
                             qtyWarning.style.background = "#fffbeb";
@@ -606,9 +381,8 @@
                             qtyWarning.style.display = 'block';
                         }
                     }
-                    
+
                     resultContainer.style.display = 'block';
-                    
                     btn.innerHTML = `<span style="display:flex; align-items:center; justify-content:center; gap:8px;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#10b981;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                         <span style="color:#0f172a; font-weight:800;">KÉO XUỐNG XEM GIÁ 👇</span>
@@ -617,7 +391,6 @@
                     btn.style.background = '#f8fafc';
                     btn.style.border = '2px dashed #cbd5e1';
                     btn.style.boxShadow = 'none';
-
                 } else {
                     alert('Lỗi hệ thống: ' + data.error);
                     btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';

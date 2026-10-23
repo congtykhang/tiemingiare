@@ -395,8 +395,8 @@
                 const width = parseFloat(rawWidth);
                 const originalQty = parseInt(rawQty);
 
-                if (isNaN(length) || isNaN(width) || length <= 0 || width <= 0) {
-                    alert("Kích thước nhập vào không hợp lệ (Phải lớn hơn 0)!");
+                if (isNaN(length) || isNaN(width) || length < 1 || width < 1) {
+                    alert("Kích thước tối thiểu cho phép là 1 x 1 cm!");
                     return;
                 }
                 if (isNaN(originalQty) || originalQty < 100) {
@@ -469,5 +469,37 @@
             }
         }
     </script>
+
+    // =======================================================
+        // CÁC TÍNH NĂNG TỐI ƯU TRẢI NGHIỆM NGƯỜI DÙNG (UX)
+        // =======================================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. TÍNH NĂNG: BẤM VÀO Ô LÀ TỰ ĐỘNG BÔI ĐEN TOÀN BỘ SỐ
+            const inputFields = document.querySelectorAll('#priceCalcForm input[type="text"]');
+            inputFields.forEach(input => {
+                input.addEventListener('focus', function() {
+                    // Đợi 10ms để trình duyệt hoàn tất việc đặt con trỏ, sau đó mới bôi đen
+                    setTimeout(() => {
+                        this.select();
+                    }, 10);
+                });
+            });
+
+            // 2. TÍNH NĂNG: NHẤN ENTER ĐỂ TÍNH GIÁ (CHẶN TRÌNH DUYỆT TẢI LẠI TRANG)
+            const formElement = document.getElementById('priceCalcForm');
+            formElement.addEventListener('keydown', function(event) {
+                // Kiểm tra xem phím vừa nhấn có phải là Enter (mã phím 13) không
+                if (event.key === 'Enter' || event.keyCode === 13) {
+                    event.preventDefault(); // Chặn hành động tải lại trang mặc định
+                    
+                    const btn = document.getElementById('btnCalculate');
+                    // Chỉ cho phép tính giá nếu nút Xem giá đang mở (không bị mờ/khóa)
+                    if (!btn.disabled) {
+                        tinhGiaNgay();
+                    }
+                }
+            });
+        });
 </body>
 </html>

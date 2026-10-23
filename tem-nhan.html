@@ -43,7 +43,7 @@
         .result-box .sub-days { display: block; font-size: 12px; font-weight: 500; color: #64748b; margin-top: 3px; }
         .price-big { font-size: 26px; font-weight: 900; margin: 10px 0 6px; }
         .price-total { color: #0f172a; font-size: 15px; margin-bottom: 18px; }
-        .btn-chot-don { display: block; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s; }
+        .btn-chot-don { display: block; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s; cursor: pointer; width: 100%; border: none; }
         .box-fast .title { color: #166534; }
         .box-fast .price-big { color: #15803d; }
         .box-fast .btn-chot-don { background: #f0fdf4; border: 1px solid #166534; color: #166534; }
@@ -127,11 +127,11 @@
                         <div class="grid-2-col">
                             <div class="form-group">
                                 <label class="form-label">2. Ngang (cm)</label>
-                                <input type="text" inputmode="decimal" id="calcLength" placeholder="VD: 5" class="form-input" onfocus="this.select();" oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
+                                <input type="text" inputmode="decimal" id="calcLength" placeholder="VD: 5" class="form-input" oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">3. Cao (cm)</label>
-                                <input type="text" inputmode="decimal" id="calcWidth" placeholder="VD: 5" class="form-input" onfocus="this.select();" oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
+                                <input type="text" inputmode="decimal" id="calcWidth" placeholder="VD: 5" class="form-input" oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
                             </div>
                         </div>
                         <div class="grid-2-col">
@@ -144,7 +144,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">5. SL (Tem) <span style="text-transform:none; font-weight:normal; font-size:11px; color:#ef4444;">*Chẵn trăm</span></label>
-                                <input type="text" inputmode="numeric" id="calcQty" placeholder="1000" class="form-input" onfocus="this.select();" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                <input type="text" inputmode="numeric" id="calcQty" placeholder="1000" class="form-input" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                             </div>
                         </div>
                         <div style="margin-top: 10px;">
@@ -154,29 +154,57 @@
                         </div>
                     </form>
 
-                    <div id="resultContainer">
-                        <div class="result-header">TỔNG CHI PHÍ DỰ KIẾN</div>
-                        <div class="result-comparison">
-                            <div id="resultFast" class="result-box box-fast">
-                                <div class="title">
-                                    ⏱️ IN NHANH
-                                    <span class="sub-days">(1 - 2 ngày)</span>
+                    <!-- KHU VỰC HIỂN THỊ KẾT QUẢ MỚI -->
+                    <div id="resultContainer" class="mt-8 bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm" style="display: none;">
+                        <div class="bg-slate-50 border-b border-gray-100 p-4 text-center">
+                            <!-- Đã bỏ chữ TỔNG -->
+                            <h3 class="font-bold text-slate-800 text-[15px] uppercase tracking-wide">CHI PHÍ DỰ KIẾN</h3>
+                            <!-- Dòng mô tả vắn tắt cấu hình (Dynamic Summary) -->
+                            <p id="summaryText" class="text-xs text-slate-500 mt-2 font-medium"></p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 divide-x divide-gray-100 p-1 result-comparison">
+                            <!-- Ô IN NHANH -->
+                            <div id="resultFast" class="result-box box-fast p-4 flex flex-col justify-between" style="display: none;">
+                                <div class="text-center">
+                                    <div class="title font-bold text-emerald-800 text-[13px] flex items-center justify-center gap-1">
+                                        ⏱️ IN NHANH
+                                        <span class="sub-days">(1 - 2 ngày)</span>
+                                    </div>
+                                    
+                                    <div class="mt-4 mb-3 price-big" id="fastUnitPrice">
+                                        0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>
+                                    </div>
+                                    <div class="font-bold text-slate-800 text-[15px] price-total" id="fastTotalPrice">0 đ</div>
                                 </div>
-                                <div class="price-big" id="fastUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
-                                <div class="price-total" id="fastTotalPrice"><strong>0 đ</strong></div>
-                                <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn Zalo</a>
+                                <!-- Nút bấm tâm lý nhẹ nhàng hơn -->
+                                <button onclick="guiZalo('Fast')" class="btn-chot-don mt-5 w-full py-2.5 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-sm rounded-lg border border-emerald-200 transition-colors">
+                                    Tư vấn trực tiếp (Zalo)
+                                </button>
                             </div>
-                            <div id="resultOffset" class="result-box box-offset">
-                                <div class="title">
-                                    📦 IN TIẾT KIỆM
-                                    <span class="sub-days">(5 - 7 ngày)</span>
+
+                            <!-- Ô IN TIẾT KIỆM -->
+                            <div id="resultOffset" class="result-box box-offset p-4 flex flex-col justify-between" style="display: none;">
+                                <div class="text-center">
+                                    <div class="title font-bold text-blue-900 text-[13px] flex items-center justify-center gap-1">
+                                        📦 IN TIẾT KIỆM
+                                        <span class="sub-days">(5 - 7 ngày)</span>
+                                    </div>
+                                    
+                                    <div class="mt-4 mb-3 price-big" id="offsetUnitPrice">
+                                        0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>
+                                    </div>
+                                    <div class="font-bold text-slate-800 text-[15px] price-total" id="offsetTotalPrice">0 đ</div>
                                 </div>
-                                <div class="price-big" id="offsetUnitPrice">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
-                                <div class="price-total" id="offsetTotalPrice"><strong>0 đ</strong></div>
-                                <a href="https://zalo.me/0986450025" target="_blank" class="btn-chot-don">Chốt Đơn Zalo</a>
+                                <!-- Nút bấm tâm lý nhẹ nhàng hơn -->
+                                <button onclick="guiZalo('Offset')" class="btn-chot-don mt-5 w-full py-2.5 px-2 bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold text-sm rounded-lg border border-blue-200 transition-colors">
+                                    Tư vấn trực tiếp (Zalo)
+                                </button>
                             </div>
                         </div>
-                        <div id="qtyWarning" class="qty-warning"></div>
+                        <!-- VÙNG MẸO TIẾT KIỆM -->
+                        <div id="qtyWarning" class="qty-warning p-4 text-[14px] text-center border-t border-gray-100 leading-relaxed" style="display: none;"></div>
+                        
                         <div style="padding: 12px; background: #f8fafc; font-size: 12px; color: #64748b; text-align: center; font-style: italic; border-top: 1px solid #e2e8f0;">
                             * Giá tham khảo. In tiết kiệm áp dụng cho số lượng chẵn ngàn.
                         </div>
@@ -317,6 +345,12 @@
             const offsetUnitPriceEl = document.getElementById('offsetUnitPrice');
             const offsetTotalPriceEl = document.getElementById('offsetTotalPrice');
 
+            // Lấy thông tin cấu hình từ form để điền vào phần tóm tắt
+            const material = document.getElementById('calcMaterial').value;
+            const length = document.getElementById('calcLength').value;
+            const width = document.getElementById('calcWidth').value;
+            const lamination = document.getElementById('calcLamination').value;
+
             const fastPrice = (data.tongTienFast !== undefined && data.tongTienFast > 0) ? data.tongTienFast : 0;
             const offsetPrice = (data.tongTienOffset !== undefined && data.tongTienOffset > 0) ? data.tongTienOffset : 0;
             let currentBestPrice = 0;
@@ -325,7 +359,7 @@
                 const unitPrice = Math.round(fastPrice / originalQty);
                 fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
                 fastTotalPriceEl.innerHTML = '<strong>' + fastPrice.toLocaleString('vi-VN') + ' đ</strong>';
-                resultFast.style.display = 'block';
+                resultFast.style.display = 'flex';
                 currentBestPrice = fastPrice;
             } else {
                 resultFast.style.display = 'none';
@@ -335,16 +369,14 @@
                 const unitPrice = Math.round(offsetPrice / originalQty);
                 offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
                 offsetTotalPriceEl.innerHTML = '<strong>' + offsetPrice.toLocaleString('vi-VN') + ' đ</strong>';
-                resultOffset.style.display = 'block';
+                resultOffset.style.display = 'flex';
                 currentBestPrice = offsetPrice;
             } else {
                 resultOffset.style.display = 'none';
             }
 
-                        // HIỆN MẸO TIẾT KIỆM (Chỉ khi khách phải bù thêm tiền)
-                        // HIỆN MẸO TIẾT KIỆM (Chỉ khi khách nhập số lẻ KHÔNG chẵn ngàn, VÀ phải bù thêm tiền)
+            // HIỆN MẸO TIẾT KIỆM (Chỉ khi khách nhập số lẻ KHÔNG chẵn ngàn, VÀ phải bù thêm tiền)
             qtyWarning.style.display = 'none';
-            // Thêm điều kiện (originalQty % 1000 !== 0) để chặn luôn nếu khách đã nhập chẵn 1000, 2000...
             if (originalQty % 1000 !== 0 && originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
                 const nextQty = data.nextQty;
                 const nextTotal = data.tongTienOffsetNext;
@@ -362,8 +394,11 @@
                 }
             }
 
-
+            // Hiển thị phần kết quả và dòng mô tả cấu hình vắn tắt
             resultContainer.style.display = 'block';
+            const summaryStr = `${material} | Cán màng: ${lamination} | Khổ: ${length} x ${width} cm | ${originalQty.toLocaleString('vi-VN')} tem`;
+            document.getElementById('summaryText').innerText = summaryStr;
+
             btn.innerHTML = `<span style="display:flex; align-items:center; justify-content:center; gap:8px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#10b981;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                 <span style="color:#0f172a; font-weight:800;">KÉO XUỐNG XEM GIÁ 👇</span>
@@ -425,6 +460,7 @@
                 resultContainer.style.display = 'none';
                 qtyWarning.style.display = 'none';
 
+                // URL GOOGLE SCRIPT MỚI CỦA ANH
                 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzKf0GxuGQ_otWr8xkvyKOPR_LVxc4eOTK-BZNror7XwT841-WJNXfNZYg5_YgEwWP/exec";
                 const payload = { chatlieu: material, dai: length, rong: width, canmang: lamination, soluong: originalQty };
 
@@ -464,10 +500,44 @@
                 btn.disabled = false;
             }
         }
+
+        // =======================================================
+        // HÀM TẠO TIN NHẮN TỰ ĐỘNG GỬI QUA ZALO
+        // =======================================================
+        function guiZalo(loaiIn) {
+            const chatLieu = document.getElementById('calcMaterial').value;
+            const chieuDai = document.getElementById('calcLength').value;
+            const chieuRong = document.getElementById('calcWidth').value;
+            const canMang = document.getElementById('calcLamination').value;
+            const soLuong = document.getElementById('calcQty').value;
+            
+            let tenGoiLoaiIn = "";
+            let giaTem = "";
+            let tongTien = "";
+            
+            if (loaiIn === 'Fast') {
+                tenGoiLoaiIn = "In Nhanh (1-2 ngày)";
+                giaTem = document.getElementById('resGiaTemFast').innerText;
+                tongTien = document.getElementById('resTongTienFast').innerText;
+            } else {
+                tenGoiLoaiIn = "In Tiết Kiệm (5-7 ngày)";
+                giaTem = document.getElementById('resGiaTemOffset').innerText;
+                tongTien = document.getElementById('resTongTienOffset').innerText;
+            }
+
+            // Tin nhắn được soạn với giọng điệu thân thiện, nhẹ nhàng
+            const message = `Chào Tiệm In Giá Rẻ,\nMình muốn tư vấn in tem nhãn với cấu hình như sau:\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Cán màng: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} tem\n- Lựa chọn: ${tenGoiLoaiIn}\n👉 Giá tham khảo trên web: ${tongTien} (${giaTem} đ/tem)\n\nXưởng tư vấn giúp mình nhé!`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            // Đổi số điện thoại bên dưới thành số Zalo của anh (bỏ số 0, thay bằng 84)
+            const zaloNumber = "84986450025"; 
+            
+            window.open(`https://zalo.me/${zaloNumber}?text=${encodedMessage}`, '_blank');
+        }
+
         // =======================================================
         // CÁC TÍNH NĂNG TỐI ƯU TRẢI NGHIỆM NGƯỜI DÙNG (UX)
         // =======================================================
-        
         document.addEventListener('DOMContentLoaded', function() {
             // 1. TÍNH NĂNG: BẤM VÀO Ô LÀ TỰ ĐỘNG BÔI ĐEN TOÀN BỘ SỐ
             const inputFields = document.querySelectorAll('#priceCalcForm input[type="text"]');

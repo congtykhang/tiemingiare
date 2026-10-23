@@ -341,26 +341,25 @@
                 resultOffset.style.display = 'none';
             }
 
+                        // HIỆN MẸO TIẾT KIỆM (Chỉ khi khách phải bù thêm tiền)
             qtyWarning.style.display = 'none';
             if (originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
                 const nextQty = data.nextQty;
                 const nextTotal = data.tongTienOffsetNext;
                 const extraTem = nextQty - originalQty;
-                const applyBtnHtml = `<span onclick="document.getElementById('calcQty').value=${nextQty}; document.getElementById('btnCalculate').disabled=false; tinhGiaNgay();" style="display:inline-block; margin-top:10px; padding: 6px 15px; background: #fbbf24; color: #000; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #d97706; transition:0.2s;">👉 Áp dụng mức ${nextQty.toLocaleString('vi-VN')} tem ngay</span>`;
-
-                if (nextTotal <= currentBestPrice) {
-                    qtyWarning.innerHTML = `🎉 <b>ĐẶC QUYỀN:</b> Bạn đủ điều kiện nâng cấp! Xưởng sẽ tự động in dư thành <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) với giá Tiết Kiệm chỉ <b>${nextTotal.toLocaleString('vi-VN')}đ</b>.<br><span style="font-size:13px; color:#166534; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng In Tiết Kiệm là 5-7 ngày.</span><br>${applyBtnHtml}`;
-                    qtyWarning.style.background = "#f0fdf4";
-                    qtyWarning.style.color = "#166534";
-                    qtyWarning.style.display = 'block';
-                } else if ((nextTotal - currentBestPrice) <= 100000) {
-                    const diff = nextTotal - currentBestPrice;
-                    qtyWarning.innerHTML = `💡 <b>MẸO TIẾT KIỆM:</b> Chỉ cần thêm <b>${diff.toLocaleString('vi-VN')}đ</b>, bạn sẽ nhận được <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) nhờ công nghệ In Tiết Kiệm.<br><span style="font-size:13px; color:#b45309; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng 5-7 ngày, không phù hợp cho đơn cần in gấp!</span><br>${applyBtnHtml}`;
+                const diff = nextTotal - currentBestPrice; // Số tiền phải bù thêm
+                
+                // ĐIỀU KIỆN UPSELL: Tiền bù thêm phải DƯƠNG (lớn hơn 0) và KHÔNG QUÁ 100.000đ
+                if (diff > 0 && diff <= 100000) {
+                    const applyBtnHtml = `<span onclick="document.getElementById('calcQty').value=${nextQty}; document.getElementById('btnCalculate').disabled=false; tinhGiaNgay();" style="display:inline-block; margin-top:10px; padding: 6px 15px; background: #fbbf24; color: #000; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #d97706; transition:0.2s;">👉 Áp dụng mức ${nextQty.toLocaleString('vi-VN')} tem ngay</span>`;
+                    
+                    qtyWarning.innerHTML = `💡 <b>MẸO TIẾT KIỆM:</b> Chỉ cần thêm <b>${diff.toLocaleString('vi-VN')}đ</b>, bạn sẽ nhận được tới <b>${nextQty.toLocaleString('vi-VN')} tem</b> (+${extraTem} tem) nhờ công nghệ In Tiết Kiệm.<br><span style="font-size:13px; color:#b45309; font-style:italic;">⚠️ Lưu ý: Thời gian giao hàng In Tiết Kiệm là 5-7 ngày.</span><br>${applyBtnHtml}`;
                     qtyWarning.style.background = "#fffbeb";
                     qtyWarning.style.color = "#b45309";
                     qtyWarning.style.display = 'block';
                 }
             }
+
 
             resultContainer.style.display = 'block';
             btn.innerHTML = `<span style="display:flex; align-items:center; justify-content:center; gap:8px;">

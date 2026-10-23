@@ -377,12 +377,23 @@
 
             if (fastPrice > 0) {
                 const unitPrice = Math.round(fastPrice / originalQty);
-                fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span>';
-                fastTotalPriceEl.innerHTML = '<strong>' + fastPrice.toLocaleString('vi-VN') + ' đ</strong>';
-                resultFast.style.display = 'flex';
+                // Bỏ phần chữ "đ/tem" vì em đã tách riêng nó ra trong HTML mới để dễ canh chỉnh
+                fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN');
+                fastTotalPriceEl.innerHTML = fastPrice.toLocaleString('vi-VN') + ' đ';
+                resultFast.style.display = 'block'; // Đổi từ flex thành block
                 currentBestPrice = fastPrice;
             } else {
                 resultFast.style.display = 'none';
+            }
+
+            if (offsetPrice > 0 && (fastPrice === 0 || offsetPrice < fastPrice)) {
+                const unitPrice = Math.round(offsetPrice / originalQty);
+                offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN');
+                offsetTotalPriceEl.innerHTML = offsetPrice.toLocaleString('vi-VN') + ' đ';
+                resultOffset.style.display = 'block'; // Đổi từ flex thành block
+                currentBestPrice = offsetPrice;
+            } else {
+                resultOffset.style.display = 'none';
             }
 
             if (offsetPrice > 0 && (fastPrice === 0 || offsetPrice < fastPrice)) {

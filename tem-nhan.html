@@ -342,8 +342,10 @@
             }
 
                         // HIỆN MẸO TIẾT KIỆM (Chỉ khi khách phải bù thêm tiền)
+                        // HIỆN MẸO TIẾT KIỆM (Chỉ khi khách nhập số lẻ KHÔNG chẵn ngàn, VÀ phải bù thêm tiền)
             qtyWarning.style.display = 'none';
-            if (originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
+            // Thêm điều kiện (originalQty % 1000 !== 0) để chặn luôn nếu khách đã nhập chẵn 1000, 2000...
+            if (originalQty % 1000 !== 0 && originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
                 const nextQty = data.nextQty;
                 const nextTotal = data.tongTienOffsetNext;
                 const extraTem = nextQty - originalQty;

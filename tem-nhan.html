@@ -434,6 +434,9 @@
         }
 
         // HÀM MỞ ZALO
+        // =======================================================
+        // HÀM TẠO TIN NHẮN TỰ ĐỘNG GỬI QUA ZALO (CẬP NHẬT COPY CLIPBOARD)
+        // =======================================================
         function guiZalo(loaiIn) {
             const chatLieu = document.getElementById('calcMaterial').value;
             const chieuDai = document.getElementById('calcLength').value;
@@ -457,8 +460,48 @@
 
             const message = `Chào Tiệm In Giá Rẻ,\nMình muốn tư vấn in tem nhãn với cấu hình như sau:\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Cán màng: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} tem\n- Lựa chọn: ${tenGoiLoaiIn}\n👉 Giá tham khảo trên web: ${tongTien} (${giaTem} đ/tem)\n\nXưởng tư vấn giúp mình nhé!`;
             
-            const encodedMessage = encodeURIComponent(message);
+            // 1. Sao chép nội dung vào Clipboard
+            if (navigator.clipboard && window.isSecureContext) {
+                // Sử dụng API hiện đại nếu trình duyệt hỗ trợ
+                navigator.clipboard.writeText(message).then(function() {
+                    alert("Đã sao chép nội dung báo giá!\nVui lòng 'Dán' (Paste) vào khung chat Zalo ở màn hình tiếp theo.");
+                    moZalo();
+                }).catch(function() {
+                    // Fallback nếu lỗi
+                    copyFallback(message);
+                });
+            } else {
+                // Fallback cho trình duyệt cũ hoặc thiết bị di động
+                copyFallback(message);
+            }
+        }
+
+        // Hàm hỗ trợ copy (Fallback)
+        function copyFallback(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            // Đặt text area ngoài tầm nhìn
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert("Đã sao chép nội dung báo giá!\nVui lòng 'Dán' (Paste) vào khung chat Zalo ở màn hình tiếp theo.");
+            } catch (err) {
+                alert("Trình duyệt không hỗ trợ tự động sao chép. Vui lòng ghi nhớ thông tin để gửi Zalo nhé!");
+            }
+            textArea.remove();
+            moZalo();
+        }
+
+        // Hàm mở Zalo
+        function moZalo() {
             const zaloNumber = "84986450025"; 
+            // Vẫn truyền tham số text phòng trường hợp Zalo Web nhận được
+            const encodedMessage = encodeURIComponent("Xin chào Tiệm In Giá Rẻ!");
             window.open(`https://zalo.me/${zaloNumber}?text=${encodedMessage}`, '_blank');
         }
 

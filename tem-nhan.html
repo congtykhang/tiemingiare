@@ -285,15 +285,19 @@
     </footer>
 
     <script>
+// BỘ NHỚ ĐỆM TẠM THỜI TRÊN TRÌNH DUYỆT
         const priceCache = {};
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý menu mobile
             const mobileMenu = document.getElementById('mobile-menu');
             const navLinks = document.getElementById('nav-links');
-            mobileMenu.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                mobileMenu.classList.toggle('is-active');
-            });
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    mobileMenu.classList.toggle('is-active');
+                });
+            }
             kiemTraCanMang();
 
             // 1. TÍNH NĂNG: BẤM VÀO Ô LÀ TỰ ĐỘNG BÔI ĐEN
@@ -306,15 +310,17 @@
 
             // 2. TÍNH NĂNG: NHẤN ENTER ĐỂ TÍNH GIÁ
             const formElement = document.getElementById('priceCalcForm');
-            formElement.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter' || event.keyCode === 13) {
-                    event.preventDefault(); 
-                    const btn = document.getElementById('btnCalculate');
-                    if (!btn.disabled) {
-                        tinhGiaNgay();
+            if (formElement) {
+                formElement.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter' || event.keyCode === 13) {
+                        event.preventDefault(); 
+                        const btn = document.getElementById('btnCalculate');
+                        if (!btn.disabled) {
+                            tinhGiaNgay();
+                        }
                     }
-                }
-            });
+                });
+            }
         });
 
         const chatLieuKhongCanMang = ['Decal kraft', 'Decal vỡ dẻo', 'Decal giấy fort'];
@@ -382,10 +388,9 @@
             const offsetPrice = (data.tongTienOffset !== undefined && data.tongTienOffset > 0) ? data.tongTienOffset : 0;
             let currentBestPrice = 0;
 
-            // [CẬP NHẬT]: Làm tròn giá, đảm bảo Tổng = Đơn giá x Số lượng
             if (fastPrice > 0) {
                 const unitPrice = Math.round(fastPrice / originalQty);
-                const displayTotalPrice = unitPrice * originalQty; // Tính ngược lại tổng tiền
+                const displayTotalPrice = unitPrice * originalQty; 
                 
                 fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN');
                 fastTotalPriceEl.innerHTML = displayTotalPrice.toLocaleString('vi-VN') + ' đ';
@@ -397,7 +402,7 @@
 
             if (offsetPrice > 0 && (fastPrice === 0 || offsetPrice < fastPrice)) {
                 const unitPrice = Math.round(offsetPrice / originalQty);
-                const displayTotalPrice = unitPrice * originalQty; // Tính ngược lại tổng tiền
+                const displayTotalPrice = unitPrice * originalQty; 
                 
                 offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN');
                 offsetTotalPriceEl.innerHTML = displayTotalPrice.toLocaleString('vi-VN') + ' đ';
@@ -410,7 +415,6 @@
             qtyWarning.style.display = 'none';
             if (originalQty % 1000 !== 0 && originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
                 const nextQty = data.nextQty;
-                // [CẬP NHẬT]: Đồng bộ giá gợi ý Upsell với công thức (Đơn giá x Số lượng)
                 const nextUnitPrice = Math.round(data.tongTienOffsetNext / nextQty);
                 const nextTotal = nextUnitPrice * nextQty;
                 
@@ -442,7 +446,7 @@
         }
 
         // =======================================================
-        // HÀM TẠO TIN NHẮN TỰ ĐỘNG GỬI QUA ZALO (CẬP NHẬT HIỆU ỨNG NÚT BẤM)
+        // HÀM TẠO TIN NHẮN TỰ ĐỘNG GỬI QUA ZALO 
         // =======================================================
         function guiZalo(loaiIn) {
             const chatLieu = document.getElementById('calcMaterial').value;
@@ -454,9 +458,8 @@
             let tenGoiLoaiIn = "";
             let giaTem = "";
             let tongTien = "";
-            let btnElement = null; // Biến để xác định khách vừa bấm nút nào
+            let btnElement = null; 
             
-            // Lấy dữ liệu và định vị nút bấm tương ứng
             if (loaiIn === 'Fast') {
                 tenGoiLoaiIn = "In Nhanh (1-2 ngày)";
                 giaTem = document.getElementById('fastUnitPrice').innerText;
@@ -471,17 +474,15 @@
 
             const message = `Chào Tiệm In Giá Rẻ,\nMình muốn tư vấn in tem nhãn với cấu hình như sau:\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Cán màng: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} tem\n- Lựa chọn: ${tenGoiLoaiIn}\n👉 Giá tham khảo trên web: ${tongTien} (${giaTem} đ/tem)\n\nXưởng tư vấn giúp mình nhé!`;
             
-            // HIỆU ỨNG ĐỔI GIAO DIỆN NÚT BẤM (Báo cho khách biết đã copy)
             const hieuUngNutBam = () => {
+                if(!btnElement) return;
                 const originalText = btnElement.innerText;
                 
-                // Đổi nút thành màu xanh lá + Hướng dẫn khách dán
                 btnElement.innerText = "✅ Đã copy! Nhớ DÁN vào Zalo nhé";
                 btnElement.style.backgroundColor = "#10b981"; 
                 btnElement.style.color = "#ffffff";
                 btnElement.style.borderColor = "#10b981";
                 
-                // Trả lại trạng thái cũ sau 4 giây
                 setTimeout(() => {
                     btnElement.innerText = originalText;
                     btnElement.style.backgroundColor = "";
@@ -490,11 +491,10 @@
                 }, 4000);
             };
 
-            // THỰC THI SAO CHÉP NGẦM
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(message).then(function() {
-                    hieuUngNutBam(); // Kích hoạt hiệu ứng nút
-                    moZalo();        // Mở Zalo
+                    hieuUngNutBam(); 
+                    moZalo();        
                 }).catch(function() {
                     copyFallback(message);
                     hieuUngNutBam();
@@ -505,7 +505,6 @@
             }
         }
 
-        // Hàm sao chép ngầm dự phòng (Dành cho trình duyệt cũ)
         function copyFallback(text) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
@@ -517,32 +516,26 @@
             textArea.select();
             try {
                 document.execCommand('copy');
-            } catch (err) {} // Im lặng nếu lỗi, không hiện Popup
+            } catch (err) {} 
             textArea.remove();
             moZalo();
         }
 
-        // Hàm chuyển tiếp sang Zalo
         function moZalo() {
             const zaloNumber = "84986450025"; 
             const encodedMessage = encodeURIComponent("Xin chào Tiệm In Giá Rẻ! Mình đã xem báo giá trên website và muốn tư vấn thêm.");
             const zaloUrl = `https://zalo.me/${zaloNumber}?text=${encodedMessage}`;
             
-            // Anh có thể tự chỉnh thời gian chờ ở con số 1500 bên dưới (1500 = 1.5 giây)
             setTimeout(() => {
-                // Nhận diện xem khách đang dùng Điện thoại hay Máy tính
                 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                
                 if (isMobile) {
-                    // Tránh lỗi tab trắng trên điện thoại
                     window.location.href = zaloUrl;
                 } else {
-                    // Giữ lại trang tính giá trên máy tính
                     window.open(zaloUrl, '_blank');
                 }
             }, 1500); 
         }
-        }
+
         async function tinhGiaNgay() {
             try {
                 const material = document.getElementById('calcMaterial').value;

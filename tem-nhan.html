@@ -442,7 +442,7 @@
         }
 
         // =======================================================
-        // HÀM TẠO TIN NHẮN TỰ ĐỘNG GỬI QUA ZALO (CẬP NHẬT SAO CHÉP NGẦM)
+        // HÀM TẠO TIN NHẮN TỰ ĐỘNG GỬI QUA ZALO (CẬP NHẬT HIỆU ỨNG NÚT BẤM)
         // =======================================================
         function guiZalo(loaiIn) {
             const chatLieu = document.getElementById('calcMaterial').value;
@@ -454,32 +454,58 @@
             let tenGoiLoaiIn = "";
             let giaTem = "";
             let tongTien = "";
+            let btnElement = null; // Biến để xác định khách vừa bấm nút nào
             
+            // Lấy dữ liệu và định vị nút bấm tương ứng
             if (loaiIn === 'Fast') {
                 tenGoiLoaiIn = "In Nhanh (1-2 ngày)";
                 giaTem = document.getElementById('fastUnitPrice').innerText;
                 tongTien = document.getElementById('fastTotalPrice').innerText;
+                btnElement = document.querySelector('#resultFast .btn-chot-don');
             } else {
                 tenGoiLoaiIn = "In Tiết Kiệm (5-7 ngày)";
                 giaTem = document.getElementById('offsetUnitPrice').innerText;
                 tongTien = document.getElementById('offsetTotalPrice').innerText;
+                btnElement = document.querySelector('#resultOffset .btn-chot-don');
             }
 
             const message = `Chào Tiệm In Giá Rẻ,\nMình muốn tư vấn in tem nhãn với cấu hình như sau:\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Cán màng: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} tem\n- Lựa chọn: ${tenGoiLoaiIn}\n👉 Giá tham khảo trên web: ${tongTien} (${giaTem} đ/tem)\n\nXưởng tư vấn giúp mình nhé!`;
             
-            // Thực thi sao chép ngầm (Không mở popup thông báo)
+            // HIỆU ỨNG ĐỔI GIAO DIỆN NÚT BẤM (Báo cho khách biết đã copy)
+            const hieuUngNutBam = () => {
+                const originalText = btnElement.innerText;
+                
+                // Đổi nút thành màu xanh lá + Hướng dẫn khách dán
+                btnElement.innerText = "✅ Đã copy! Nhớ DÁN vào Zalo nhé";
+                btnElement.style.backgroundColor = "#10b981"; 
+                btnElement.style.color = "#ffffff";
+                btnElement.style.borderColor = "#10b981";
+                
+                // Trả lại trạng thái cũ sau 4 giây
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                    btnElement.style.backgroundColor = "";
+                    btnElement.style.color = "";
+                    btnElement.style.borderColor = "";
+                }, 4000);
+            };
+
+            // THỰC THI SAO CHÉP NGẦM
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(message).then(function() {
-                    moZalo();
+                    hieuUngNutBam(); // Kích hoạt hiệu ứng nút
+                    moZalo();        // Mở Zalo
                 }).catch(function() {
                     copyFallback(message);
+                    hieuUngNutBam();
                 });
             } else {
                 copyFallback(message);
+                hieuUngNutBam();
             }
         }
 
-        // Hàm sao chép ngầm dự phòng
+        // Hàm sao chép ngầm dự phòng (Dành cho trình duyệt cũ)
         function copyFallback(text) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
@@ -491,7 +517,7 @@
             textArea.select();
             try {
                 document.execCommand('copy');
-            } catch (err) {} // Im lặng nếu lỗi, không làm phiền khách
+            } catch (err) {} // Im lặng nếu lỗi, không hiện Popup
             textArea.remove();
             moZalo();
         }
@@ -500,9 +526,12 @@
         function moZalo() {
             const zaloNumber = "84986450025"; 
             const encodedMessage = encodeURIComponent("Xin chào Tiệm In Giá Rẻ! Mình đã xem báo giá trên website và muốn tư vấn thêm.");
-            window.open(`https://zalo.me/${zaloNumber}?text=${encodedMessage}`, '_blank');
+            
+            // Dùng setTimeout nhỏ để khách kịp nhìn thấy nút bấm đổi màu trước khi tab mới mở ra
+            setTimeout(() => {
+                window.open(`https://zalo.me/${zaloNumber}?text=${encodedMessage}`, '_blank');
+            }, 300);
         }
-
         async function tinhGiaNgay() {
             try {
                 const material = document.getElementById('calcMaterial').value;

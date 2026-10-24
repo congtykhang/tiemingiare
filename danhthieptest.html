@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Danh Thiếp - Card Visit | CÔNG TY TNHH PHẠM DUY KHANG</title>
+    <!-- Kế thừa trọn vẹn thiết kế từ style.css -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .showcase-container {
+            max-width: 1150px;
+            margin: 50px auto;
+            padding: 0 15px;
+        }
+
+        .showcase-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .showcase-header h1 {
+            font-size: 32px;
+            color: #1e293b;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .showcase-header p {
+            font-size: 16px;
+            color: #64748b;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-item {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .product-details {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .product-desc {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .price-box {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px dashed #cbd5e1;
+        }
+        
+        .price-box p { margin: 0 0 5px; font-size: 12px; color: #64748b; font-weight: bold; text-transform: uppercase; }
+        .price-box span { font-size: 20px; font-weight: 900; color: #1e3a8a; }
+
+        .btn-zalo-adv {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            background: #eff6ff;
+            color: #1e3a8a;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-zalo-adv:hover {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html"><span>PHẠM DUY KHANG</span></a>
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="nav-links" id="nav-links">
+            <a href="index.html">Trang Chủ</a>
+            <div class="dropdown">
+                <a href="index.html#products" class="dropbtn active">Sản Phẩm <span class="arrow">&#9662;</span></a>
+                <div class="dropdown-content">
+                    <a href="tem-nhan.html">In Tem Nhãn (Decal)</a>
+                    <a href="danh-thiep.html" class="active">In Danh Thiếp</a>
+                    <a href="tui-giay.html">In Túi Giấy</a>
+                    <a href="to-roi.html">In Tờ Rơi / Catalogue</a>
+                </div>
+            </div>
+            <a href="lien-he.html">Liên Hệ</a>
+            <a href="https://zalo.me/84986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
+        </nav>
+        <a href="https://zalo.me/84986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
+    </header>
+
+    <div class="showcase-container">
+        
+        <div class="showcase-header">
+            <h1>In Danh Thiếp Chuyên Nghiệp</h1>
+            <p>Khẳng định đẳng cấp thương hiệu qua từng điểm chạm. Đa dạng chất liệu giấy, công nghệ in hiện đại từ số lượng ít đến in ghép bài tối ưu chi phí.</p>
+        </div>
+
+        <div class="product-list">
+            
+            <!-- SP 1: Danh thiếp số lượng nhiều -->
+            <div class="product-item">
+                <img src="images/danh-thiep.jpg" alt="Danh thiếp số lượng nhiều" class="product-image">
+                <div class="product-details">
+                    <h3 class="product-title">Danh Thiếp Số Lượng Nhiều</h3>
+                    <div class="product-desc">
+                        Công nghệ in Offset ghép bài. Khuyên dùng cho doanh nghiệp in ấn đồng loạt cho nhân viên. Chất lượng chuẩn mực, giá siêu rẻ.
+                        <br><br><strong>Quy cách:</strong> Giấy C300gsm cứng cáp, cán màng mờ 2 mặt bảo vệ.
+                    </div>
+                    <div class="price-box">
+                        <p>Giá tham khảo</p>
+                        <span>Chỉ từ 25.000đ / Hộp</span>
+                    </div>
+                    <button onclick="guiZaloAdv('Danh Thiếp Số Lượng Nhiều')" class="btn-zalo-adv">Tư vấn trực tiếp (Zalo)</button>
+                </div>
+            </div>
+
+            <!-- SP 2: Danh thiếp in nhanh -->
+            <div class="product-item">
+                <img src="images/danh-thiep.jpg" alt="Danh thiếp in nhanh" class="product-image">
+                <div class="product-details">
+                    <h3 class="product-title">Danh Thiếp In Nhanh (Số lượng ít)</h3>
+                    <div class="product-desc">
+                        Cứu cánh cho những chuyến công tác gấp. In kỹ thuật số sắc nét, nhận hàng ngay trong ngày.
+                        <br><br><strong>Quy cách:</strong> Nhận in từ 1 hộp. Giấy C300gsm, Ford hoặc các loại giấy phổ thông.
+                    </div>
+                    <div class="price-box">
+                        <p>Dịch vụ</p>
+                        <span>In lấy liền trong ngày</span>
+                    </div>
+                    <button onclick="guiZaloAdv('Danh Thiếp In Nhanh lấy liền')" class="btn-zalo-adv">Tư vấn trực tiếp (Zalo)</button>
+                </div>
+            </div>
+
+            <!-- SP 3: Danh thiếp giấy mỹ thuật -->
+            <div class="product-item">
+                <img src="images/danh-thiep.jpg" alt="Danh thiếp giấy mỹ thuật" class="product-image">
+                <div class="product-details">
+                    <h3 class="product-title">Danh Thiếp Giấy Mỹ Thuật</h3>
+                    <div class="product-desc">
+                        Mang đến cảm giác chạm sang trọng, khác biệt hoàn toàn với giấy thường. Có gân, nhám, hoặc ánh kim.
+                        <br><br><strong>Qia công:</strong> Hỗ trợ ép kim logo, dập nổi, bế hình theo yêu cầu.
+                    </div>
+                    <div class="price-box">
+                        <p>Dịch vụ</p>
+                        <span>Thiết kế & In cao cấp</span>
+                    </div>
+                    <button onclick="guiZaloAdv('Danh Thiếp Giấy Mỹ Thuật / Ép kim')" class="btn-zalo-adv">Tư vấn trực tiếp (Zalo)</button>
+                </div>
+            </div>
+
+            <!-- SP 4: Danh thiếp có keo -->
+            <div class="product-item">
+                <img src="images/danh-thiep.jpg" alt="Danh thiếp có keo" class="product-image">
+                <div class="product-details">
+                    <h3 class="product-title">Danh Thiếp Có Keo Sẵn (Decal)</h3>
+                    <div class="product-desc">
+                        Sự kết hợp giữa thẻ cá nhân và tem nhãn. Bóc ra dán lên bưu kiện, tài liệu cực kỳ tiện dụng.
+                        <br><br><strong>Quy cách:</strong> Decal giấy hoặc decal nhựa bám dính chắc chắn.
+                    </div>
+                    <div class="price-box">
+                        <p>Ứng dụng</p>
+                        <span>Dán hồ sơ, bưu kiện</span>
+                    </div>
+                    <button onclick="guiZaloAdv('Danh Thiếp Decal (Có keo)')" class="btn-zalo-adv">Tư vấn trực tiếp (Zalo)</button>
+                </div>
+            </div>
+
+            <!-- SP 5: Danh thiếp nhựa / Thẻ VIP -->
+            <div class="product-item">
+                <img src="images/danh-thiep.jpg" alt="Danh thiếp nhựa trong" class="product-image">
+                <div class="product-details">
+                    <h3 class="product-title">Danh Thiếp Nhựa / Thẻ VIP</h3>
+                    <div class="product-desc">
+                        Bền bỉ, xé không rách, chống nước 100%. Phù hợp làm thẻ khách hàng thân thiết, thẻ thành viên cao cấp.
+                        <br><br><strong>Tùy chọn:</strong> Nhựa trong suốt (xuyên thấu) hoặc nhựa đục. Tích hợp chip NFC thông minh.
+                    </div>
+                    <div class="price-box">
+                        <p>Chất liệu</p>
+                        <span>Nhựa PVC siêu bền</span>
+                    </div>
+                    <button onclick="guiZaloAdv('Danh Thiếp Nhựa / Thẻ VIP / NFC')" class="btn-zalo-adv">Tư vấn trực tiếp (Zalo)</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer id="contact">
+        <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
+        <p><strong>Hotline/Zalo:</strong> <a href="https://zalo.me/84986450025" style="color: inherit; text-decoration: none;">0986.450.025</a></p>
+        <p><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
+        <p><strong>Chi nhánh:</strong> A34/9JS Quốc Lộ 50, Phường Bình Hưng, TP. Hồ Chí Minh</p>
+        <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
+    </footer>
+
+    <script>
+        // Menu Mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+            mobileMenu.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileMenu.classList.toggle('is-active');
+            });
+            const dropBtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            dropBtn.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdownContent.classList.toggle('show');
+                }
+            });
+        });
+
+        // Hàm mở Zalo có Copy (Áp dụng chung cho các trang Showcase)
+        function guiZaloAdv(loaiSanPham) {
+            const message = `Chào Tiệm In Giá Rẻ,\nMình đang xem mẫu "${loaiSanPham}" trên website và muốn nhờ xưởng tư vấn chi tiết hơn nhé!`;
+            const btnElements = document.querySelectorAll('.btn-zalo-adv');
+            
+            // Tìm đúng nút khách vừa bấm để tạo hiệu ứng
+            let targetBtn = null;
+            btnElements.forEach(btn => {
+                if(btn.innerText.includes('Tư vấn') || btn.innerText.includes('copy')) {
+                    // Do onclick truyền biến vào, mình có thể gán hiệu ứng cho tất cả hoặc nút gần nhất
+                    targetBtn = event.target;
+                }
+            });
+
+            if(targetBtn) {
+                const originalText = targetBtn.innerText;
+                targetBtn.innerText = "✅ Đã copy! Nhớ DÁN vào Zalo nhé";
+                targetBtn.style.backgroundColor = "#10b981"; 
+                targetBtn.style.color = "#ffffff";
+                targetBtn.style.borderColor = "#10b981";
+                
+                setTimeout(() => {
+                    targetBtn.innerText = originalText;
+                    targetBtn.style.backgroundColor = "";
+                    targetBtn.style.color = "";
+                    targetBtn.style.borderColor = "";
+                }, 4000);
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(message).then(function() {
+                    moZalo();
+                }).catch(function() {
+                    copyFallback(message);
+                });
+            } else {
+                copyFallback(message);
+            }
+        }
+
+        function copyFallback(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try { document.execCommand('copy'); } catch (err) {}
+            textArea.remove();
+            moZalo();
+        }
+
+        function moZalo() {
+            const zaloNumber = "84986450025"; 
+            const encodedMessage = encodeURIComponent("Xin chào Tiệm In Giá Rẻ!");
+            const zaloUrl = `https://zalo.me/${zaloNumber}?text=${encodedMessage}`;
+            
+            setTimeout(() => {
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                if (isMobile) {
+                    window.location.href = zaloUrl;
+                } else {
+                    window.open(zaloUrl, '_blank');
+                }
+            }, 1000); 
+        }
+    </script>
+</body>
+</html>

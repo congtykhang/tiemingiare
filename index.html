@@ -6,6 +6,46 @@
     <title>Tiệm In Giá Rẻ | CÔNG TY TNHH PHẠM DUY KHANG</title>
     <!-- Link nhúng file CSS dùng chung -->
     <link rel="stylesheet" href="style.css">
+    <!-- CSS nhúng trực tiếp cho các phần nâng cấp để đảm bảo không bị vỡ layout -->
+    <style>
+        /* Dải Cam Kết (Trust Badges) */
+        .trust-badges { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 15px 0; }
+        .trust-container { max-width: 1150px; margin: 0 auto; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; padding: 0 15px; }
+        .badge-item { display: flex; items-center; gap: 8px; font-size: 14px; font-weight: 600; color: #475569; }
+        .badge-icon { font-size: 18px; }
+
+        /* Nâng cấp Card Sản Phẩm */
+        .products { margin-top: 50px; padding: 0 15px; }
+        .card { display: flex; flex-direction: column; height: 100%; border: 1px solid #f1f5f9; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: #cbd5e1; }
+        .card-link-wrapper { text-decoration: none; color: inherit; flex: 1; display: flex; flex-direction: column; }
+        .card h3 { color: #0f172a; transition: color 0.2s; }
+        .card:hover h3 { color: #3b82f6; }
+        .btn-card { display: block; text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; margin-top: 15px; transition: 0.2s; }
+        
+        /* Nút tính giá (Tem Nhãn) */
+        .btn-calc { background: #fbbf24; color: #000; border: 1px solid #d97706; }
+        .btn-calc:hover { background: #f59e0b; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); }
+        
+        /* Nút Zalo (Sản phẩm khác) */
+        .btn-zalo-card { background: #eff6ff; color: #1e3a8a; border: 1px solid #bfdbfe; }
+        .btn-zalo-card:hover { background: #dbeafe; color: #1e40af; }
+
+        /* Vùng Giới Thiệu Ngắn (Why Choose Us) */
+        .why-choose-us { max-width: 1150px; margin: 60px auto; padding: 0 15px; }
+        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; background: #fff; padding: 40px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+        .why-content h2 { color: #1e293b; font-size: 28px; margin-top: 0; margin-bottom: 20px; font-weight: 800; }
+        .why-content p { color: #475569; line-height: 1.7; margin-bottom: 15px; font-size: 15px; }
+        .why-features { list-style: none; padding: 0; margin-top: 25px; }
+        .why-features li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-weight: 600; color: #334155; }
+        .why-features li span { color: #10b981; font-size: 18px; }
+        
+        @media (max-width: 768px) {
+            .why-grid { grid-template-columns: 1fr; padding: 25px; }
+            .trust-container { gap: 15px; }
+            .badge-item { font-size: 12px; width: calc(50% - 10px); }
+        }
+    </style>
 </head>
 <body>
 
@@ -15,7 +55,6 @@
             <a href="index.html"><span>PHẠM DUY KHANG</span></a>
         </div>
         
-        <!-- Nút 3 gạch (Hamburger) cho Mobile -->
         <div class="menu-toggle" id="mobile-menu">
             <span></span>
             <span></span>
@@ -23,9 +62,8 @@
         </div>
 
         <nav class="nav-links" id="nav-links">
-            <a href="index.html">Trang Chủ</a>
+            <a href="index.html" class="active">Trang Chủ</a>
             
-            <!-- Menu Sản Phẩm xổ xuống -->
             <div class="dropdown">
                 <a href="#products" class="dropbtn">Sản Phẩm <span class="arrow">&#9662;</span></a>
                 <div class="dropdown-content">
@@ -37,64 +75,114 @@
             </div>
 
             <a href="lien-he.html">Liên Hệ</a>
-            <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
+            <a href="https://zalo.me/84986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
         </nav>
         
-        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
+        <a href="https://zalo.me/84986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
     </header>
 
     <!-- PHẦN 2: BANNER CHÍNH CỦA TRANG CHỦ -->
     <section class="hero">
         <h1>In Đẹp Giá Tốt - Cùng Bạn Thành Công</h1>
-        <p>Xưởng In Trực Tiếp - Không Qua Trung Gian. <br>Cam kết chất lượng, tối ưu chi phí.</p>
-        <a href="#products" class="btn-cta" style="background-color: var(--accent-gold);">Xem Sản Phẩm</a>
+        <p>Xưởng In Trực Tiếp - Không Qua Trung Gian. <br>Cam kết chất lượng, tối ưu chi phí cho doanh nghiệp.</p>
+        <a href="#products" class="btn-cta" style="background-color: var(--accent-gold); color: #000; font-weight: bold; border: 1px solid #d97706; box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3);">Xem Báo Giá Sản Phẩm</a>
     </section>
+
+    <!-- THANH CAM KẾT (TRUST BADGES) -->
+    <div class="trust-badges">
+        <div class="trust-container">
+            <div class="badge-item"><span class="badge-icon">🏭</span> Xưởng in trực tiếp</div>
+            <div class="badge-item"><span class="badge-icon">⏱️</span> Giao hàng siêu tốc</div>
+            <div class="badge-item"><span class="badge-icon">💰</span> Giá gốc tận xưởng</div>
+            <div class="badge-item"><span class="badge-icon">🔄</span> In lỗi đền 100%</div>
+        </div>
+    </div>
 
     <!-- PHẦN 3: DANH SÁCH 4 NHÓM SẢN PHẨM -->
     <section id="products" class="products">
-        <div class="card">
-            <img src="images/tem-nhan.jpg" alt="Tem Nhãn Decal" class="product-img">
-            <h3>Tem Nhãn (Decal)</h3>
-            <p>Decal giấy, nhựa, trong, xi bạc...</p>
-            <a href="tem-nhan.html" class="card-link">Xem các loại &rarr;</a>
+        
+        <!-- CARD 1: TEM NHÃN (Sản phẩm mũi nhọn) -->
+        <div class="card" onclick="window.location.href='tem-nhan.html'">
+            <a href="tem-nhan.html" class="card-link-wrapper">
+                <img src="images/tem-nhan.jpg" alt="Tem Nhãn Decal" class="product-img">
+                <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+                    <h3 style="margin-top: 0;">Tem Nhãn (Decal)</h3>
+                    <p style="flex: 1;">Decal giấy, nhựa, trong, xi bạc... Bám dính chắc chắn, cắt bế mọi hình dáng.</p>
+                    <span class="btn-card btn-calc">👉 Bấm Tính Giá Tự Động</span>
+                </div>
+            </a>
         </div>
         
-        <div class="card">
-            <img src="images/danh-thiep.jpg" alt="Danh Thiếp" class="product-img">
-            <h3>Danh Thiếp</h3>
-            <p>In offset, in nhanh kỹ thuật số.</p>
-            <a href="danh-thiep.html" class="card-link">Xem các loại &rarr;</a>
+        <!-- CARD 2: DANH THIẾP -->
+        <div class="card" onclick="window.open('https://zalo.me/84986450025', '_blank')">
+            <a href="javascript:void(0)" class="card-link-wrapper">
+                <img src="images/danh-thiep.jpg" alt="Danh Thiếp" class="product-img">
+                <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+                    <h3 style="margin-top: 0;">Danh Thiếp</h3>
+                    <p style="flex: 1;">In offset siêu nét, in nhanh kỹ thuật số lấy liền. Hỗ trợ cán màng sang trọng.</p>
+                    <span class="btn-card btn-zalo-card">Nhắn Zalo Tư Vấn Gấp</span>
+                </div>
+            </a>
         </div>
         
-        <div class="card">
-            <img src="images/tui-giay.jpg" alt="Túi Giấy" class="product-img">
-            <h3>Túi Giấy</h3>
-            <p>Đa dạng kích thước, chất liệu giấy.</p>
-            <a href="tui-giay.html" class="card-link">Xem các loại &rarr;</a>
+        <!-- CARD 3: TÚI GIẤY -->
+        <div class="card" onclick="window.open('https://zalo.me/84986450025', '_blank')">
+            <a href="javascript:void(0)" class="card-link-wrapper">
+                <img src="images/tui-giay.jpg" alt="Túi Giấy" class="product-img">
+                <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+                    <h3 style="margin-top: 0;">Túi Giấy</h3>
+                    <p style="flex: 1;">Đa dạng kích thước, chất liệu Kraft, Ivory. Nâng tầm giá trị sản phẩm của bạn.</p>
+                    <span class="btn-card btn-zalo-card">Nhắn Zalo Tư Vấn Gấp</span>
+                </div>
+            </a>
         </div>
         
-        <div class="card">
-            <img src="images/to-roi.jpg" alt="Tờ Rơi" class="product-img">
-            <h3>Tờ Rơi / Catalogue</h3>
-            <p>Màu sắc chuẩn, gấp cấn thành phẩm.</p>
-            <a href="to-roi.html" class="card-link">Xem các loại &rarr;</a>
+        <!-- CARD 4: TỜ RƠI -->
+        <div class="card" onclick="window.open('https://zalo.me/84986450025', '_blank')">
+            <a href="javascript:void(0)" class="card-link-wrapper">
+                <img src="images/to-roi.jpg" alt="Tờ Rơi" class="product-img">
+                <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+                    <h3 style="margin-top: 0;">Tờ Rơi / Catalogue</h3>
+                    <p style="flex: 1;">In offset công nghiệp màu sắc chuẩn, sắc nét, hỗ trợ gấp cấn thành phẩm.</p>
+                    <span class="btn-card btn-zalo-card">Nhắn Zalo Tư Vấn Gấp</span>
+                </div>
+            </a>
         </div>
     </section>
 
-    <!-- PHẦN 4: CHÂN TRANG -->
+    <!-- PHẦN 4: TẠI SAO CHỌN CHÚNG TÔI -->
+    <section class="why-choose-us">
+        <div class="why-grid">
+            <div class="why-content">
+                <h2>Đối Tác In Ấn Đáng Tin Cậy Của Doanh Nghiệp</h2>
+                <p>Với hệ thống máy in kỹ thuật số tiên tiến và dàn máy Offset công nghiệp khổ lớn, <strong>Phạm Duy Khang</strong> tự tin đáp ứng mọi nhu cầu in ấn từ số lượng ít lấy ngay đến những đơn hàng lớn cần tối ưu chi phí.</p>
+                <p>Chúng tôi không chỉ in ấn, chúng tôi trao giải pháp giúp bao bì và sản phẩm của bạn nổi bật nhất trên quầy kệ.</p>
+                
+                <ul class="why-features">
+                    <li><span>✓</span> File in được kiểm tra và chỉnh sửa miễn phí trước khi xuất phim.</li>
+                    <li><span>✓</span> Hệ thống máy in thông minh hiện đại, rút ngắn thời gian chờ đợi và giảm thiểu đáng kể chi phí cho khách hàng.</li>
+                    <li><span>✓</span> Đội ngũ gia công dày dạn kinh nghiệm, kiểm soát khắt khe mọi khâu hoàn thiện để mỗi sản phẩm giao đi đều là một tác phẩm hoàn hảo.</li>
+                </ul>
+            </div>
+            <!-- Thay bằng hình ảnh thực tế xưởng in hoặc dàn máy của anh nếu có -->
+            <div style="border-radius: 12px; overflow: hidden; height: 100%;">
+                <img src="images/tem-nhan.jpg" alt="Xưởng In Phạm Duy Khang" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+        </div>
+    </section>
+
+    <!-- PHẦN 5: CHÂN TRANG -->
     <footer id="contact">
         <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
-        <p><strong>Hotline/Zalo:</strong> 0986.450.025</p>
+        <p><strong>Hotline/Zalo:</strong> <a href="https://zalo.me/84986450025" style="color: #fff; text-decoration: none;">0986.450.025</a></p>
         <p><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
         <p><strong>Chi nhánh:</strong> A34/9JS Quốc Lộ 50, Phường Bình Hưng, TP. Hồ Chí Minh</p>
         <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
     </footer>
 
     <!-- ĐOẠN JAVASCRIPT XỬ LÝ MENU MOBILE -->
-    <!-- ĐOẠN JAVASCRIPT XỬ LÝ MENU MOBILE (HỖ TRỢ TỐI ĐA SAFARI) -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Xử lý nút 3 gạch mở Menu chính
             const mobileMenu = document.getElementById('mobile-menu');
             const navLinks = document.getElementById('nav-links');
 
@@ -103,21 +191,16 @@
                 mobileMenu.classList.toggle('is-active');
             });
 
-            // Xử lý nút "Sản Phẩm" để xổ Dropdown (Chỉ trên Mobile)
             const dropBtn = document.querySelector('.dropbtn');
             const dropdownContent = document.querySelector('.dropdown-content');
 
             dropBtn.addEventListener('click', function(e) {
-                // Kiểm tra xem có đang ở chế độ mobile không (màn hình < 768px)
                 if (window.innerWidth <= 768) {
-                    e.preventDefault(); // Ngăn trình duyệt nhảy trang
+                    e.preventDefault(); 
                     dropdownContent.classList.toggle('show');
                 }
             });
         });
     </script>
-</body>
-</html>
-
 </body>
 </html>

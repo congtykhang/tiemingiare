@@ -382,22 +382,27 @@
             const offsetPrice = (data.tongTienOffset !== undefined && data.tongTienOffset > 0) ? data.tongTienOffset : 0;
             let currentBestPrice = 0;
 
+            // [CẬP NHẬT]: Làm tròn giá, đảm bảo Tổng = Đơn giá x Số lượng
             if (fastPrice > 0) {
                 const unitPrice = Math.round(fastPrice / originalQty);
+                const displayTotalPrice = unitPrice * originalQty; // Tính ngược lại tổng tiền
+                
                 fastUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN');
-                fastTotalPriceEl.innerHTML = fastPrice.toLocaleString('vi-VN') + ' đ';
+                fastTotalPriceEl.innerHTML = displayTotalPrice.toLocaleString('vi-VN') + ' đ';
                 resultFast.style.display = 'flex';
-                currentBestPrice = fastPrice;
+                currentBestPrice = displayTotalPrice;
             } else {
                 resultFast.style.display = 'none';
             }
 
             if (offsetPrice > 0 && (fastPrice === 0 || offsetPrice < fastPrice)) {
                 const unitPrice = Math.round(offsetPrice / originalQty);
+                const displayTotalPrice = unitPrice * originalQty; // Tính ngược lại tổng tiền
+                
                 offsetUnitPriceEl.innerHTML = unitPrice.toLocaleString('vi-VN');
-                offsetTotalPriceEl.innerHTML = offsetPrice.toLocaleString('vi-VN') + ' đ';
+                offsetTotalPriceEl.innerHTML = displayTotalPrice.toLocaleString('vi-VN') + ' đ';
                 resultOffset.style.display = 'flex';
-                currentBestPrice = offsetPrice;
+                currentBestPrice = displayTotalPrice;
             } else {
                 resultOffset.style.display = 'none';
             }
@@ -405,7 +410,10 @@
             qtyWarning.style.display = 'none';
             if (originalQty % 1000 !== 0 && originalQty !== data.nextQty && data.tongTienOffsetNext > 0) {
                 const nextQty = data.nextQty;
-                const nextTotal = data.tongTienOffsetNext;
+                // [CẬP NHẬT]: Đồng bộ giá gợi ý Upsell với công thức (Đơn giá x Số lượng)
+                const nextUnitPrice = Math.round(data.tongTienOffsetNext / nextQty);
+                const nextTotal = nextUnitPrice * nextQty;
+                
                 const extraTem = nextQty - originalQty;
                 const diff = nextTotal - currentBestPrice; 
                 
@@ -433,9 +441,8 @@
             btn.style.boxShadow = 'none';
         }
 
-        // HÀM MỞ ZALO
         // =======================================================
-        // HÀM TẠO TIN NHẮN TỰ ĐỘNG GỬI QUA ZALO (CẬP NHẬT COPY CLIPBOARD)
+        // HÀM TẠO TIN NHẮN TỰ ĐỘNG GỬI QUA ZALO (CẬP NHẬT SAO CHÉP NGẦM)
         // =======================================================
         function guiZalo(loaiIn) {
             const chatLieu = document.getElementById('calcMaterial').value;
@@ -460,27 +467,22 @@
 
             const message = `Chào Tiệm In Giá Rẻ,\nMình muốn tư vấn in tem nhãn với cấu hình như sau:\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Cán màng: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} tem\n- Lựa chọn: ${tenGoiLoaiIn}\n👉 Giá tham khảo trên web: ${tongTien} (${giaTem} đ/tem)\n\nXưởng tư vấn giúp mình nhé!`;
             
-            // 1. Sao chép nội dung vào Clipboard
+            // Thực thi sao chép ngầm (Không mở popup thông báo)
             if (navigator.clipboard && window.isSecureContext) {
-                // Sử dụng API hiện đại nếu trình duyệt hỗ trợ
                 navigator.clipboard.writeText(message).then(function() {
-                    alert("Đã sao chép nội dung báo giá!\nVui lòng 'Dán' (Paste) vào khung chat Zalo ở màn hình tiếp theo.");
                     moZalo();
                 }).catch(function() {
-                    // Fallback nếu lỗi
                     copyFallback(message);
                 });
             } else {
-                // Fallback cho trình duyệt cũ hoặc thiết bị di động
                 copyFallback(message);
             }
         }
 
-        // Hàm hỗ trợ copy (Fallback)
+        // Hàm sao chép ngầm dự phòng
         function copyFallback(text) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
-            // Đặt text area ngoài tầm nhìn
             textArea.style.position = "fixed";
             textArea.style.left = "-999999px";
             textArea.style.top = "-999999px";
@@ -489,19 +491,15 @@
             textArea.select();
             try {
                 document.execCommand('copy');
-                alert("Đã sao chép nội dung báo giá!\nVui lòng 'Dán' (Paste) vào khung chat Zalo ở màn hình tiếp theo.");
-            } catch (err) {
-                alert("Trình duyệt không hỗ trợ tự động sao chép. Vui lòng ghi nhớ thông tin để gửi Zalo nhé!");
-            }
+            } catch (err) {} // Im lặng nếu lỗi, không làm phiền khách
             textArea.remove();
             moZalo();
         }
 
-        // Hàm mở Zalo
+        // Hàm chuyển tiếp sang Zalo
         function moZalo() {
             const zaloNumber = "84986450025"; 
-            // Vẫn truyền tham số text phòng trường hợp Zalo Web nhận được
-            const encodedMessage = encodeURIComponent("Xin chào Tiệm In Giá Rẻ!");
+            const encodedMessage = encodeURIComponent("Xin chào Tiệm In Giá Rẻ! Mình đã xem báo giá trên website và muốn tư vấn thêm.");
             window.open(`https://zalo.me/${zaloNumber}?text=${encodedMessage}`, '_blank');
         }
 

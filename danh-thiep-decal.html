@@ -53,9 +53,17 @@
         .result-header {
             color: #1e293b; padding: 20px 15px 5px; text-align: center; font-weight: 800; font-size: 16px; text-transform: uppercase;
         }
+        
+        /* Cập nhật style cho dòng tóm tắt chống rớt dòng */
         .result-summary {
             text-align: center; font-size: 14px; color: #64748b; margin-bottom: 20px; padding: 0 15px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
         }
+        
+        @media (max-width: 480px) {
+            .result-summary { font-size: 12.5px; } /* Thu nhỏ chữ trên màn quá hẹp để giữ 1 dòng */
+        }
+
         .result-comparison { display: flex; gap: 0; border-top: 1px solid #f1f5f9; }
         .result-box { flex: 1; padding: 25px 15px 10px; text-align: center; display: none; }
         .result-box:first-child { border-right: 1px solid #f1f5f9; }
@@ -200,7 +208,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">5. SL (Thẻ) <span style="text-transform:none; font-weight:normal; font-size:11px; color:#ef4444;">*Chẵn trăm</span></label>
+                                <label class="form-label">5. SL (Cái) <span style="text-transform:none; font-weight:normal; font-size:11px; color:#ef4444;">*Chẵn trăm</span></label>
                                 <input type="text" inputmode="numeric" id="calcQty" value="500" class="form-input">
                             </div>
                         </div>
@@ -225,7 +233,7 @@
                                     <span class="title-icon">⏱️ IN NHANH</span>
                                     <span class="time-text nowrap">(1 - 2 ngày)</span>
                                 </div>
-                                <div class="price-big"><span id="fastUnitPrice">0</span><span class="price-unit"> đ/thẻ</span></div>
+                                <div class="price-big"><span id="fastUnitPrice">0</span><span class="price-unit"> đ/cái</span></div>
                                 <div class="price-total"><span id="fastTotalPrice">0 đ</span></div>
                                 <button class="btn-chot-don" id="btnFast" onclick="guiZalo('Fast')">Tư vấn trực tiếp (Zalo)</button>
                             </div>
@@ -236,7 +244,7 @@
                                     <span class="title-icon">📦 IN TIẾT KIỆM</span>
                                     <span class="time-text nowrap">(5 - 7 ngày)</span>
                                 </div>
-                                <div class="price-big"><span id="offsetUnitPrice">0</span><span class="price-unit"> đ/thẻ</span></div>
+                                <div class="price-big"><span id="offsetUnitPrice">0</span><span class="price-unit"> đ/cái</span></div>
                                 <div class="price-total"><span id="offsetTotalPrice">0 đ</span></div>
                                 <button class="btn-chot-don" id="btnOffset" onclick="guiZalo('Offset')">Tư vấn trực tiếp (Zalo)</button>
                             </div>
@@ -305,8 +313,8 @@
             <div class="pro-card" style="box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                 <img src="images/danh-thiep.jpg" alt="Danh thiếp offset" class="pro-img">
                 <div class="pro-content" style="text-align: center; padding: 15px;">
-                    <h3 style="font-size: 15px;">In Ghép Bài (SL Nhiều)</h3>
-                    <p style="text-align: left; font-size: 13px;">In offset ghép bài cực rẻ khi in từ 5 hộp trở lên. Chất liệu C300 tiêu chuẩn.</p>
+                    <h3 style="font-size: 15px;">In Số Lượng Nhiều</h3>
+                    <p style="text-align: left; font-size: 13px;">In offset công nghiệp cực rẻ khi in từ 5 hộp trở lên. Chất liệu C300 tiêu chuẩn.</p>
                     <a href="https://zalo.me/84986450025" target="_blank" class="btn-select-pro">Tư vấn Zalo</a>
                 </div>
             </div>
@@ -340,7 +348,7 @@
         </div>
     </section>
 
-    <!-- CHÂN TRANG -->
+    <!-- CHÂN TRANG CHUẨN MỚI -->
     <footer id="contact">
         <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
         <p><strong>Hotline/Zalo:</strong> <a href="https://zalo.me/84986450025" style="color: #fff; text-decoration: none;">0986.450.025</a></p>
@@ -464,7 +472,7 @@
             }
 
             if (isNaN(originalQty) || originalQty < 100) {
-                alert("Vui lòng nhập số lượng tối thiểu là 100 thẻ!");
+                alert("Vui lòng nhập số lượng tối thiểu là 100 cái!");
                 return;
             }
 
@@ -512,7 +520,7 @@
                     let hasFast = false;
                     let hasOffset = false;
                     
-                    document.getElementById('summaryText').innerText = `${material} | Cán màng: ${lamination} | Khổ: ${length} × ${width} cm | ${originalQty.toLocaleString('vi-VN')} thẻ`;
+                    document.getElementById('summaryText').innerText = `${material} | Cán màng: ${lamination} | Khổ: ${length} × ${width} cm | ${originalQty.toLocaleString('vi-VN')} cái`;
 
                     if (data.tongTienFast !== undefined && data.tongTienFast > 0) {
                         const unitPriceFast = Math.round(data.tongTienFast / originalQty);
@@ -539,7 +547,7 @@
                          resetBtn();
                     } else {
                          resultContainer.style.display = 'block';
-                         // Vô hiệu hóa nút và đổi thành "Kéo xuống xem giá" giống Tem Nhãn[cite: 5]
+                         // Vô hiệu hóa nút và đổi thành "Kéo xuống xem giá" giống Tem Nhãn
                          btn.innerHTML = `<span style="display:flex; align-items:center; justify-content:center; gap:8px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#10b981;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                 <span style="color:#1e293b; font-weight:800;">KÉO XUỐNG XEM GIÁ 👇</span>
@@ -583,7 +591,7 @@
                 btnElement = document.getElementById('btnOffset');
             }
 
-            const message = `Chào Tiệm In Giá Rẻ,\nMình muốn đặt In Danh Thiếp Có Keo (Decal):\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Bề mặt: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} thẻ\n- Dịch vụ: ${tenGoiLoaiIn}\n👉 Giá tạm tính: ${tongTien} (${giaTem} đ/thẻ)\n\nXưởng kiểm tra file và tư vấn giúp mình nhé!`;
+            const message = `Chào Tiệm In Giá Rẻ,\nMình muốn đặt In Danh Thiếp Có Keo (Decal):\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Bề mặt: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} cái\n- Dịch vụ: ${tenGoiLoaiIn}\n👉 Giá tạm tính: ${tongTien} (${giaTem} đ/cái)\n\nXưởng kiểm tra file và tư vấn giúp mình nhé!`;
             
             const originalText = btnElement.innerText;
             btnElement.innerText = "✅ Đã copy! Nhớ DÁN vào Zalo nhé";

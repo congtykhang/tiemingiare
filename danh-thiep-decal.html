@@ -15,9 +15,7 @@
     
     <style>
         /* BỐ CỤC CHIA 2 CỘT */
-        .content-wrapper {
-            position: relative; max-width: 1150px; margin: 50px auto 60px; padding: 0 15px; z-index: 10;
-        }
+        .content-wrapper { position: relative; max-width: 1150px; margin: 50px auto 60px; padding: 0 15px; z-index: 10; }
         .main-split-layout { display: flex; gap: 40px; align-items: flex-start; }
         .calc-col { flex: 0 0 460px; position: sticky; top: 20px; z-index: 10; }
         .products-col { flex: 1; padding-top: 0; }
@@ -42,6 +40,10 @@
             font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.3s; width: 100%; text-transform: uppercase; 
         }
         .btn-main-calc:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4); }
+        .btn-main-calc:disabled {
+            background: #f8fafc !important; color: #1e293b !important;
+            border: 2px dashed #cbd5e1 !important; box-shadow: none !important; cursor: default !important; transform: none !important;
+        }
         
         /* GIAO DIỆN KẾT QUẢ Y CHANG TEM NHÃN */
         #resultContainer {
@@ -88,7 +90,6 @@
             text-align: center; display: none; background: #fffbeb; color: #b45309; border-bottom: 1px solid #fef3c7;
         }
         
-        /* CHỐNG RỚT DÒNG VÔ LÝ */
         .nowrap { white-space: nowrap; }
 
         /* THẺ SẢN PHẨM BÊN PHẢI & BÊN DƯỚI */
@@ -339,7 +340,7 @@
         </div>
     </section>
 
-    <!-- CHÂN TRANG CHUẨN MỚI -->
+    <!-- CHÂN TRANG -->
     <footer id="contact">
         <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
         <p><strong>Hotline/Zalo:</strong> <a href="https://zalo.me/84986450025" style="color: #fff; text-decoration: none;">0986.450.025</a></p>
@@ -388,7 +389,7 @@
                 }
             });
             
-            // Xóa kết quả khi khách gõ lại thông số
+            // Xóa kết quả khi khách gõ lại thông số & bật lại nút tính giá
             const allInputs = document.querySelectorAll('#priceCalcForm input, #priceCalcForm select');
             allInputs.forEach(input => {
                 input.addEventListener('input', resetBtn);
@@ -411,15 +412,15 @@
             });
         });
 
+        // Hàm bật lại nút tính giá
         function resetBtn() {
             const resultContainer = document.getElementById('resultContainer');
             const btn = document.getElementById('btnCalculate');
             if (resultContainer.style.display === 'block' || btn.disabled) {
                 resultContainer.style.display = 'none';
                 btn.disabled = false;
-                btn.innerHTML = '👉 BẤM ĐỂ CẬP NHẬT GIÁ MỚI';
-                btn.style.background = '#ea580c'; 
-                btn.style.color = '#fff';
+                btn.style.border = 'none';
+                btn.innerHTML = `<i class="fa-regular fa-circle-check"></i> XEM GIÁ ƯỚC TÍNH <i class="fa-solid fa-hand-pointer" style="color: #ea580c; font-size: 18px; margin-left: 5px;"></i>`;
             }
         }
 
@@ -482,6 +483,7 @@
             btn.disabled = true; 
             btn.style.background = ''; 
             btn.style.color = '';
+            btn.style.border = 'none';
             
             resultContainer.style.display = 'none';
             qtyWarning.style.display = 'none';
@@ -496,7 +498,6 @@
                 return;
             }
 
-            // GỌI THẲNG API CỦA TEM NHÃN MÀ KHÔNG CẦN CHỈNH SỬA
             const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzKf0GxuGQ_otWr8xkvyKOPR_LVxc4eOTK-BZNror7XwT841-WJNXfNZYg5_YgEwWP/exec";
 
             try {
@@ -511,10 +512,8 @@
                     let hasFast = false;
                     let hasOffset = false;
                     
-                    // Điền dòng Tóm tắt
-                    document.getElementById('summaryText').innerText = `${material} | Cán: ${lamination} | Khổ: ${length} × ${width} cm | ${originalQty.toLocaleString('vi-VN')} thẻ`;
+                    document.getElementById('summaryText').innerText = `${material} | Cán màng: ${lamination} | Khổ: ${length} × ${width} cm | ${originalQty.toLocaleString('vi-VN')} thẻ`;
 
-                    // Giá In Nhanh
                     if (data.tongTienFast !== undefined && data.tongTienFast > 0) {
                         const unitPriceFast = Math.round(data.tongTienFast / originalQty);
                         fastUnitPriceEl.innerText = unitPriceFast.toLocaleString('vi-VN');
@@ -525,7 +524,6 @@
                         resultFast.style.display = 'none';
                     }
 
-                    // Giá In Tiết Kiệm (Chỉ hiện nếu rẻ hơn In Nhanh)
                     if (data.tongTienOffset !== undefined && data.tongTienOffset > 0 && (data.tongTienFast === 0 || data.tongTienOffset < data.tongTienFast)) {
                         const unitPriceOffset = Math.round(data.tongTienOffset / originalQty);
                         offsetUnitPriceEl.innerText = unitPriceOffset.toLocaleString('vi-VN');
@@ -538,17 +536,23 @@
                     
                     if(!hasFast && !hasOffset) {
                          alert("Không thể tính giá với cấu hình này, vui lòng liên hệ Zalo!");
+                         resetBtn();
                     } else {
                          resultContainer.style.display = 'block';
+                         // Vô hiệu hóa nút và đổi thành "Kéo xuống xem giá" giống Tem Nhãn[cite: 5]
+                         btn.innerHTML = `<span style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#10b981;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span style="color:#1e293b; font-weight:800;">KÉO XUỐNG XEM GIÁ 👇</span>
+                             </span>`;
+                         btn.disabled = true;
                     }
                 } else {
                     alert('Lỗi hệ thống báo giá: ' + data.error);
+                    resetBtn();
                 }
             } catch (error) {
                 alert('Mạng chập chờn hoặc hệ thống đang bận, vui lòng thử lại.');
-            } finally {
-                btn.innerHTML = 'XEM LẠI GIÁ ƯỚC TÍNH';
-                btn.style.background = '#10b981';
+                resetBtn();
             }
         });
 
@@ -581,14 +585,12 @@
 
             const message = `Chào Tiệm In Giá Rẻ,\nMình muốn đặt In Danh Thiếp Có Keo (Decal):\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Bề mặt: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} thẻ\n- Dịch vụ: ${tenGoiLoaiIn}\n👉 Giá tạm tính: ${tongTien} (${giaTem} đ/thẻ)\n\nXưởng kiểm tra file và tư vấn giúp mình nhé!`;
             
-            // Hiệu ứng nút bấm phản hồi
             const originalText = btnElement.innerText;
             btnElement.innerText = "✅ Đã copy! Nhớ DÁN vào Zalo nhé";
             btnElement.style.backgroundColor = "#10b981"; 
             btnElement.style.color = "#ffffff";
             btnElement.style.borderColor = "#10b981";
             
-            // Khôi phục nút sau 4 giây
             setTimeout(() => {
                 btnElement.innerText = originalText;
                 btnElement.style.backgroundColor = "";
@@ -625,7 +627,6 @@
             const encodedMessage = encodeURIComponent("Xin chào Tiệm In Giá Rẻ! Mình đã xem báo giá Danh Thiếp trên website và muốn tư vấn thêm.");
             const zaloUrl = `https://zalo.me/${zaloNumber}?text=${encodedMessage}`;
             
-            // Delay chính xác 1500ms (1.5s) như trang Tem Nhãn để khách kịp đọc chữ trên nút
             setTimeout(() => {
                 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
                 if (isMobile) {

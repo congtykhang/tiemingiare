@@ -3,66 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiệm In Giá Rẻ | Xưởng In Tem Nhãn & Danh Thiếp Tận Gốc</title>
-    
-    <!-- CÀI ĐẶT FAVICON (Biểu tượng tab trình duyệt) -->
-    <link rel="icon" href="favicon.png" type="image/png">
-    
-    <!-- TỐI ƯU SEO & THẺ HIỂN THỊ MẠNG XÃ HỘI (Zalo, Facebook) -->
+    <title>Tiệm In Giá Rẻ | Xưởng In Trực Tiếp - CÔNG TY TNHH PHẠM DUY KHANG</title>
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tiemingiare.com/">
-    <meta property="og:title" content="Tiệm In Giá Rẻ | Xưởng In Trực Tiếp - Không Qua Trung Gian">
-    <meta property="og:description" content="Chuyên in Tem Nhãn Decal, Danh Thiếp, Túi Giấy, Tờ Rơi. Báo giá tự động cực nhanh, công nghệ in Offset và in Kỹ thuật số hiện đại.">
-    <!-- Nhớ up thêm tấm ảnh xưởng hoặc logo đặt tên là anh-bia-seo.jpg vào thư mục images -->
+    <meta property="og:title" content="Tiệm In Giá Rẻ | In Tem Nhãn, Danh Thiếp Giá Xưởng">
+    <meta property="og:description" content="Xưởng in trực tiếp không qua trung gian. Báo giá tự động cực nhanh. CÔNG TY TNHH PHẠM DUY KHANG.">
     <meta property="og:image" content="https://tiemingiare.com/images/anh-bia-seo.jpg">
-
-    <!-- Link nhúng file CSS dùng chung -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.png" type="image/png">
     
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KDV619X24Z"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-KDV619X24Z');
-</script>
-
+    <link rel="stylesheet" href="style.css">
+    <!-- Nhúng bộ não xử lý Header/Footer tự động -->
+    <script src="main.js" defer></script> 
+    
+    <style>
+        .trust-bar { background: #f8fafc; padding: 15px 10px; border-bottom: 1px solid #e2e8f0; text-align: center; }
+        .trust-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; font-size: 14px; color: #334155; font-weight: 600; }
+        .trust-list li { display: flex; align-items: center; gap: 5px; }
+    </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <a href="index.html"><span>PHẠM DUY KHANG</span></a>
-        </div>
-        
-        <div class="menu-toggle" id="mobile-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <!-- ĐÃ CHUẨN HÓA 100% LINK MENU -->
-        <nav class="nav-links" id="nav-links">
-            <a href="index.html">Trang Chủ</a>
-            
-            <div class="dropdown">
-                <a href="index.html#products" class="dropbtn">Sản Phẩm <span class="arrow">&#9662;</span></a>
-                <div class="dropdown-content">
-                    <a href="tem-nhan.html">In Tem Nhãn (Decal)</a>
-                    <a href="danh-thiep.html">In Danh Thiếp</a>
-                    <a href="tui-giay.html">In Túi Giấy</a>
-                    <a href="to-roi.html">In Tờ Rơi / Catalogue</a>
-                </div>
-            </div>
-
-            <a href="chinh-sach.html">Chính Sách</a>
-            <a href="lien-he.html">Liên Hệ</a>
-            <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
-        </nav>
-        
-        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
-    </header>
+    <!-- ĐIỂM CHỜ NẠP HEADER TỰ ĐỘNG -->
+    <div id="header-placeholder"></div>
 
     <section class="hero">
         <h1>In Đẹp Giá Tốt - Cùng Bạn Thành Công</h1>
@@ -70,30 +32,28 @@
         <a href="#products" class="btn-cta" style="background-color: var(--accent-gold);">Xem Sản Phẩm</a>
     </section>
 
-    <!-- KHỐI NIỀM TIN (TRUST BADGES) -->
-    <section style="background: #f8fafc; padding: 20px 0; border-bottom: 1px solid #e2e8f0; text-align: center;">
-        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; font-size: 15px; color: #334155; font-weight: 500;">
-            <li>✅ Xưởng in trực tiếp</li>
-            <li>✅ Công nghệ Offset & KTS</li>
-            <li>✅ Chăm chút tỉ mỉ</li>
-            <li>✅ Giao hàng toàn quốc</li>
+    <div class="trust-bar">
+        <ul class="trust-list">
+            <li>✅ Xưởng In Trực Tiếp</li>
+            <li>✅ Báo Giá Minh Bạch</li>
+            <li>✅ Chăm Chút Tỉ Mỉ</li>
+            <li>✅ Giao Hàng Toàn Quốc</li>
         </ul>
-    </section>
+    </div>
 
     <section id="products" class="products">
-        <!-- ĐÃ CHUẨN HÓA 100% LINK SẢN PHẨM TRỎ ĐÚNG MENU -->
         <div class="card">
             <a href="tem-nhan.html"><img src="images/tem-nhan.jpg" alt="Tem Nhãn Decal" class="product-img"></a>
             <h3>Tem Nhãn (Decal)</h3>
             <p>Decal giấy, nhựa, trong, xi bạc...</p>
-            <a href="tem-nhan.html" class="card-link" style="background: var(--accent-gold); color:#000; font-weight:bold; padding:8px 15px; border-radius:5px;">Bấm tính giá ngay &rarr;</a>
+            <a href="tem-nhan.html" class="card-link" style="background: var(--accent-gold); color:#000; padding: 8px 15px; border-radius: 5px; font-weight: bold;">Tính giá tự động &rarr;</a>
         </div>
         
         <div class="card">
             <a href="danh-thiep.html"><img src="images/danh-thiep.jpg" alt="Danh Thiếp" class="product-img"></a>
             <h3>Danh Thiếp</h3>
             <p>In offset, in nhanh kỹ thuật số.</p>
-            <a href="danh-thiep.html" class="card-link">Xem các loại &rarr;</a>
+            <a href="danh-thiep.html" class="card-link">Tính giá tự động &rarr;</a>
         </div>
         
         <div class="card">
@@ -111,46 +71,14 @@
         </div>
     </section>
 
-    <footer id="contact">
-        <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
-        <p><strong>Hotline/Zalo:</strong> 0986.450.025</p>
-        <p><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
-        <p><strong>Chi nhánh:</strong> A34/9JS Quốc Lộ 50, Phường Bình Hưng, TP. Hồ Chí Minh</p>
-        <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
-    </footer>
+    <!-- ĐIỂM CHỜ NẠP FOOTER TỰ ĐỘNG -->
+    <div id="footer-placeholder"></div>
 
-    <!-- CỤM NÚT THẢ NỔI CALL TO ACTION -->
+    <!-- CỤM NÚT ZALO THẢ NỔI VẪN GIỮ Ở ĐÂY ĐỂ TRÁNH BỊ LỖI KHI LOAD HEADER CHẬM -->
     <div class="floating-buttons">
-        <a href="tel:0986450025" class="float-btn btn-call" title="Gọi ngay">
-            📞
-        </a>
-        <a href="https://zalo.me/0986450025" target="_blank" class="float-btn btn-zalo" title="Chat Zalo">
-            Zalo
-        </a>
+        <a href="tel:0986450025" class="float-btn btn-call" title="Gọi Ngay">📞</a>
+        <a href="https://zalo.me/0986450025" target="_blank" class="float-btn btn-zalo" title="Chat Zalo">Zalo</a>
     </div>
-
-    <!-- ĐOẠN JAVASCRIPT XỬ LÝ MENU MOBILE -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const navLinks = document.getElementById('nav-links');
-
-            mobileMenu.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                mobileMenu.classList.toggle('is-active');
-            });
-
-            const dropBtn = document.querySelector('.dropbtn');
-            const dropdownContent = document.querySelector('.dropdown-content');
-
-            dropBtn.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    dropdownContent.classList.toggle('show');
-                }
-            });
-        });
-    </script>
 
 </body>
 </html>

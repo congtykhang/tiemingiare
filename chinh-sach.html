@@ -1,94 +1,113 @@
 <!DOCTYPE html>
 <html lang="vi">
-    
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KDV619X24Z"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-KDV619X24Z');
-</script>
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiệm In Giá Rẻ | CÔNG TY TNHH PHẠM DUY KHANG</title>
-    <link rel="icon" href="favicon.png" type="image/png">
+    <title>Chính Sách & Hướng Dẫn | CÔNG TY TNHH PHẠM DUY KHANG</title>
+    
+    <!-- GỌI FILE CSS CHUNG -->
     <link rel="stylesheet" href="style.css">
     
     <!-- GỌI BỘ NÃO JS TỰ ĐỘNG NẠP HEADER/FOOTER -->
     <script src="main.js" defer></script> 
+    
+    <style>
+        /* CSS GIAO DIỆN CHUẨN XỊN CHO TRANG CHÍNH SÁCH */
+        .policy-container { max-width: 900px; margin: 40px auto 60px; padding: 0 15px; }
+        .policy-card { background: #fff; padding: 40px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.04); margin-bottom: 30px; }
+        .policy-title { font-size: 22px; color: #0f172a; margin-top: 0; margin-bottom: 20px; font-weight: 800; border-left: 5px solid var(--accent-gold, #fbbf24); padding-left: 15px; line-height: 1.4; }
+        .policy-content { color: #475569; line-height: 1.8; font-size: 15px; }
+        .policy-content p { margin-bottom: 15px; }
+        .policy-content ul { padding-left: 20px; margin-bottom: 15px; }
+        .policy-content li { margin-bottom: 12px; }
+        .policy-content strong { color: #1e293b; }
+        
+        /* Box thông tin chuyển khoản nổi bật */
+        .bank-box { background: #f8fafc; border: 2px dashed #cbd5e1; padding: 25px; border-radius: 12px; margin-top: 25px; text-align: center; }
+        .bank-name { font-size: 18px; font-weight: 800; color: #1e3a8a; margin-bottom: 10px; }
+        .bank-details { font-size: 16px; color: #0f172a; font-weight: 600; line-height: 1.6; }
+        .bank-number { font-size: 24px; color: #e11d48; font-weight: 900; display: block; margin-top: 5px; letter-spacing: 1px; }
+        
+        /* Tối ưu riêng cho điện thoại */
+        @media (max-width: 768px) {
+            .policy-card { padding: 25px 20px; }
+            .policy-title { font-size: 19px; }
+            .bank-number { font-size: 20px; }
+        }
+    </style>
 </head>
 <body>
+
     <!-- ĐIỂM CHỜ NẠP HEADER TỰ ĐỘNG -->
     <div id="header-placeholder"></div>
 
-    <section class="hero" style="padding: 60px 20px;">
+    <!-- PHẦN 2: BANNER CHÍNH -->
+    <section class="hero">
         <h1>Chính Sách & Hướng Dẫn</h1>
         <p>Minh bạch - Uy tín - Đồng hành cùng khách hàng trong mọi đơn hàng.</p>
     </section>
 
+    <!-- PHẦN 3: NỘI DUNG CHÍNH SÁCH -->
     <div class="policy-container">
         
-        <!-- 1. Hướng Dẫn Đặt Hàng & Thanh Toán -->
-        <div class="policy-section">
+        <!-- Mục 1: Đặt hàng & Thanh toán -->
+        <div class="policy-card">
             <h2 class="policy-title">1. Quy Trình Đặt Hàng & Thanh Toán</h2>
             <div class="policy-content">
-                <p>Để đảm bảo tiến độ và chất lượng sản phẩm, Tiệm In Giá Rẻ áp dụng quy trình chuẩn như sau:</p>
+                <p>Để đảm bảo tiến độ và chất lượng sản phẩm tốt nhất, Tiệm In Giá Rẻ áp dụng quy trình làm việc chuẩn mực như sau:</p>
                 <ul>
-                    <li><strong>Bước 1:</strong> Tư vấn & Báo giá qua Zalo dựa trên yêu cầu của khách hàng.</li>
-                    <li><strong>Bước 2:</strong> Kiểm tra file thiết kế. Nếu khách hàng chưa có file, xưởng hỗ trợ thiết kế (có tính phí tùy mức độ phức tạp).</li>
-                    <li><strong>Bước 3: Chốt file & Đặt cọc.</strong> Xưởng sẽ gửi hình ảnh (Mockup) hoặc file PDF cuối cùng để khách duyệt. Khách hàng vui lòng chuyển khoản cọc <strong>50% giá trị đơn hàng</strong> để xưởng tiến hành xuất kẽm in.</li>
-                    <li><strong>Bước 4:</strong> Sản xuất & Giao hàng. Quý khách thanh toán 50% số tiền còn lại khi nhận đủ hàng.</li>
+                    <li><strong>Bước 1:</strong> Khách hàng nhận tư vấn & Báo giá trực tiếp qua Zalo.</li>
+                    <li><strong>Bước 2:</strong> Xưởng kiểm tra file thiết kế. Hỗ trợ điều chỉnh file hoàn toàn miễn phí trước khi in.</li>
+                    <li><strong>Bước 3: Chốt file & Đặt cọc.</strong> Xưởng sẽ gửi hình ảnh (Mockup) hoặc file PDF cuối cùng để khách duyệt. Quý khách vui lòng chuyển khoản cọc <strong>50% giá trị đơn hàng</strong> để hệ thống tiến hành xuất kẽm in.</li>
+                    <li><strong>Bước 4:</strong> Sản xuất & Giao hàng. Quý khách thanh toán 50% số tiền còn lại sau khi nhận và kiểm tra đủ hàng.</li>
                 </ul>
+                
                 <div class="bank-box">
                     <div class="bank-name">THÔNG TIN CHUYỂN KHOẢN DUY NHẤT</div>
                     <div class="bank-details">
-                        <!-- ANH SỬA LẠI TÊN NGÂN HÀNG VÀ STK CỦA ANH Ở ĐÂY NHÉ -->
-                        Ngân hàng: [Tên Ngân Hàng] (Chi nhánh...)<br>
-                        Chủ tài khoản: [TÊN CHỦ TÀI KHOẢN GHI HOA]<br>
-                        Số tài khoản: <span style="font-size: 22px; color: #e11d48;">[SỐ TÀI KHOẢN]</span>
+                        Ngân hàng: [VIETCOMBANK]<br>
+                        Chủ tài khoản: [CÔNG TY TNHH PHẠM DUY KHANG]<br>
+                        <span class="bank-number">[0531002592468]</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. Chính Sách Giao Hàng -->
-        <div class="policy-section">
+        <!-- Mục 2: Giao hàng -->
+        <div class="policy-card">
             <h2 class="policy-title">2. Chính Sách Giao Hàng</h2>
             <div class="policy-content">
                 <ul>
-                    <li><strong>Khách hàng tại TP. Hồ Chí Minh:</strong> Hỗ trợ giao hỏa tốc qua Grab/Ahamove (phí giao hàng do khách thanh toán với tài xế) hoặc gửi Viettel Post.</li>
-                    <li><strong>Khách hàng Tỉnh/Thành phố khác:</strong> Xưởng nhận gửi hàng ra các chành xe theo yêu cầu, hoặc gửi chuyển phát nhanh (Viettel Post, GHTK...).</li>
-                    <li><em>Lưu ý:</em> Thời gian giao hàng tính từ lúc khách hàng duyệt file cuối cùng và chuyển cọc thành công. Các yếu tố khách quan (Lễ, Tết, thời tiết xấu...) có thể làm thay đổi tiến độ 1-2 ngày.</li>
+                    <li><strong>Tại TP. Hồ Chí Minh:</strong> Hỗ trợ giao hỏa tốc qua các đơn vị Grab/Ahamove (phí giao hàng do quý khách thanh toán trực tiếp với tài xế) hoặc gửi chuyển phát nhanh Viettel Post.</li>
+                    <li><strong>Khách hàng Tỉnh/Thành phố khác:</strong> Xưởng hỗ trợ đóng thùng kỹ lưỡng và gửi hàng ra các chành xe theo yêu cầu, hoặc gửi qua các đơn vị vận chuyển uy tín (Viettel Post, GHTK...).</li>
+                    <li><em>Lưu ý:</em> Thời gian giao hàng được tính từ thời điểm quý khách duyệt file cuối cùng và chuyển cọc thành công. Các yếu tố khách quan (Lễ, Tết, thời tiết...) có thể làm thay đổi tiến độ thực tế 1-2 ngày.</li>
                 </ul>
             </div>
         </div>
 
-        <!-- 3. Chính Sách Xử Lý Rủi Ro / Bảo Hành -->
-        <div class="policy-section">
+        <!-- Mục 3: Xử lý rủi ro -->
+        <div class="policy-card">
             <h2 class="policy-title">3. Chính Sách Xử Lý Rủi Ro & Đền Bù</h2>
             <div class="policy-content">
-                <p>Tiệm In Giá Rẻ cam kết làm việc dựa trên tinh thần trách nhiệm cao nhất. Tuy nhiên, trong in ấn khó tránh khỏi sai số. Chúng tôi quy định rõ:</p>
+                <p>Chúng tôi luôn nỗ lực mang đến thành phẩm hoàn hảo nhất. Tuy nhiên, trong sản xuất công nghiệp, xưởng quy định rõ các tiêu chuẩn xử lý như sau:</p>
                 <ul>
-                    <li><strong>Sai lệch màu sắc:</strong> Công nghệ in ghép bài Offset cho phép tỷ lệ sai lệch màu sắc ở mức <strong>±10% đến 15%</strong> so với màu hiển thị trên màn hình điện thoại/máy tính (Do hệ màu RGB và CMYK khác nhau). Đây là hao phí cho phép của ngành in.</li>
-                    <li><strong>Xử lý lỗi do xưởng:</strong> Nếu hàng bị in sai file (khác với file khách đã duyệt cuối cùng), sai kích thước, sai chất liệu, hoặc lỗi gia công (cắt lẹm, bế lệch quá mức cho phép)... xưởng cam kết <strong>in lại mới 100% miễn phí</strong> hoặc hoàn tiền cọc cho khách hàng.</li>
-                    <li><strong>Lỗi do file của khách:</strong> Xưởng không chịu trách nhiệm đền bù nếu lỗi xuất phát từ file thiết kế khách tự gửi (file độ phân giải thấp gây mờ nhòe, file sai chính tả, sai số điện thoại...). Quý khách vui lòng kiểm tra thật kỹ file trước khi chốt lệnh in.</li>
+                    <li><strong>Về màu sắc:</strong> Công nghệ in ghép bài Offset cho phép tỷ lệ sai lệch màu sắc ở mức <strong>±10% đến 15%</strong> so với màu hiển thị trên màn hình điện thoại/máy tính (do hệ màu RGB và CMYK khác nhau). Đây là mức hao phí cho phép của ngành in ấn.</li>
+                    <li><strong>Lỗi phát sinh từ xưởng:</strong> Nếu sản phẩm in sai so với file khách đã duyệt, sai kích thước, sai chất liệu, hoặc lỗi gia công (cắt lẹm, bế lệch quá mức), xưởng cam kết <strong>in lại mới 100% miễn phí</strong> hoặc hoàn trả tiền cọc cho quý khách.</li>
+                    <li><strong>Lỗi phát sinh từ file của khách:</strong> Xưởng từ chối đền bù đối với các trường hợp lỗi xuất phát từ file thiết kế do khách cung cấp (file độ phân giải thấp gây mờ nhòe, sai lỗi chính tả, sai thông tin...). Quý khách vui lòng kiểm tra thật kỹ file trước khi chốt lệnh in.</li>
                 </ul>
             </div>
         </div>
 
     </div>
 
-<!-- ĐIỂM CHỜ NẠP FOOTER TỰ ĐỘNG -->
+    <!-- ĐIỂM CHỜ NẠP FOOTER TỰ ĐỘNG -->
     <div id="footer-placeholder"></div>
 
-    <!-- CỤM NÚT ZALO THẢ NỔI -->
+    <!-- CỤM NÚT ZALO THẢ NỔI VẪN GIỮ ĐỂ TRÁNH TRỄ KHI LOAD HEADER/FOOTER -->
     <div class="floating-buttons">
         <a href="tel:0986450025" class="float-btn btn-call" title="Gọi Ngay">📞</a>
         <a href="https://zalo.me/0986450025" target="_blank" class="float-btn btn-zalo" title="Chat Zalo">Zalo</a>
     </div>
+
 </body>
 </html>

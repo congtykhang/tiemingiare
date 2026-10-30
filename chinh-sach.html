@@ -26,18 +26,19 @@
         .bank-box { background: #f8fafc; border: 2px dashed #cbd5e1; padding: 25px; border-radius: 12px; margin-top: 25px; text-align: center; }
         .bank-name { font-size: 18px; font-weight: 800; color: #1e3a8a; margin-bottom: 10px; }
         .bank-details { font-size: 16px; color: #0f172a; font-weight: 600; line-height: 1.6; }
-        /* Cụm chống rớt dòng cho Số tài khoản */
-        .bank-number { font-size: 24px; color: #e11d48; font-weight: 900; display: block; margin-top: 5px; letter-spacing: 1px; white-space: nowrap; }
+        .bank-number { font-size: 24px; color: #e11d48; font-weight: 900; display: block; margin-top: 5px; letter-spacing: 1px; }
         
-        /* Tối ưu riêng cho điện thoại (Chống rớt dòng) */
+        /* Tối ưu riêng cho điện thoại */
         @media (max-width: 768px) {
             .policy-card { padding: 25px 15px; }
             .policy-title { font-size: 19px; }
-            /* Ép hộp bank-box mỏng lại hai bên để nhường chỗ cho chữ */
             .bank-box { padding: 20px 10px; }
-            /* Cho phép chữ thu nhỏ tỷ lệ với chiều ngang màn hình thay vì rớt dòng */
-            .bank-details { font-size: 3.8vw; white-space: nowrap; }
-            .bank-number { font-size: 5.5vw; }
+            
+            /* Cho phép tên tài khoản xuống dòng để không bị lọt ra ngoài khung */
+            .bank-details { font-size: 15px; white-space: normal; word-wrap: break-word; }
+            
+            /* Riêng số tài khoản thì cấm rớt dòng và thu nhỏ linh hoạt */
+            .bank-number { font-size: 6vw; white-space: nowrap; }
         }
     </style>
 

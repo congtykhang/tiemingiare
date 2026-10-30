@@ -11,7 +11,11 @@
     <meta property="og:description" content="Nhập kích thước & số lượng để xem ngay giá in nhanh và in tiết kiệm. Bám dính chắc chắn, cắt bế mọi hình dáng.">
     <meta property="og:image" content="https://tiemingiare.com/images/tem-nhan.jpg">
     <meta property="og:image:alt" content="In Tem Nhãn Decal Giá Rẻ - Phạm Duy Khang">
+    
     <link rel="stylesheet" href="style.css">
+    <!-- GỌI BỘ NÃO JS TỰ ĐỘNG NẠP HEADER/FOOTER -->
+    <script src="main.js" defer></script> 
+    
     <style>
         .content-wrapper { position: relative; max-width: 1150px; margin: 50px auto 60px; padding: 0 15px; z-index: 10; }
         .main-split-layout { display: flex; gap: 40px; align-items: flex-start; }
@@ -96,29 +100,8 @@
 </head>
 <body>
     
-    <header>
-        <div class="logo">
-            <a href="index.html"><span>PHẠM DUY KHANG</span></a>
-        </div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span></span><span></span><span></span>
-        </div>
-        <nav class="nav-links" id="nav-links">
-            <a href="index.html">Trang Chủ</a>
-            <div class="dropdown">
-                <a href="index.html#products" class="dropbtn">Sản Phẩm <span class="arrow">&#9662;</span></a>
-                <div class="dropdown-content">
-                    <a href="tem-nhan.html">In Tem Nhãn (Decal)</a>
-                    <a href="danh-thiep.html">In Danh Thiếp</a>
-                    <a href="tui-giay.html">In Túi Giấy</a>
-                    <a href="to-roi.html">In Tờ Rơi / Catalogue</a>
-                </div>
-            </div>
-            <a href="lien-he.html">Liên Hệ</a>
-            <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
-        </nav>
-        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
-    </header>
+    <!-- ĐIỂM CHỜ NẠP HEADER TỰ ĐỘNG -->
+    <div id="header-placeholder"></div>
 
     <section class="hero">
         <h1>In Tem Nhãn - Decal</h1>
@@ -287,28 +270,14 @@
         </div>
     </div> <!-- Kết thúc content-wrapper -->
 
-    <footer id="contact">
-        <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
-        <p><strong>Hotline/Zalo:</strong> 0986.450.025</p>
-        <p><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
-        <p><strong>Chi nhánh:</strong> A34/9JS Quốc Lộ 50, Phường Bình Hưng, TP. Hồ Chí Minh</p>
-        <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
-    </footer>
+    <!-- ĐIỂM CHỜ NẠP FOOTER TỰ ĐỘNG -->
+    <div id="footer-placeholder"></div>
 
     <script>
-// BỘ NHỚ ĐỆM TẠM THỜI TRÊN TRÌNH DUYỆT
+        // BỘ NHỚ ĐỆM TẠM THỜI TRÊN TRÌNH DUYỆT
         const priceCache = {};
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Xử lý menu mobile
-            const mobileMenu = document.getElementById('mobile-menu');
-            const navLinks = document.getElementById('nav-links');
-            if (mobileMenu) {
-                mobileMenu.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
-                    mobileMenu.classList.toggle('is-active');
-                });
-            }
             kiemTraCanMang();
 
             // 1. TÍNH NĂNG: BẤM VÀO Ô LÀ TỰ ĐỘNG BÔI ĐEN

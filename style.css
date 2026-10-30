@@ -87,15 +87,15 @@ header {
     text-align: center; 
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); 
     border: 1px solid #e2e8f0; 
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng nảy nhẹ cực mượt */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     overflow: hidden;
 }
 
 /* HIỆU ỨNG NỔI LÊN MẠNH MẼ KHI RÊ CHUỘT */
 .card:hover { 
-    transform: translateY(-15px); /* Nổi cao hẳn lên 15px */
-    box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.05); /* Bóng đổ sâu và xịn hơn */
-    border-color: var(--accent-gold); /* Viền sáng lên màu Vàng Gold */
+    transform: translateY(-15px); 
+    box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.05); 
+    border-color: var(--accent-gold); 
 }
 
 /* Ảnh sản phẩm */
@@ -105,12 +105,12 @@ header {
     margin-bottom: 15px; 
     object-fit: cover; 
     aspect-ratio: 1/1; 
-    transition: transform 0.5s ease; /* Thời gian zoom ảnh */
+    transition: transform 0.5s ease; 
 }
 
 /* Tự động phóng to ảnh (zoom in) khi rê chuột vào thẻ */
 .card:hover .product-img {
-    transform: scale(1.08); /* Phóng to ảnh 8% */
+    transform: scale(1.08); 
 }
 
 .card h3 { color: var(--primary-blue); font-size: 18px; margin-bottom: 8px; }
@@ -197,14 +197,17 @@ footer p { margin-bottom: 8px; font-size: 14px; }
     justify-content: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     text-decoration: none;
-    color: #fff;
+    color: #fff; /* Biểu tượng trắng dùng chung */
     font-size: 24px;
     animation: rung 2s infinite ease-in-out;
     transition: transform 0.3s;
 }
 .float-btn:hover { transform: scale(1.1); animation: none; }
-.btn-call { background-color: #dc2626; }
+
+/* THAY ĐỔI MÀU SẮC RIÊNG BIỆT CHO TỪNG NÚT */
+.btn-call { background-color: #10b981; } /* Nút Gọi Điện: Chuyển sang màu xanh lá */
 .btn-zalo { background-color: #0068ff; font-weight: bold; font-size: 14px; text-align: center; line-height: 1.2;}
+
 @keyframes rung {
     0% { transform: rotate(0) scale(1) skew(1deg); }
     10% { transform: rotate(-25deg) scale(1) skew(1deg); }
@@ -214,4 +217,3 @@ footer p { margin-bottom: 8px; font-size: 14px; }
     50% { transform: rotate(0) scale(1) skew(1deg); }
     100% { transform: rotate(0) scale(1) skew(1deg); }
 }
-

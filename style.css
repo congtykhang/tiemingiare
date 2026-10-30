@@ -175,3 +175,43 @@ footer p { margin-bottom: 8px; font-size: 14px; }
     /* Ép dòng bản quyền thẳng 1 hàng */
     .copyright { font-size: 2.3vw !important; white-space: nowrap !important; }
 }
+
+/* =========================================
+   NÚT GỌI & ZALO THẢ NỔI (DÙNG CHUNG TOÀN TRANG)
+   ========================================= */
+.floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 99999;
+}
+.float-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    animation: rung 2s infinite ease-in-out;
+    transition: transform 0.3s;
+}
+.float-btn:hover { transform: scale(1.1); animation: none; }
+.btn-call { background-color: #dc2626; }
+.btn-zalo { background-color: #0068ff; font-weight: bold; font-size: 14px; text-align: center; line-height: 1.2;}
+@keyframes rung {
+    0% { transform: rotate(0) scale(1) skew(1deg); }
+    10% { transform: rotate(-25deg) scale(1) skew(1deg); }
+    20% { transform: rotate(25deg) scale(1) skew(1deg); }
+    30% { transform: rotate(-25deg) scale(1) skew(1deg); }
+    40% { transform: rotate(25deg) scale(1) skew(1deg); }
+    50% { transform: rotate(0) scale(1) skew(1deg); }
+    100% { transform: rotate(0) scale(1) skew(1deg); }
+}
+

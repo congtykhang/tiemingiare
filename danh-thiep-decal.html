@@ -4,13 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>In Danh Thiếp Có Keo (Decal) | CÔNG TY TNHH PHẠM DUY KHANG</title>
+    
     <!-- THẺ HIỂN THỊ ĐẸP KHI GỬI LINK FACEBOOK / ZALO -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tiemingiare.com/danh-thiep-decal.html">
     <meta property="og:title" content="Bảng Tính Giá In Danh Thiếp Có Keo Tự Động">
     <meta property="og:description" content="Nhập số lượng để xem ngay giá in nhanh và in tiết kiệm. Bóc dán cực kỳ tiện lợi, bám dính chắc chắn.">
-    <meta property="og:image" content="https://tiemingiare.com/images/danh-thiep.jpg">
+    
+    <!-- Kế thừa CSS gốc của anh -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Thư viện Icon để hiển thị biểu tượng máy tính giống hệt trang tem nhãn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS DÀNH RIÊNG CHO KHỐI HIỂN THỊ KẾT QUẢ IN NHANH/IN GHÉP ĐỒNG BỘ 100% VỚI TEM NHÃN */
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .result-item {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid;
+            display: none; /* Ẩn mặc định, sẽ hiển thị qua JS */
+        }
+
+        .result-item.fast {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        .result-item.offset {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+        }
+
+        .result-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .result-item.fast .result-title {
+            color: #166534;
+        }
+
+        .result-item.offset .result-title {
+            color: #1e3a8a;
+        }
+
+        .final-price {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+        
+        .result-item.fast .final-price {
+            color: #15803d;
+        }
+
+        .result-item.offset .final-price {
+            color: #1d4ed8;
+        }
+
+        .unit-price {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .result-item.fast .unit-price {
+             color: #166534;
+        }
+        
+        .result-item.offset .unit-price {
+             color: #1e3a8a;
+        }
+        
+        .note {
+            font-size: 13px;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .result-item.fast .note {
+             color: #166534;
+        }
+
+        .result-item.offset .note {
+             color: #1e3a8a;
+        }
+
+        .qty-warning {
+             font-size: 14px;
+             color: #dc2626;
+             margin-bottom: 15px;
+             font-weight: 500;
+             display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -20,7 +116,6 @@
             <a href="index.html"><span>PHẠM DUY KHANG</span></a>
         </div>
         
-        <!-- Nút 3 gạch (Hamburger) cho Mobile -->
         <div class="menu-toggle" id="mobile-menu">
             <span></span>
             <span></span>
@@ -29,8 +124,6 @@
 
         <nav class="nav-links" id="nav-links">
             <a href="index.html">Trang Chủ</a>
-            
-            <!-- Menu Sản Phẩm xổ xuống -->
             <div class="dropdown">
                 <a href="index.html#products" class="dropbtn">Sản Phẩm <span class="arrow">&#9662;</span></a>
                 <div class="dropdown-content">
@@ -40,143 +133,122 @@
                     <a href="to-roi.html">In Tờ Rơi / Catalogue</a>
                 </div>
             </div>
-
-            <a href="chinh-sach.html">Chính Sách</a>
             <a href="lien-he.html">Liên Hệ</a>
-            <a href="https://zalo.me/84986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
+            <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-mobile">Liên hệ Zalo</a>
         </nav>
-        
-        <a href="https://zalo.me/84986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
+        <a href="https://zalo.me/0986450025" target="_blank" class="btn-cta-header">Liên hệ Zalo</a>
     </header>
 
-    <!-- BANNER -->
+    <!-- PHẦN 2: BANNER -->
     <section class="hero">
         <h1>In Danh Thiếp Có Keo (Decal)</h1>
-        <p>Bóc dán tiện lợi - Bám dính chắc chắn - Giao hàng tận nơi.<br>Đã điền sẵn kích thước chuẩn, bạn có thể tùy chỉnh theo nhu cầu.</p>
+        <p>Bóc dán tiện lợi - Bám dính chắc chắn - Giao hàng tận nơi.</p>
     </section>
 
-    <!-- FORM BÁO GIÁ TỰ ĐỘNG THÔNG MINH -->
-    <section class="calculator-section" style="max-width: 850px; margin: 40px auto; padding: 0 20px; position: relative;">
+    <!-- PHẦN 3: FORM BÁO GIÁ TỰ ĐỘNG THÔNG MINH -->
+    <section class="calculator-section" style="max-width: 800px; margin: -20px auto 40px; padding: 0 20px; position: relative; z-index: 10;">
         <div class="calculator-box" style="background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 5px solid var(--accent-gold);">
-            <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 30px; font-size: 24px;">
-                BẢNG TÍNH GIÁ TỰ ĐỘNG
+            <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 25px; font-size: 22px;">
+                <i class="fa-solid fa-calculator"></i> TÍNH GIÁ DANH THIẾP CÓ KEO
             </h2>
             
-            <!-- BẢNG NHẬP LIỆU -->
             <form id="priceCalcForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- 1. Chọn chất liệu -->
                 <div style="grid-column: 1 / -1;">
                     <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">1. Chất liệu in</label>
-                    <select id="calcMaterial" style="width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 16px; outline: none; background: #f8fafc;">
+                    <select id="calcMaterial" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
                         <option value="Decal giấy">Decal Giấy (Khuyên dùng)</option>
                         <option value="Decal nhựa đục">Decal Nhựa (Chống nước)</option>
                         <option value="Decal nhựa trong">Decal Trong Suốt</option>
-                        <option value="Decal Kraft">Decal Kraft (Da bò)</option>
-                        <option value="Decal xi bạc">Decal Xi Bạc</option>
-                        <option value="Decal vỡ">Decal Vỡ (Tem bảo hành)</option>
-                        <option value="Decal giấy Fort">Decal Giấy Fort (Ghi chữ được)</option>
                     </select>
                 </div>
 
+                <!-- 2 & 3. Kích thước (Mặc định 9 x 5.5 chuẩn Card Visit) -->
                 <div>
-                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">2. Ngang (cm)</label>
-                    <input type="number" id="calcLength" step="0.1" min="1" value="9" required style="width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 16px; outline: none; background: #f8fafc;">
+                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">2. Chiều ngang (cm)</label>
+                    <input type="number" id="calcLength" step="0.1" min="1" value="9" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
                 </div>
                 <div>
-                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">3. Cao (cm)</label>
-                    <input type="number" id="calcWidth" step="0.1" min="1" value="5.5" required style="width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 16px; outline: none; background: #f8fafc;">
+                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">3. Chiều cao (cm)</label>
+                    <input type="number" id="calcWidth" step="0.1" min="1" value="5.5" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
                 </div>
 
+                <!-- 4 & 5. Gia công và Số lượng -->
                 <div>
-                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">4. Cán Màng</label>
-                    <select id="calcLamination" style="width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 16px; outline: none; background: #f8fafc;">
-                        <option value="Không">Không cán</option>
-                        <option value="Có">Cán Bóng / Mờ</option>
+                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">4. Gia công màng</label>
+                    <select id="calcLamination" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
+                        <option value="Không">Không cán màng</option>
+                        <option value="Có">Cán Bóng / Cán Mờ</option>
                     </select>
                 </div>
                 <div>
-                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">5. SL (Tem)</label>
-                    <input type="number" id="calcQty" min="100" step="1" placeholder="VD: 500" required style="width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 16px; outline: none; background: #f8fafc;">
+                    <label style="font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block;">5. Số lượng cần in (Thẻ)</label>
+                    <input type="number" id="calcQty" min="100" step="1" placeholder="VD: 500" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; outline: none;">
                 </div>
 
-                <!-- Nút Tính Giá -->
-                <div style="grid-column: 1 / -1; text-align: center; margin-top: 20px;">
-                    <button type="submit" id="btnCalculate" style="background: var(--accent-gold); color: #000; padding: 16px 45px; border: none; border-radius: 50px; font-size: 16px; font-weight: 900; cursor: pointer; transition: 0.3s; width: auto; min-width: 320px; box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4); text-transform: uppercase; letter-spacing: 0.5px;">
+                <!-- Nút bấm -->
+                <div style="grid-column: 1 / -1; text-align: center; margin-top: 10px;">
+                    <button type="submit" id="btnCalculate" style="background: var(--primary-color); color: #fff; padding: 14px 30px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%;">
                         XEM GIÁ ƯỚC TÍNH
                     </button>
                 </div>
             </form>
 
-            <!-- KHU VỰC HIỂN THỊ KẾT QUẢ -->
-            <div id="resultContainer" style="display: none; margin-top: 35px; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); background: #fff;">
-                <div style="background: #f8fafc; color: #1e293b; padding: 18px; text-align: center; font-weight: 800; font-size: 18px; border-bottom: 2px dashed #cbd5e1; text-transform: uppercase; letter-spacing: 0.5px;">
-                    TỔNG CHI PHÍ DỰ KIẾN
+            <!-- Khối hiển thị kết quả -->
+             <div class="result-container" id="resultContainer">
+                <div id="qtyWarning" class="qty-warning"></div>
+                <!-- Kết quả In Nhanh -->
+                <div id="resultFast" class="result-item fast">
+                    <div class="result-title">IN NHANH (Giao hàng 1 - 2 ngày)</div>
+                    <div id="fastUnitPrice" class="final-price">Đang tính...</div>
+                    <div id="fastTotalPrice" class="unit-price">Tổng tiền: 0 đ</div>
+                    <p class="note">* Giá mang tính chất tham khảo. Liên hệ Zalo nhận báo giá chính xác kèm thiết kế.</p>
+                    <a href="https://zalo.me/0986450025" id="btnZaloFast" onclick="guiZalo('Fast', event)" target="_blank" style="display: inline-block; background: var(--accent-gold); color: #000; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 10px; transition: 0.3s;">Chốt Đơn Zalo (In Nhanh)</a>
                 </div>
-                <div id="dynamicSummary" style="text-align: center; font-size: 14px; color: #64748b; margin-top: 15px; font-style: italic; font-weight: 600;"></div>
-                
-                <div id="qtyWarning" style="font-size: 14px; color: #dc2626; padding: 12px 15px; background: #fef2f2; text-align: center; font-weight: 500; display: none; border-bottom: 1px solid #fee2e2;"></div>
-                
-                <div style="display: flex; background: #e2e8f0; gap: 1px; flex-wrap: wrap;">
-                    <!-- Khối In Nhanh -->
-                    <div id="resultFast" style="flex: 1; min-width: 300px; background: #fff; padding: 25px 15px; text-align: center; display: none;">
-                        <div style="color: #166534; font-weight: bold; font-size: 16px; margin-bottom: 10px;">⏱️ IN NHANH <span style="display: block; font-weight: normal; font-size: 12px; color: #64748b; margin-top: 5px;">(1-2 ngày)</span></div>
-                        <div id="fastUnitPrice" style="font-size: 28px; font-weight: 900; color: #15803d; margin: 8px 0;">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
-                        <div id="fastTotalPrice" style="color: #475569; font-size: 15px; margin-bottom: 20px;">0 đ</div>
-                        <button onclick="guiZalo('Fast')" style="width: 100%; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s; background: #f0fdf4; border: 1px solid #166534; color: #166534; cursor: pointer;">
-                            👉 Chốt Đơn (In Nhanh)
-                        </button>
-                    </div>
 
-                    <!-- Khối In Ghép -->
-                    <div id="resultOffset" style="flex: 1; min-width: 300px; background: #fff; padding: 25px 15px; text-align: center; display: none;">
-                        <div style="color: #1e3a8a; font-weight: bold; font-size: 16px; margin-bottom: 10px;">📦 IN TIẾT KIỆM <span style="display: block; font-weight: normal; font-size: 12px; color: #64748b; margin-top: 5px;">(5-7 ngày)</span></div>
-                        <div id="offsetUnitPrice" style="font-size: 28px; font-weight: 900; color: #1d4ed8; margin: 8px 0;">0 đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/tem</span></div>
-                        <div id="offsetTotalPrice" style="color: #475569; font-size: 15px; margin-bottom: 20px;">0 đ</div>
-                        <button onclick="guiZalo('Offset')" style="width: 100%; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s; background: #eff6ff; border: 1px solid #1e3a8a; color: #1e3a8a; cursor: pointer;">
-                            👉 Chốt Đơn (In Tiết Kiệm)
-                        </button>
-                    </div>
-                </div>
-                
-                <div style="padding: 12px; background: #f8fafc; font-size: 13px; color: #64748b; text-align: center; font-style: italic;">
-                    * Lưu ý: Giá mang tính chất tham khảo. Vui lòng liên hệ Zalo để nhận báo giá chính xác.
+                <!-- Kết quả In Ghép -->
+                <div id="resultOffset" class="result-item offset">
+                    <div class="result-title">IN TIẾT KIỆM (Giao hàng 5 - 7 ngày)</div>
+                    <div id="offsetUnitPrice" class="final-price">Đang tính...</div>
+                    <div id="offsetTotalPrice" class="unit-price">Tổng tiền: 0 đ</div>
+                    <p class="note">* Áp dụng cho số lượng lớn. Cực kỳ tối ưu chi phí.</p>
+                    <a href="https://zalo.me/0986450025" id="btnZaloOffset" onclick="guiZalo('Offset', event)" target="_blank" style="display: inline-block; background: var(--accent-gold); color: #000; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 10px; transition: 0.3s;">Chốt Đơn Zalo (In Tiết Kiệm)</a>
                 </div>
             </div>
-            
         </div>
     </section>
 
-    <!-- THÔNG TIN SẢN PHẨM -->
-    <section class="calculator-section" style="max-width: 850px; margin: 0 auto 50px; padding: 0 20px;">
+    <!-- PHẦN 4: THÔNG TIN ƯU ĐIỂM -->
+    <section class="products" style="max-width: 900px; margin: 0 auto; display: block; padding: 0 20px 50px;">
         <h2 style="font-size: 22px; color: var(--primary-color); margin-bottom: 20px; border-bottom: 2px solid var(--accent-gold); display: inline-block; padding-bottom: 5px;">Ưu Điểm Danh Thiếp Có Keo</h2>
         
-        <div style="background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px;">
-            <h3 style="margin-top: 0; color: #333; font-size: 18px;">Tiện lợi bóc dán - Không lo thất lạc</h3>
-            <p style="color: #666; font-size: 15px; line-height: 1.6;">Thay vì gửi kèm card visit thông thường dễ bị rơi rớt trong quá trình vận chuyển, danh thiếp có keo cho phép bạn bóc và dán trực tiếp lên hộp sản phẩm, túi niêm phong hoặc bao bì. Đảm bảo thông tin liên hệ của bạn luôn đến tay khách hàng.</p>
-        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div style="background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: left;">
+                <h3 style="margin-top: 0; color: #333; font-size: 18px;">Tiện lợi bóc dán - Không lo thất lạc</h3>
+                <p style="color: #666; font-size: 15px; line-height: 1.6;">Thay vì gửi kèm card visit thông thường dễ bị rơi rớt trong quá trình vận chuyển, danh thiếp có keo (decal giấy) cho phép bạn bóc và dán trực tiếp lên hộp sản phẩm, túi niêm phong hoặc bao bì.</p>
+            </div>
 
-        <div style="background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px;">
-            <h3 style="margin-top: 0; color: #333; font-size: 18px;">Đa dụng & Tùy biến cao</h3>
-            <p style="color: #666; font-size: 15px; line-height: 1.6;">Với kích thước chuẩn 9 x 5.5cm, bạn vừa có thể làm danh thiếp dán, vừa có thể làm thư cảm ơn (Thank you card), thẻ bảo hành dán hoặc sticker logo dán ly/hộp cỡ lớn. Bạn hoàn toàn có thể tùy chỉnh kích thước ở bảng tính bên trên để phù hợp với nhu cầu.</p>
+            <div style="background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: left;">
+                <h3 style="margin-top: 0; color: #333; font-size: 18px;">Đa dụng & Tùy biến cao</h3>
+                <p style="color: #666; font-size: 15px; line-height: 1.6;">Với kích thước mặc định 9 x 5.5cm, bạn vừa có thể làm danh thiếp dán, vừa làm thư cảm ơn (Thank you card), thẻ bảo hành dán hoặc sticker logo dán ly/hộp. Có thể tùy chỉnh kích thước ở bảng trên.</p>
+            </div>
         </div>
     </section>
 
-    <!-- CHÂN TRANG ĐỒNG BỘ -->
+    <!-- PHẦN 5: CHÂN TRANG ĐỒNG BỘ -->
     <footer id="contact">
         <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
-        <p><strong>Hotline/Zalo:</strong> <a href="https://zalo.me/84986450025" style="color: #fff; text-decoration: none;">0986.450.025</a></p>
+        <p><strong>Hotline/Zalo:</strong> <a href="https://zalo.me/0986450025" style="color: #fff; text-decoration: none;">0986.450.025</a></p>
         <p><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
         <p><strong>Chi nhánh:</strong> A34/9JS Quốc Lộ 50, Phường Bình Hưng, TP. Hồ Chí Minh</p>
         <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
     </footer>
 
     <!-- ==============================================================
-         MÃ JAVASCRIPT XỬ LÝ TOÀN BỘ LOGIC (TÍNH GIÁ, ZALO, MENU) 
+         MÃ JAVASCRIPT XỬ LÝ TOÀN BỘ LOGIC UX & TÍNH GIÁ ĐỒNG BỘ
          ============================================================== -->
     <script>
-        // TRẠNG THÁI
-        let isPriceShowing = false;
-
-        // 1. TÍNH NĂNG MENU MOBILE
+        // Xử lý Menu Mobile
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenu = document.getElementById('mobile-menu');
             const navLinks = document.getElementById('nav-links');
@@ -192,120 +264,88 @@
                     dropdownContent.classList.toggle('show');
                 }
             });
-
-            // 2. TỰ ĐỘNG BÔI ĐEN KHI NHẤP VÀO Ô NHẬP LIỆU
+            
+            // UX: BẤM VÀO Ô LÀ TỰ ĐỘNG BÔI ĐEN TOÀN BỘ SỐ
             const inputFields = document.querySelectorAll('#priceCalcForm input[type="number"]');
             inputFields.forEach(input => {
                 input.addEventListener('focus', function() {
-                    setTimeout(() => { this.select(); }, 10);
+                    setTimeout(() => {
+                        this.select();
+                    }, 10);
                 });
             });
 
-            // 3. NHẤN ENTER ĐỂ TÍNH GIÁ
+            // UX: NHẤN ENTER ĐỂ TÍNH GIÁ
             const formElement = document.getElementById('priceCalcForm');
             formElement.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter' || event.keyCode === 13) {
                     event.preventDefault(); 
                     const btn = document.getElementById('btnCalculate');
-                    if (!btn.disabled && !isPriceShowing) {
-                        tinhGiaNgay();
+                    if (!btn.disabled) {
+                        btn.click();
                     }
                 }
             });
-        });
-
-        // 4. RESET KẾT QUẢ KHI KHÁCH SỬA THÔNG SỐ
-        const allInputs = document.querySelectorAll('#priceCalcForm input, #priceCalcForm select');
-        allInputs.forEach(input => {
-            input.addEventListener('input', function() {
-                if(isPriceShowing) {
-                    document.getElementById('resultContainer').style.display = 'none';
-                    const btn = document.getElementById('btnCalculate');
-                    btn.innerHTML = '👉 BẤM CẬP NHẬT GIÁ MỚI';
-                    btn.style.background = '#ef4444'; // Chuyển màu đỏ
-                    isPriceShowing = false;
-                }
+            
+            // Xóa kết quả khi khách thay đổi giá trị
+            const allInputs = document.querySelectorAll('#priceCalcForm input, #priceCalcForm select');
+            allInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const resultContainer = document.getElementById('resultContainer');
+                    if (resultContainer.style.display === 'flex' || resultContainer.style.display === 'block') {
+                        resultContainer.style.display = 'none';
+                        const btn = document.getElementById('btnCalculate');
+                        btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
+                        btn.style.backgroundColor = 'var(--primary-color)';
+                        btn.disabled = false;
+                    }
+                });
             });
         });
 
-        // 5. KHÓA CÁN MÀNG CHO CÁC CHẤT LIỆU ĐẶC THÙ
-        document.getElementById('calcMaterial').addEventListener('change', function() {
-            const mat = this.value;
-            const lamSelect = document.getElementById('calcLamination');
-            if (mat === 'Decal Kraft' || mat === 'Decal vỡ' || mat === 'Decal giấy Fort') {
-                lamSelect.value = 'Không';
-                lamSelect.disabled = true;
-                lamSelect.style.backgroundColor = '#f1f5f9';
-            } else {
-                lamSelect.disabled = false;
-                lamSelect.style.backgroundColor = '#f8fafc';
-            }
-        });
-
-        // HÀM LÀM TRÒN SỐ LƯỢNG CHẴN TRĂM
+        // Hàm làm tròn số lượng lên chẵn trăm
         function roundUpToHundred(num) {
             if (num % 100 === 0) return num;
             return Math.ceil(num / 100) * 100;
         }
 
-        // 6. GỌI API GOOGLE SCRIPT ĐỂ TÍNH GIÁ
-        document.getElementById('priceCalcForm').addEventListener('submit', function(e) {
+        // Xử lý Báo giá tự động
+        document.getElementById('priceCalcForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            tinhGiaNgay();
-        });
-
-        async function tinhGiaNgay() {
+            
             const material = document.getElementById('calcMaterial').value;
             const length = document.getElementById('calcLength').value;
             const width = document.getElementById('calcWidth').value;
             const lamination = document.getElementById('calcLamination').value;
             const originalQty = parseInt(document.getElementById('calcQty').value);
             
-            // Xử lý làm tròn số lượng
+            // Làm tròn số lượng
             const qty = roundUpToHundred(originalQty);
             
             const btn = document.getElementById('btnCalculate');
-            const resultContainer = document.getElementById('resultContainer');
             const qtyWarning = document.getElementById('qtyWarning');
             const resultFast = document.getElementById('resultFast');
             const resultOffset = document.getElementById('resultOffset');
-            const dynamicSummary = document.getElementById('dynamicSummary');
             
             const fastUnitPriceEl = document.getElementById('fastUnitPrice');
             const fastTotalPriceEl = document.getElementById('fastTotalPrice');
             const offsetUnitPriceEl = document.getElementById('offsetUnitPrice');
             const offsetTotalPriceEl = document.getElementById('offsetTotalPrice');
 
-            // Cảnh báo nhập sai
-            if (!length || !width || length <= 0 || width <= 0) {
-                alert("Kích thước phải lớn hơn 0");
-                return;
-            }
-            if (originalQty < 100) {
-                alert("Vui lòng nhập tối thiểu 100 thẻ");
-                return;
-            }
-
-            // Đổi giao diện chờ
+            // Đổi trạng thái nút bấm
             btn.innerHTML = '⏳ ĐANG TÍNH TOÁN...';
             btn.disabled = true;
             btn.style.opacity = '0.7';
-            btn.style.background = 'var(--accent-gold)';
 
+            // Cảnh báo nếu số lượng bị làm tròn
             if (originalQty !== qty) {
-                qtyWarning.innerHTML = `⚠️ Máy in vận hành theo lốc, số lượng <b>${originalQty}</b> của bạn đã được tự động làm tròn thành <b>${qty}</b> thẻ.`;
+                qtyWarning.innerText = `* Do quy cách in theo lô, số lượng ${originalQty} thẻ của bạn đã được làm tròn thành ${qty} thẻ.`;
                 qtyWarning.style.display = 'block';
             } else {
                 qtyWarning.style.display = 'none';
             }
 
-            // Cập nhật dòng tóm tắt cấu hình
-            let laminationText = lamination === 'Có' ? 'Cán bóng/mờ' : 'Không cán';
-            dynamicSummary.innerText = `${material} | ${laminationText} | ${length}x${width} cm | ${qty.toLocaleString('vi-VN')} thẻ`;
-
-            // ==============================================================
-            // ⚠️ GẮN CHUNG API CỦA TEM NHÃN
-            // ==============================================================
+            // GỌI THẲNG API CỦA TRANG TEM NHÃN MÀ KHÔNG CẦN CHỈNH SỬA
             const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvSmL7e1s7Gw7nyayStxCJjYUc8QLiUHrp43GO6GxLj1LoMA3Xl0Vkhyn8WCWnd1IC/exec";
 
             try {
@@ -327,81 +367,100 @@
                 if (data.success) {
                     let hasFast = false;
                     let hasOffset = false;
-                    
-                    const fastTotal = data.tongTienFast || 0;
-                    const offsetTotal = data.tongTienOffset || 0;
 
-                    // 1. Nếu có giá Offset, và nó TỐT HƠN In Nhanh
-                    if (offsetTotal > 0 && (fastTotal === 0 || offsetTotal <= fastTotal)) {
-                        let donGiaOffset = Math.ceil((offsetTotal / qty) / 10) * 10;
-                        offsetUnitPriceEl.innerHTML = donGiaOffset.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/thẻ</span>';
-                        offsetTotalPriceEl.innerHTML = (donGiaOffset * qty).toLocaleString('vi-VN') + ' đ';
+                    // IN GHÉP (TIẾT KIỆM)
+                    if (data.tongTienOffset && data.tongTienOffset > 0) {
+                        offsetUnitPriceEl.innerText = data.donGiaOffset.toLocaleString('vi-VN') + ' đ/thẻ';
+                        offsetTotalPriceEl.innerText = 'Tổng tiền: ' + data.tongTienOffset.toLocaleString('vi-VN') + ' đ';
                         resultOffset.style.display = 'block';
                         hasOffset = true;
                     } else {
                         resultOffset.style.display = 'none';
                     }
 
-                    // 2. Nếu có giá In Nhanh
-                    if (fastTotal > 0) {
-                        let donGiaFast = Math.ceil((fastTotal / qty) / 10) * 10;
-                        fastUnitPriceEl.innerHTML = donGiaFast.toLocaleString('vi-VN') + ' đ<span style="font-size:14px; font-weight:normal; color:#64748b;">/thẻ</span>';
-                        fastTotalPriceEl.innerHTML = (donGiaFast * qty).toLocaleString('vi-VN') + ' đ';
+                    // IN NHANH
+                    if (data.tongTienFast && data.tongTienFast > 0) {
+                        fastUnitPriceEl.innerText = data.donGiaFast.toLocaleString('vi-VN') + ' đ/thẻ';
+                        fastTotalPriceEl.innerText = 'Tổng tiền: ' + data.tongTienFast.toLocaleString('vi-VN') + ' đ';
                         resultFast.style.display = 'block';
                         hasFast = true;
                     } else {
                         resultFast.style.display = 'none';
                     }
-
-                    if (hasFast || hasOffset) {
-                        resultContainer.style.display = 'block';
-                        isPriceShowing = true;
+                    
+                    if(!hasFast && !hasOffset) {
+                         alert("Không thể tính giá với kích thước và số lượng này, vui lòng liên hệ Zalo!");
                     } else {
-                        alert("Hệ thống chưa tính được giá với kích thước và số lượng này, vui lòng liên hệ Zalo!");
+                         document.getElementById('resultContainer').style.display = 'flex';
                     }
+
                 } else {
-                    alert('Lỗi hệ thống: ' + data.error);
+                    alert('Lỗi hệ thống báo giá: ' + data.error);
                 }
             } catch (error) {
-                alert('Chưa kết nối được máy chủ tính giá.');
+                alert('Mạng chập chờn hoặc hệ thống đang bận: ' + error);
             } finally {
-                btn.innerHTML = '✅ ĐÃ CẬP NHẬT BẢNG GIÁ';
-                btn.style.background = '#10b981'; // Màu xanh lá thành công
+                btn.innerHTML = 'XEM LẠI GIÁ ƯỚC TÍNH';
                 btn.disabled = false;
                 btn.style.opacity = '1';
-                
+                btn.style.backgroundColor = '#10b981'; // Xanh lá báo thành công
                 setTimeout(() => {
-                    if (isPriceShowing) {
-                        btn.innerHTML = 'XEM LẠI GIÁ ƯỚC TÍNH';
-                        btn.style.background = 'var(--accent-gold)';
-                    }
+                    btn.innerHTML = 'XEM GIÁ ƯỚC TÍNH';
+                    btn.style.backgroundColor = 'var(--primary-color)';
                 }, 3000);
             }
-        }
+        });
 
-        // 7. ZALO CHỐT ĐƠN TỰ ĐỘNG
-        function guiZalo(loaiIn) {
+        // Copy ngầm cấu hình và Mở Zalo
+        function guiZalo(loaiIn, event) {
+            event.preventDefault(); // Chặn tải lại link
+            
             const chatLieu = document.getElementById('calcMaterial').value;
             const chieuDai = document.getElementById('calcLength').value;
             const chieuRong = document.getElementById('calcWidth').value;
-            let canMangRaw = document.getElementById('calcLamination').value;
-            const canMang = canMangRaw === 'Có' ? 'Cán màng' : 'Không cán';
+            const canMang = document.getElementById('calcLamination').value === 'Có' ? 'Cán màng' : 'Không cán';
             
-            // Luôn lấy số lượng đã làm tròn
             const originalQty = parseInt(document.getElementById('calcQty').value);
             const soLuong = roundUpToHundred(originalQty);
             
             let tenGoiLoaiIn = loaiIn === 'Fast' ? "In Nhanh (1-2 ngày)" : "In Tiết Kiệm (5-7 ngày)";
             
-            // Lấy giá tổng tiền đang hiển thị trên web
-            let tongTien = loaiIn === 'Fast' ? document.getElementById('fastTotalPrice').innerText : document.getElementById('offsetTotalPrice').innerText;
+            let tongTienText = loaiIn === 'Fast' ? document.getElementById('fastTotalPrice').innerText : document.getElementById('offsetTotalPrice').innerText;
+            let donGiaText = loaiIn === 'Fast' ? document.getElementById('fastUnitPrice').innerText : document.getElementById('offsetUnitPrice').innerText;
 
-            const message = `Chào Tiệm In Giá Rẻ,\nMình muốn đặt In Danh Thiếp Có Keo (Decal):\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Cán màng: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} thẻ\n- Lựa chọn: ${tenGoiLoaiIn}\n👉 Giá tạm tính: ${tongTien}\n\nXưởng kiểm tra file giúp mình nhé!`;
+            const message = `Chào Tiệm In Giá Rẻ,\nMình muốn đặt In Danh Thiếp Có Keo:\n\n- Kích thước: ${chieuDai} x ${chieuRong} cm\n- Chất liệu: ${chatLieu}\n- Bề mặt: ${canMang}\n- Số lượng: ${Number(soLuong).toLocaleString('vi-VN')} thẻ\n- Dịch vụ: ${tenGoiLoaiIn}\n👉 ${tongTienText} (${donGiaText})\n\nXưởng kiểm tra file và tư vấn giúp mình nhé!`;
+            
+            let btnId = loaiIn === 'Fast' ? 'btnZaloFast' : 'btnZaloOffset';
+            let btnElement = document.getElementById(btnId);
+            let originalText = btnElement.innerText;
+            
+            // Hiệu ứng copy
+            btnElement.innerText = "✅ Đã copy! Đang mở Zalo...";
             
             if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(message);
+                navigator.clipboard.writeText(message).then(() => {
+                    setTimeout(() => { window.open('https://zalo.me/0986450025', '_blank'); }, 500);
+                }).catch(() => { copyFallback(message); });
+            } else {
+                copyFallback(message);
             }
-            window.open(`https://zalo.me/84986450025`, '_blank');
+
+            setTimeout(() => {
+                btnElement.innerText = originalText;
+            }, 3000);
+        }
+
+        function copyFallback(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try { document.execCommand('copy'); } catch (err) {}
+            textArea.remove();
+            setTimeout(() => { window.open('https://zalo.me/0986450025', '_blank'); }, 500);
         }
     </script>
 </body>

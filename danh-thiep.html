@@ -66,22 +66,13 @@
         </div>
     </section>
 
-    <footer id="contact">
-        <h2>CÔNG TY TNHH PHẠM DUY KHANG</h2>
-        <p><strong>Hotline/Zalo:</strong> <a href="https://zalo.me/84986450025" style="color: #fff; text-decoration: none;">0986.450.025</a></p>
-        <p><strong>Địa chỉ:</strong> 860/84A Xô Viết Nghệ Tĩnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh</p>
-        <p class="copyright">© 2026 Bản quyền thuộc về Tiệm In Giá Rẻ - Công Ty TNHH Phạm Duy Khang.</p>
-    </footer>
+<!-- ĐIỂM CHỜ NẠP FOOTER TỰ ĐỘNG -->
+    <div id="footer-placeholder"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const navLinks = document.getElementById('nav-links');
-            mobileMenu.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                mobileMenu.classList.toggle('is-active');
-            });
-        });
-    </script>
+    <!-- CỤM NÚT ZALO THẢ NỔI -->
+    <div class="floating-buttons">
+        <a href="tel:0986450025" class="float-btn btn-call" title="Gọi Ngay">📞</a>
+        <a href="https://zalo.me/0986450025" target="_blank" class="float-btn btn-zalo" title="Chat Zalo">Zalo</a>
+    </div>
 </body>
 </html>

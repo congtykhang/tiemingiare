@@ -4,34 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiệm In Giá Rẻ | Xưởng In Trực Tiếp - CÔNG TY TNHH PHẠM DUY KHANG</title>
+    
+    <!-- TỐI ƯU SEO & HIỂN THỊ KHI CHIA SẺ ZALO/FACEBOOK -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tiemingiare.com/">
     <meta property="og:title" content="Tiệm In Giá Rẻ | In Tem Nhãn, Danh Thiếp Giá Xưởng">
     <meta property="og:description" content="Xưởng in trực tiếp không qua trung gian. Báo giá tự động cực nhanh. CÔNG TY TNHH PHẠM DUY KHANG.">
     <meta property="og:image" content="https://tiemingiare.com/images/anh-bia-seo.jpg">
+    
+    <!-- CÀI ĐẶT FAVICON -->
     <link rel="icon" href="favicon.png" type="image/png">
-    
+
+    <!-- Kế thừa CSS chung & Bộ não nạp Header/Footer tự động -->
     <link rel="stylesheet" href="style.css">
-    <!-- Nhúng bộ não xử lý Header/Footer tự động -->
-    <script src="main.js" defer></script> 
-    
+    <script src="main.js" defer></script>
+
+    <!-- CSS BỔ SUNG CHO TRANG CHỦ -->
     <style>
+        /* Thanh cam kết niềm tin */
         .trust-bar { background: #f8fafc; padding: 15px 10px; border-bottom: 1px solid #e2e8f0; text-align: center; }
-        .trust-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; font-size: 14px; color: #334155; font-weight: 600; }
-        .trust-list li { display: flex; align-items: center; gap: 5px; }
+        .trust-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; font-size: 15px; color: #334155; font-weight: 600; }
+        .trust-list li { display: flex; align-items: center; gap: 6px; }
+
+        /* Khối PR: Tại sao chọn chúng tôi */
+        .why-us-section { max-width: 1100px; margin: 20px auto 50px; padding: 0 20px; }
+        .why-us-box { background: #ffffff; border-radius: 16px; padding: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.06); border-left: 6px solid var(--accent-gold, #f59e0b); }
+        .why-us-box h2 { color: var(--primary-color, #0f172a); font-size: 24px; margin-top: 0; margin-bottom: 15px; }
+        .why-us-box p.intro { color: #475569; font-size: 16px; line-height: 1.6; margin-bottom: 20px; }
+        .why-features { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+        .why-features li { display: flex; align-items: flex-start; gap: 12px; font-size: 15.5px; color: #1e293b; line-height: 1.5; }
+        .why-features li span { color: #16a34a; font-weight: bold; font-size: 18px; line-height: 1.3; flex-shrink: 0; }
+
+        /* Cụm nút liên hệ thả nổi góc dưới */
+        .floating-buttons { position: fixed; bottom: 25px; right: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 9999; }
+        .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.25); text-decoration: none; color: #fff; font-size: 24px; transition: 0.3s; }
+        .float-btn:hover { transform: scale(1.1); animation: none; }
+        .btn-call { background-color: #dc2626; animation: rung 2s infinite ease-in-out; }
+        .btn-zalo { background-color: #0068ff; font-weight: bold; font-size: 14px; line-height: 1.2; text-align: center; }
+        
+        @keyframes rung {
+            0% { transform: rotate(0) scale(1); }
+            10% { transform: rotate(-25deg) scale(1.1); }
+            20% { transform: rotate(25deg) scale(1.1); }
+            30% { transform: rotate(-25deg) scale(1.1); }
+            40% { transform: rotate(25deg) scale(1.1); }
+            50% { transform: rotate(0) scale(1); }
+            100% { transform: rotate(0) scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .trust-list { gap: 12px 20px; font-size: 14px; }
+            .why-us-box { padding: 25px 20px; }
+            .why-us-box h2 { font-size: 20px; }
+        }
     </style>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KDV619X24Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KDV619X24Z');
+</script>
+
 </head>
 <body>
 
-    <!-- ĐIỂM CHỜ NẠP HEADER TỰ ĐỘNG -->
+    <!-- PHẦN 1: ĐIỂM CHỜ NẠP HEADER TỰ ĐỘNG TỪ MAIN.JS -->
     <div id="header-placeholder"></div>
 
+    <!-- PHẦN 2: BANNER CHÍNH (HERO) -->
     <section class="hero">
         <h1>In Đẹp Giá Tốt - Cùng Bạn Thành Công</h1>
         <p>Xưởng In Trực Tiếp - Không Qua Trung Gian. <br>Cam kết chất lượng, tối ưu chi phí.</p>
         <a href="#products" class="btn-cta" style="background-color: var(--accent-gold);">Xem Sản Phẩm</a>
     </section>
 
+    <!-- PHẦN 3: THANH CAM KẾT NIỀM TIN (TRUST BADGES) -->
     <div class="trust-bar">
         <ul class="trust-list">
             <li>✅ Xưởng In Trực Tiếp</li>
@@ -41,19 +92,20 @@
         </ul>
     </div>
 
+    <!-- PHẦN 4: DANH MỤC SẢN PHẨM CHỦ LỰC -->
     <section id="products" class="products">
         <div class="card">
             <a href="tem-nhan.html"><img src="images/tem-nhan.jpg" alt="Tem Nhãn Decal" class="product-img"></a>
             <h3>Tem Nhãn (Decal)</h3>
             <p>Decal giấy, nhựa, trong, xi bạc...</p>
-            <a href="tem-nhan.html" class="card-link" style="background: var(--accent-gold); color:#000; padding: 8px 15px; border-radius: 5px; font-weight: bold;">Tính giá tự động &rarr;</a>
+            <a href="tem-nhan.html" class="card-link" style="background: var(--accent-gold); color:#000; padding: 8px 15px; border-radius: 6px; font-weight: bold; display: inline-block;">Bấm tính giá tự động &rarr;</a>
         </div>
         
         <div class="card">
             <a href="danh-thiep.html"><img src="images/danh-thiep.jpg" alt="Danh Thiếp" class="product-img"></a>
             <h3>Danh Thiếp</h3>
-            <p>In offset, in nhanh kỹ thuật số.</p>
-            <a href="danh-thiep.html" class="card-link">Tính giá tự động &rarr;</a>
+            <p>In offset, in nhanh, danh thiếp decal...</p>
+            <a href="danh-thiep.html" class="card-link">Xem các loại &amp; Báo giá &rarr;</a>
         </div>
         
         <div class="card">
@@ -71,10 +123,23 @@
         </div>
     </section>
 
-    <!-- ĐIỂM CHỜ NẠP FOOTER TỰ ĐỘNG -->
+    <!-- PHẦN 5: KHỐI PR - TẠI SAO CHỌN CHÚNG TÔI (PHƯƠNG ÁN 3) -->
+    <section class="why-us-section">
+        <div class="why-us-box">
+            <h2>Đối Tác In Ấn Tin Cậy Cho Doanh Nghiệp &amp; Cửa Hàng</h2>
+            <p class="intro">Tại <strong>Tiệm In Giá Rẻ (Phạm Duy Khang)</strong>, chúng tôi hiểu rằng mỗi chiếc tem nhãn hay tấm danh thiếp đều là bộ mặt thương hiệu của bạn. Chúng tôi cam kết mang lại trải nghiệm đặt in an tâm tuyệt đối:</p>
+            <ul class="why-features">
+                <li><span>✓</span> File in được kiểm tra và chỉnh sửa miễn phí trước khi xuất phim.</li>
+                <li><span>✓</span> Hệ thống máy in thông minh hiện đại, rút ngắn thời gian chờ đợi và giảm thiểu đáng kể chi phí cho khách hàng.</li>
+                <li><span>✓</span> Đội ngũ gia công dày dạn kinh nghiệm, kiểm soát khắt khe mọi khâu hoàn thiện để mỗi sản phẩm giao đi đều là một tác phẩm hoàn hảo.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- PHẦN 6: ĐIỂM CHỜ NẠP FOOTER TỰ ĐỘNG TỪ MAIN.JS -->
     <div id="footer-placeholder"></div>
 
-    <!-- CỤM NÚT ZALO THẢ NỔI VẪN GIỮ Ở ĐÂY ĐỂ TRÁNH BỊ LỖI KHI LOAD HEADER CHẬM -->
+    <!-- PHẦN 7: NÚT LIÊN HỆ THẢ NỔI -->
     <div class="floating-buttons">
         <a href="tel:0986450025" class="float-btn btn-call" title="Gọi Ngay">📞</a>
         <a href="https://zalo.me/0986450025" target="_blank" class="float-btn btn-zalo" title="Chat Zalo">Zalo</a>
